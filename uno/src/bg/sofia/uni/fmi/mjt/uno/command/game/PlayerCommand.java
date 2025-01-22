@@ -1,6 +1,9 @@
 package bg.sofia.uni.fmi.mjt.uno.command.game;
 
+import bg.sofia.uni.fmi.mjt.uno.card.models.Card;
+import bg.sofia.uni.fmi.mjt.uno.card.types.Color;
 import bg.sofia.uni.fmi.mjt.uno.command.Command;
+import bg.sofia.uni.fmi.mjt.uno.exceptions.CommandExecutionException;
 import bg.sofia.uni.fmi.mjt.uno.game.Game;
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
 
@@ -28,7 +31,33 @@ public abstract class PlayerCommand implements Command {
 
     protected void validatePlayerTurn() {
         if (!game.getTurnManager().getCurrentPlayer().equals(player)) {
-            throw new IllegalStateException("It's not your turn!");
+            throw new CommandExecutionException("It's not your turn!");
+        }
+    }
+
+    protected String getArgumentValue(String[] args, String key) {
+        for (String arg : args) {
+            if (arg.startsWith(key + "=")) {
+                return arg.substring((key + "=").length());
+            }
+        }
+        throw new CommandExecutionException("Missing argument: " + key);
+    }
+
+    protected Card findCardById(String cardId) {
+        for (Card card : player.getHandManager().getAllCards()) {
+            if (card.getId().equals(cardId)) {
+                return card;
+            }
+        }
+        throw new CommandExecutionException("Card with ID " + cardId + " does not exist in your hand.");
+    }
+
+    protected Color parseColor(String colorArg) {
+        try {
+            return Color.valueOf(colorArg.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new CommandExecutionException("Invalid color. Allowed values are: red, green, blue, yellow.");
         }
     }
 

@@ -34,21 +34,4 @@ public class PlayCardCommand extends PlayerCommand {
         return "You played " + cardToPlay.getCardDescription() + ".";
     }
 
-    private String getArgumentValue(String[] args, String key) {
-        for (String arg : args) {
-            if (arg.startsWith(key + "=")) {
-                return arg.substring((key + "=").length());
-            }
-        }
-        throw new IllegalArgumentException("Missing argument: " + key);
-    }
-
-    private Card findCardById(String cardId) {
-        for (Card card : player.getHandManager().getAllCards()) {
-            if (card.getId().equals(cardId)) {
-                return card;
-            }
-        }
-        throw new IllegalArgumentException("Card with ID " + cardId + " does not exist in your hand.");
-    }
 }

@@ -1,13 +1,14 @@
 package bg.sofia.uni.fmi.mjt.uno.player;
 
 import bg.sofia.uni.fmi.mjt.uno.card.models.Card;
-import bg.sofia.uni.fmi.mjt.uno.card.types.Color;
 import bg.sofia.uni.fmi.mjt.uno.game.Game;
+import bg.sofia.uni.fmi.mjt.uno.logging.CardLogger;
 import bg.sofia.uni.fmi.mjt.uno.player.account.Account;
 
 public class Player {
     private final Account account;
     private final Hand handManager;
+    private final CardLogger cardLogger;
     private boolean unoCalled;
     private Game currentGame;
 
@@ -17,7 +18,12 @@ public class Player {
         }
         this.account = account;
         this.handManager = new Hand();
+        this.cardLogger = new CardLogger();
         this.unoCalled = false;
+    }
+
+    public CardLogger getCardLogger() {
+        return cardLogger;
     }
 
     public Account getAccount() {
