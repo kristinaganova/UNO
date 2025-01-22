@@ -1,11 +1,9 @@
-package bg.sofia.uni.fmi.mjt.uno.card.actioncard;
+package bg.sofia.uni.fmi.mjt.uno.card.types;
 
 public enum ActionCardType {
     SKIP("Skips the next player's turn"),
     PLUS_TWO("Makes the next player draw 2 cards"),
-    PLUS_FOUR("Makes the next player draw 4 cards and lets you pick a color"),
-    REVERSE("Reverses the order of play"),
-    PICK_COLOR("Lets you pick a color");
+    REVERSE("Reverses the order of play");
 
     private final String description;
 

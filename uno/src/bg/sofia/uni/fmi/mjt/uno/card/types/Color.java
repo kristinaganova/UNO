@@ -1,4 +1,4 @@
-package bg.sofia.uni.fmi.mjt.uno.card;
+package bg.sofia.uni.fmi.mjt.uno.card.types;
 
 public enum Color {
     RED,

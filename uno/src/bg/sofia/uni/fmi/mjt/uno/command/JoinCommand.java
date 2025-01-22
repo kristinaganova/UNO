@@ -1,0 +1,43 @@
+package bg.sofia.uni.fmi.mjt.uno.command;
+
+import bg.sofia.uni.fmi.mjt.uno.exceptions.CommandExecutionException;
+import bg.sofia.uni.fmi.mjt.uno.game.GameManager;
+import bg.sofia.uni.fmi.mjt.uno.player.Player;
+import bg.sofia.uni.fmi.mjt.uno.player.account.UserManager;
+
+import java.nio.channels.SocketChannel;
+
+public class JoinCommand extends AbstractCommand {
+    private final GameManager gameManager;
+    private final UserManager userManager;
+    private final SocketChannel client;
+
+    public JoinCommand(GameManager gameManager, UserManager userManager, SocketChannel client) {
+        this.gameManager = gameManager;
+        this.userManager = userManager;
+        this.client = client;
+    }
+
+    @Override
+    protected String executeCommand(String[] args) {
+        CommandValidator.validateArgsLength(args, 1, "join <game-id>");
+
+        String gameId = args[0];
+
+        if (!userManager.isLoggedIn(client)) {
+            throw new CommandExecutionException("You must be logged in to join a game.");
+        }
+
+        if (!gameManager.doesGameExist(gameId)) {
+            throw new CommandExecutionException("Game with ID " + gameId + " does not exist.");
+        }
+
+        Player player = new Player(userManager.getLoggedInUser(client));
+        if (!gameManager.joinGame(gameId, player)) {
+            throw new CommandExecutionException("Unable to join game. It may be full or already started.");
+        }
+
+        return "Successfully joined game with ID: " + gameId;
+    }
+}
+
