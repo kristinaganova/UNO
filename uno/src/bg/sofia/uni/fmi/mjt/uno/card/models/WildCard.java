@@ -9,6 +9,9 @@ import bg.sofia.uni.fmi.mjt.uno.player.Player;
 public non-sealed class WildCard extends Card {
 
     private final WildCardType type;
+
+    private static final int CARDS_TO_DRAAW = 4;
+
     public WildCard(WildCardType type) {
         super(Color.BLACK, CardType.WILD);
         this.type = type;
@@ -20,23 +23,37 @@ public non-sealed class WildCard extends Card {
     }
 
     @Override
-    public boolean isPlayable(Card topCard) {
+    public boolean isPlayable(Card topCard, Color currentColor) {
+        return topCard.isPlayableWithWild(this, currentColor);
+    }
+
+    @Override
+    public boolean isPlayableWithStandard(StandardCard other, Color currentColor) {
         return true;
     }
 
-    private static final int PLUS_FOUR = 4;
+    @Override
+    public boolean isPlayableWithAction(ActionCard other, Color currentColor) {
+        return true;
+    }
+
+    @Override
+    public boolean isPlayableWithWild(WildCard other, Color currentColor) {
+        return true;
+    }
 
     @Override
     public void applyEffect(Game game) {
-        Color chosenColor = game.getTurnManager().getCurrentPlayer().chooseColor();
-        game.setCurrentColor(chosenColor);
-
         if (type == WildCardType.PLUS_FOUR) {
             Player nextPlayer = game.getTurnManager().getNextPlayer();
-            for (int i = 0; i < PLUS_FOUR; i++) {
+            for (int i = 0; i < CARDS_TO_DRAAW; i++) {
                 game.drawCard(nextPlayer);
             }
-            game.getTurnManager().skipTurn();
+            game.getTurnManager().advanceTurn();
         }
+    }
+
+    public WildCardType getWildCardType() {
+        return type;
     }
 }

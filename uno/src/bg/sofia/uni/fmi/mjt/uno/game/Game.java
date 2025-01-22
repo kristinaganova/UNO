@@ -104,23 +104,11 @@ public class Game implements Serializable {
         return card;
     }
 
-    public boolean playCard(Player player, Card card) {
-        Card topCard = deck.getTopDiscardCard();
-
-        if (!card.isPlayable(topCard)) {
-            return false;
-        }
-
-        player.removeCardFromHand(card);
-
-        deck.discardCard(card);
-
-        card.applyEffect(this);
-
-        return true;
-    }
-
     public void setCurrentColor(Color color) {
         this.currentColor = color;
+    }
+
+    public Color getCurrentColor() {
+        return currentColor;
     }
 }

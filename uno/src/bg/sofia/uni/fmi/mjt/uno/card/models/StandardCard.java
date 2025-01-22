@@ -33,12 +33,31 @@ public final class StandardCard extends Card {
     }
 
     @Override
-    public boolean isPlayable(Card topCard) {
-        return this.getColor() == topCard.getColor() ||
-                (topCard instanceof StandardCard && this.value == ((StandardCard) topCard).value);
+    public boolean isPlayable(Card topCard, Color currentColor) {
+        if (topCard == null) {
+            throw new IllegalArgumentException("Top card is null.");
+        }
+        return topCard.isPlayableWithStandard(this, currentColor);
+    }
+
+    @Override
+    public boolean isPlayableWithStandard(StandardCard other, Color currentColor) {
+        return this.getColor() == other.getColor() || this.value == other.getValue();
+    }
+
+    @Override
+    public boolean isPlayableWithAction(ActionCard other, Color currentColor) {
+        return this.getColor() == other.getColor() || this.getColor() == currentColor;
+    }
+
+    @Override
+    public boolean isPlayableWithWild(WildCard other, Color currentColor) {
+        return this.getColor() == currentColor;
     }
 
     @Override
     public void applyEffect(Game game) {
+        //staying empty because standard cards have no effect on the game
     }
+
 }

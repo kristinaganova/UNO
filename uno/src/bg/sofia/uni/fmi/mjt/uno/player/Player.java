@@ -1,6 +1,7 @@
 package bg.sofia.uni.fmi.mjt.uno.player;
 
 import bg.sofia.uni.fmi.mjt.uno.card.models.Card;
+import bg.sofia.uni.fmi.mjt.uno.card.types.Color;
 import bg.sofia.uni.fmi.mjt.uno.game.Game;
 import bg.sofia.uni.fmi.mjt.uno.player.account.Account;
 
@@ -65,5 +66,9 @@ public class Player {
 
     public String showHand() {
         return handManager.showHand();
+    }
+
+    public Hand getHandManager() {
+        return handManager;
     }
 }

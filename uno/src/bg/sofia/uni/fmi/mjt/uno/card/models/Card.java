@@ -4,11 +4,15 @@ import bg.sofia.uni.fmi.mjt.uno.card.types.CardType;
 import bg.sofia.uni.fmi.mjt.uno.card.types.Color;
 import bg.sofia.uni.fmi.mjt.uno.game.Game;
 
+import java.util.UUID;
+
 public abstract sealed class Card permits ActionCard, StandardCard, WildCard {
+    private final String id;
     private final Color color;
     private final CardType type;
 
     public Card(Color color, CardType type) {
+        this.id = UUID.randomUUID().toString();
         this.color = color;
         this.type = type;
     }
@@ -23,7 +27,17 @@ public abstract sealed class Card permits ActionCard, StandardCard, WildCard {
 
     public abstract String getCardDescription();
 
+    public abstract boolean isPlayable(Card topCard, Color currentColor);
+
+    public abstract boolean isPlayableWithStandard(StandardCard other, Color currentColor);
+
+    public abstract boolean isPlayableWithAction(ActionCard other, Color currentColor);
+
+    public abstract boolean isPlayableWithWild(WildCard other, Color currentColor);
+
     public abstract void applyEffect(Game game);
 
-    public abstract boolean isPlayable(Card topCard);
+    public String getId() {
+        return id;
+    }
 }
