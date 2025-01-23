@@ -12,6 +12,8 @@ public class JoinCommand extends AbstractCommand {
     private final UserManager userManager;
     private final SocketChannel client;
 
+    private static final String USAGE = "join <game-id>";
+
     public JoinCommand(GameManager gameManager, UserManager userManager, SocketChannel client) {
         this.gameManager = gameManager;
         this.userManager = userManager;
@@ -20,7 +22,7 @@ public class JoinCommand extends AbstractCommand {
 
     @Override
     protected String executeCommand(String[] args) {
-        CommandValidator.validateArgsLength(args, 1, "join <game-id>");
+        CommandValidator.validateArgsLength(args, 1, USAGE);
 
         String gameId = args[0];
 

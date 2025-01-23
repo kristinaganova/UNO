@@ -11,6 +11,8 @@ public class LoginCommand extends AbstractCommand {
     private final UserManager userManager;
     private final SocketChannel client;
 
+    private static final String USAGE = "login --username=<username> --password=<password>";
+
     public LoginCommand(UserManager userManager, SocketChannel client) {
         this.userManager = userManager;
         this.client = client;
@@ -18,8 +20,7 @@ public class LoginCommand extends AbstractCommand {
 
     @Override
     protected String executeCommand(String[] args) {
-        CommandValidator.validateArgsLength(args, 2,
-                "login --username=<username> --password=<password>");
+        CommandValidator.validateArgsLength(args, 2, USAGE);
 
         String username = args[0];
         String password = args[1];
