@@ -8,6 +8,7 @@ import bg.sofia.uni.fmi.mjt.uno.player.account.Account;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
+import java.util.Objects;
 
 public class Player {
     private final Account account;
@@ -53,6 +54,18 @@ public class Player {
         return currentGame;
     }
 
+    public String getInput() {
+        try {
+            ByteBuffer buffer = ByteBuffer.allocate(1024);
+            client.read(buffer);
+            buffer.flip();
+            return new String(buffer.array(), 0, buffer.limit()).trim();
+        } catch (IOException e) {
+            System.err.println("Error reading input from player " + account.getUsername() + ": " + e.getMessage());
+            return "";
+        }
+    }
+
     public void setGame(Game game) {
         if (game == null) {
             throw new IllegalArgumentException("Game cannot be null.");
@@ -95,5 +108,18 @@ public class Player {
 
     public Hand getHandManager() {
         return handManager;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Player player = (Player) obj;
+        return Objects.equals(account, player.account);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(account);
     }
 }

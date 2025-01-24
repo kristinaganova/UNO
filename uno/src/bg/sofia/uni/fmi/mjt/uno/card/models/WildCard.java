@@ -10,7 +10,7 @@ public non-sealed class WildCard extends Card {
 
     private final WildCardType type;
 
-    private static final int CARDS_TO_DRAAW = 4;
+    private static final int CARDS_TO_DRAW = 4;
 
     public WildCard(WildCardType type) {
         super(Color.BLACK, CardType.WILD);
@@ -44,13 +44,21 @@ public non-sealed class WildCard extends Card {
 
     @Override
     public void applyEffect(Game game) {
+        Player currentPlayer = game.getTurnManager().getCurrentPlayer();
+
+        String chosenColor = game.promptPlayerToChooseColor(currentPlayer);
+        game.setCurrentColor(Color.valueOf(chosenColor.toUpperCase()));
+        game.notifyPlayers(currentPlayer.getAccount().getUsername() + " chose " + chosenColor + " as the new color.");
+
         if (type == WildCardType.PLUS_FOUR) {
             Player nextPlayer = game.getTurnManager().getNextPlayer();
-            for (int i = 0; i < CARDS_TO_DRAAW; i++) {
+            for (int i = 0; i < CARDS_TO_DRAW; i++) {
                 game.drawCard(nextPlayer);
             }
-            game.getTurnManager().advanceTurn();
+            game.notifyPlayers(nextPlayer.getAccount().getUsername() + " drew " + CARDS_TO_DRAW + " cards.");
         }
+
+        game.getTurnManager().advanceTurn();
     }
 
     public WildCardType getWildCardType() {

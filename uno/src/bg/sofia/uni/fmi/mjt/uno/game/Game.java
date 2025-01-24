@@ -100,7 +100,7 @@ public class Game implements Serializable {
     }
 
     public synchronized boolean startGame(Player requestingPlayer) {
-        if (isCreator(requestingPlayer)) {
+        if (!isCreator(requestingPlayer)) {
             throw new IllegalStateException("Only the creator of the game can start it.");
         }
 
@@ -112,13 +112,35 @@ public class Game implements Serializable {
             throw new IllegalStateException("At least " + Game.MIN_PLAYERS + " players are required to start the game.");
         }
 
+        initializeTurnManager();
         distributeInitialCards();
         setFirstDiscardCard();
         setGameState(GameState.STARTED);
-        initializeTurnManager();
         notifyPlayers("The game has started!");
 
         return true;
+    }
+
+    public String promptPlayerToChooseColor(Player player) {
+        player.sendMessage("You played a Wild Card! Please choose a color (RED, GREEN, BLUE, YELLOW):");
+
+        String chosenColor = player.getInput();
+
+        while (!isValidColor(chosenColor)) {
+            player.sendMessage("Invalid color. Please choose again (RED, GREEN, BLUE, YELLOW):");
+            chosenColor = player.getInput();
+        }
+
+        return chosenColor;
+    }
+
+    private boolean isValidColor(String color) {
+        try {
+            Color.valueOf(color.toUpperCase());
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 
     private void initializeTurnManager() {
@@ -142,6 +164,7 @@ public class Game implements Serializable {
         deck.discardCard(firstCard);
         firstCard.applyEffect(this);
         currentColor = firstCard.getColor();
+        notifyPlayers("The base card is: " + firstCard.getCardDescription());
     }
 
     public void notifyPlayersOfGameState() {
@@ -161,7 +184,7 @@ public class Game implements Serializable {
     public Card drawCard(Player player) {
         Card card = deck.drawCard();
         player.addCardToHand(card);
-        player.sendMessage("You drew a card: " + card.getCardDescription());
+        player.sendMessage("You drew a card with id: " + card.getId()+ "that is " + card.getCardDescription());
         return card;
     }
 
