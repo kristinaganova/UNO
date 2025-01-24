@@ -184,7 +184,8 @@ public class Game implements Serializable {
     public Card drawCard(Player player) {
         Card card = deck.drawCard();
         player.addCardToHand(card);
-        player.sendMessage("You drew a card with id: " + card.getId()+ "that is " + card.getCardDescription());
+        player.sendMessage("You drew a card with id: " + card.getId()+ " that is " + card.getCardDescription());
+        turnManager.advanceTurn();
         return card;
     }
 
