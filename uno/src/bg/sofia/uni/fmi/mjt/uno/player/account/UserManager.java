@@ -1,15 +1,20 @@
 package bg.sofia.uni.fmi.mjt.uno.player.account;
 
+import bg.sofia.uni.fmi.mjt.uno.player.Player;
+
 import java.nio.channels.SocketChannel;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class UserManager {
-    private final ConcurrentHashMap<String, Account> accounts;
-    private final ConcurrentHashMap<SocketChannel, String> loggedInUsers;
+    private final Map<String, Account> accounts;
+    private final Map<SocketChannel, String> loggedInUsers;
+    private final Map<Account, Player> accountToPlayerMap;
 
     public UserManager() {
-        this.accounts = new ConcurrentHashMap<>();
+        this.accounts = AccountRepository.loadAccounts(); // Load accounts on initialization
         this.loggedInUsers = new ConcurrentHashMap<>();
+        this.accountToPlayerMap = new ConcurrentHashMap<>();
     }
 
     public synchronized boolean createAccount(String username, String plainPassword) {
@@ -20,16 +25,16 @@ public class UserManager {
         String hashedPassword = PasswordUtils.hashPassword(plainPassword);
         Account newAccount = new Account(username, hashedPassword);
 
-        return accounts.putIfAbsent(username, newAccount) == null;
+        if (accounts.putIfAbsent(username, newAccount) == null) {
+            AccountRepository.saveAccounts(accounts);
+            return true;
+        }
+
+        return false;
     }
 
-    public synchronized boolean validateCredentials(String username, String plainPassword) {
-        Account account = accounts.get(username);
-        return account != null && PasswordUtils.verifyPassword(plainPassword, account.getPasswordHash());
-    }
-
-    public synchronized boolean isLoggedIn(SocketChannel client) {
-        return loggedInUsers.containsKey(client);
+    public synchronized void saveUsers() {
+        AccountRepository.saveAccounts(accounts);
     }
 
     public synchronized boolean login(SocketChannel client, String username) {
@@ -41,12 +46,46 @@ public class UserManager {
             throw new IllegalArgumentException("Invalid username.");
         }
 
+        if (loggedInUsers.containsValue(username)) {
+            throw new IllegalStateException("User is already logged in from another session.");
+        }
+
         loggedInUsers.put(client, username);
+
+        Account account = accounts.get(username);
+        accountToPlayerMap.putIfAbsent(account, new Player(account, client));
+
         return true;
     }
 
+    public synchronized Player getPlayerByAccount(Account account) {
+        return accountToPlayerMap.get(account);
+    }
+
+    public synchronized Player getPlayerByUsername(String username) {
+        Account account = accounts.get(username);
+        if (account == null) {
+            return null;
+        }
+        return getPlayerByAccount(account);
+    }
+
+    public synchronized boolean validateCredentials(String username, String plainPassword) {
+        Account account = accounts.get(username);
+        return account != null && PasswordUtils.verifyPassword(plainPassword, account.getPasswordHash());
+    }
+
+    public synchronized boolean isLoggedIn(SocketChannel client) {
+        return loggedInUsers.containsKey(client);
+    }
+
     public synchronized boolean logout(SocketChannel client) {
-        return loggedInUsers.remove(client) != null;
+        String username = loggedInUsers.remove(client);
+        if (username != null) {
+            System.out.println("User " + username + " logged out.");
+            return true;
+        }
+        return false;
     }
 
     public synchronized String getLoggedInUsername(SocketChannel client) {

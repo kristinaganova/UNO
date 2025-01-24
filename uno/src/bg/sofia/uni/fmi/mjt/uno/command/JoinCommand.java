@@ -24,22 +24,30 @@ public class JoinCommand extends AbstractCommand {
     protected String executeCommand(String[] args) {
         CommandValidator.validateArgsLength(args, 1, USAGE);
 
-        String gameId = args[0];
+        String gameId = CommandValidator.extractArgument(args, "--game-id=", USAGE);
 
         if (!userManager.isLoggedIn(client)) {
             throw new CommandExecutionException("You must be logged in to join a game.");
+        }
+
+        String username = userManager.getLoggedInUsername(client);
+        if (gameManager.isPlayerInAnyGame(username)) {
+            throw new CommandExecutionException("You are already part of another game. You must leave it before joining a new one.");
         }
 
         if (!gameManager.doesGameExist(gameId)) {
             throw new CommandExecutionException("Game with ID " + gameId + " does not exist.");
         }
 
-        Player player = new Player(userManager.getLoggedInUser(client));
+        Player player = new Player(userManager.getLoggedInUser(client), client);
         if (!gameManager.joinGame(gameId, player)) {
             throw new CommandExecutionException("Unable to join game. It may be full or already started.");
         }
 
+        player.setGame(gameManager.getGame(gameId));
+
         return "Successfully joined game with ID: " + gameId;
     }
+
 }
 

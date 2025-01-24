@@ -18,8 +18,8 @@ public class RegisterCommand extends AbstractCommand {
     protected String executeCommand(String[] args) {
         CommandValidator.validateArgsLength(args, 2, USAGE);
 
-        String username = args[0];
-        String password = args[1];
+        String username = CommandValidator.extractArgument(args, "--username=", USAGE);
+        String password = CommandValidator.extractArgument(args, "--password=", USAGE);
 
         if (userManager.createAccount(username, password)) {
             return "User registered successfully.";

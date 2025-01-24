@@ -1,7 +1,5 @@
 package bg.sofia.uni.fmi.mjt.uno.game;
 
-import bg.sofia.uni.fmi.mjt.uno.card.models.Card;
-import bg.sofia.uni.fmi.mjt.uno.card.types.CardType;
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
 
 import java.util.Map;
@@ -16,85 +14,43 @@ public class GameManager {
         this.games = new ConcurrentHashMap<>();
     }
 
-    public synchronized boolean createGame(String gameId, int playersCount) {
+    public synchronized boolean createGame(String gameId, int playersCount, Player creator) {
         if (games.containsKey(gameId)) {
             return false;
         }
-        games.put(gameId, new Game(gameId, playersCount));
+        if (playersCount < Game.MIN_PLAYERS || playersCount > Game.MAX_PLAYERS) {
+            throw new IllegalArgumentException("Number of players must be between " + Game.MIN_PLAYERS + " and " + Game.MAX_PLAYERS);
+        }
+        Game game = new Game(gameId, playersCount, creator);
+        games.put(gameId, game);
+        System.out.println("Game created with ID: " + gameId);
         return true;
     }
 
     public synchronized boolean joinGame(String gameId, Player player) {
         Game game = games.get(gameId);
-        if (game == null || game.getState() != GameState.CREATED) {
+        if (game == null || game.getState() != GameState.AVAILABLE) {
             return false;
         }
+
         try {
             game.addPlayer(player);
+            notifyPlayersInGame(game, player.getAccount().getUsername() + " has joined the game.");
             return true;
         } catch (IllegalStateException | IllegalArgumentException e) {
             return false;
         }
     }
 
-    public synchronized boolean startGame(String gameId) {
+    public synchronized boolean startGame(String gameId, Player requestingPlayer) {
         Game game = games.get(gameId);
-
-        if (!isValidGameToStart(game)) {
-            return false;
+        if (game == null) {
+            throw new IllegalArgumentException("Game with this ID does not exist.");
         }
 
-        try {
-            distributeInitialCards(game);
-            setFirstDiscardCard(game);
-            game.setGameState(GameState.STARTED);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+        game.startGame(requestingPlayer);
 
-    private boolean isValidGameToStart(Game game) {
-        if (game == null || game.getState() != GameState.CREATED) {
-            return false;
-        }
-        if (game.getPlayers().size() < game.getPlayersCount()) {
-            return false;
-        }
         return true;
-    }
-
-    private void distributeInitialCards(Game game) {
-        for (Player player : game.getPlayers()) {
-            for (int i = 0; i < Game.START_HAND_CARDS_COUNT; i++) {
-                player.addCardToHand(game.getDeck().drawCard());
-            }
-        }
-    }
-
-    private void setFirstDiscardCard(Game game) {
-        Card firstCard = game.getDeck().drawCard();
-
-        while (firstCard.getCardType() == CardType.WILD) {
-            game.getDeck().discardCard(firstCard);
-            firstCard = game.getDeck().drawCard();
-        }
-
-        game.getDeck().discardCard(firstCard);
-        game.setCurrentColor(firstCard.getColor());
-    }
-
-    public synchronized String getGameStatus(String gameId) {
-        Game game = games.get(gameId);
-        return game != null ? game.getState().toString() : null;
-    }
-
-    public synchronized void removeGame(String gameId) {
-        Game game = games.get(gameId);
-        if (game != null && game.getState() == GameState.FINISHED) {
-            games.remove(gameId);
-        }
     }
 
     public synchronized String getGamesByStatus(String status) {
@@ -109,8 +65,8 @@ public class GameManager {
                             return game.getState() == GameState.STARTED;
                         case "finished":
                             return game.getState() == GameState.FINISHED;
-                        case "created":
-                            return game.getState() == GameState.CREATED;
+                        case "available":
+                            return game.getState() == GameState.AVAILABLE;
                         case "all":
                             return true;
                         default:
@@ -126,7 +82,35 @@ public class GameManager {
         return games.containsKey(gameId);
     }
 
-    public String getGameSummary(String gameId) {
-        return null;
+    public Game getGame(String gameId) {
+        return games.get(gameId);
     }
+
+    public boolean isPlayerInAnyGame(String username) {
+        return games.values().stream()
+                .anyMatch(game -> game.getPlayers().stream()
+                        .anyMatch(player -> player.getAccount().getUsername().equals(username)));
+    }
+
+    private void notifyPlayersInGame(Game game, String message) {
+        game.notifyPlayers(message);
+    }
+
+    public String getGameSummary(String gameId) {
+        Game game = games.get(gameId);
+        if (game == null) {
+            return "Game not found.";
+        }
+        return String.format("Game ID: %s, Status: %s, Players: %d/%d",
+                game.getId(), game.getState(), game.getPlayers().size(), game.getPlayersCount());
+    }
+
+    public Game getGameByPlayer(String username) {
+        return games.values().stream()
+                .filter(game -> game.getPlayers().stream()
+                        .anyMatch(player -> player.getAccount().getUsername().equals(username)))
+                .findFirst()
+                .orElse(null);
+    }
+
 }
