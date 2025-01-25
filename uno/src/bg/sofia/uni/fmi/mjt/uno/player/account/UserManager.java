@@ -12,7 +12,7 @@ public class UserManager {
     private final Map<Account, Player> accountToPlayerMap;
 
     public UserManager() {
-        this.accounts = AccountRepository.loadAccounts(); // Load accounts on initialization
+        this.accounts = AccountRepository.loadAccounts();
         this.loggedInUsers = new ConcurrentHashMap<>();
         this.accountToPlayerMap = new ConcurrentHashMap<>();
     }
@@ -65,9 +65,24 @@ public class UserManager {
     public synchronized Player getPlayerByUsername(String username) {
         Account account = accounts.get(username);
         if (account == null) {
-            return null;
+            throw new IllegalStateException("Account for username " + username + " does not exist.");
         }
-        return getPlayerByAccount(account);
+
+        Player player = accountToPlayerMap.get(account);
+        if (player == null) {
+            throw new IllegalStateException("Player instance for username " + username + " does not exist.");
+        }
+
+        return player;
+    }
+
+    public synchronized Player getOrCreatePlayer(String username, SocketChannel client) {
+        Account account = accounts.get(username);
+        if (account == null) {
+            throw new IllegalStateException("Account for username " + username + " does not exist.");
+        }
+
+        return accountToPlayerMap.computeIfAbsent(account, acc -> new Player(acc, client));
     }
 
     public synchronized boolean validateCredentials(String username, String plainPassword) {

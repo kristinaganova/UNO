@@ -8,7 +8,9 @@ import bg.sofia.uni.fmi.mjt.uno.player.account.Account;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Player {
     private final Account account;
@@ -50,19 +52,23 @@ public class Player {
         return account;
     }
 
-    public Game getCurrentGame() {
-        return currentGame;
-    }
-
     public String getInput() {
         try {
+            client.configureBlocking(false);
             ByteBuffer buffer = ByteBuffer.allocate(1024);
-            client.read(buffer);
-            buffer.flip();
-            return new String(buffer.array(), 0, buffer.limit()).trim();
+            int bytesRead = client.read(buffer);
+
+            if (bytesRead > 0) {
+                buffer.flip();
+                return new String(buffer.array(), 0, buffer.limit()).trim();
+            } else if (bytesRead == 0) {
+                return null;
+            } else {
+                throw new IOException("Client disconnected.");
+            }
         } catch (IOException e) {
             System.err.println("Error reading input from player " + account.getUsername() + ": " + e.getMessage());
-            return "";
+            return null;
         }
     }
 
@@ -73,8 +79,16 @@ public class Player {
         this.currentGame = game;
     }
 
+    public Game getCurrentGame() {
+        return this.currentGame;
+    }
+
     public void addCardToHand(Card card) {
+        if (card == null) {
+            throw new IllegalArgumentException("Card cannot be null.");
+        }
         handManager.addCard(card);
+        System.out.println("Card added to " + account.getUsername() + "'s hand: " + card.getCardDescription());
         unoCalled = false;
     }
 
@@ -103,7 +117,13 @@ public class Player {
     }
 
     public String showHand() {
-        return handManager.showHand();
+        List<Card> cards = handManager.getAllCards();
+        if (cards.isEmpty()) {
+            return "Your hand is empty.";
+        }
+        return cards.stream()
+                .map(card -> card.getId() + " - " + card.getCardDescription())
+                .collect(Collectors.joining("\n"));
     }
 
     public Hand getHandManager() {

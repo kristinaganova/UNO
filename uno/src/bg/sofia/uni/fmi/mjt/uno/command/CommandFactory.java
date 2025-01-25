@@ -66,7 +66,7 @@ public class CommandFactory {
 
         Player player = userManager.getPlayerByUsername(username);
         if (player == null) {
-            throw new IllegalStateException("Player not found for the logged-in user.");
+            throw new IllegalStateException("Player not found for logged-in user: " + username);
         }
 
         return player;
@@ -77,12 +77,10 @@ public class CommandFactory {
 
         Game game = player.getCurrentGame();
         if (game == null) {
-            game = gameManager.getGameByPlayer(player.getAccount().getUsername());
-            if (game == null) {
-                throw new IllegalStateException("Player is not currently part of any game.");
-            }
+            throw new IllegalStateException("Player " + player.getAccount().getUsername() + " is not part of any game.");
         }
 
         return game;
     }
+
 }

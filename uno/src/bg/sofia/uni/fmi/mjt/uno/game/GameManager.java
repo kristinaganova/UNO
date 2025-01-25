@@ -30,16 +30,13 @@ public class GameManager {
     public synchronized boolean joinGame(String gameId, Player player) {
         Game game = games.get(gameId);
         if (game == null || game.getState() != GameState.AVAILABLE) {
-            return false;
+            throw new IllegalStateException("Game with ID " + gameId + " is not available.");
         }
 
-        try {
-            game.addPlayer(player);
-            notifyPlayersInGame(game, player.getAccount().getUsername() + " has joined the game.");
-            return true;
-        } catch (IllegalStateException | IllegalArgumentException e) {
-            return false;
-        }
+        game.addPlayer(player);
+
+        notifyPlayersInGame(game, player.getAccount().getUsername() + " has joined the game.");
+        return true;
     }
 
     public synchronized boolean startGame(String gameId, Player requestingPlayer) {

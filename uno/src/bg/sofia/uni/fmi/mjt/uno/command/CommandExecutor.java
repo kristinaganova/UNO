@@ -26,6 +26,6 @@ public class CommandExecutor {
     }
 
     private String createErrorResponse(String message) {
-        return String.format("{\"status\":\"ERROR\",\"message\":\"%s\"}", message);
+        return String.format("ERROR: ", message);
     }
 }

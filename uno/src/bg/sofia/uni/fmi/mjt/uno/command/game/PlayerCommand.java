@@ -45,12 +45,13 @@ public abstract class PlayerCommand implements Command {
     }
 
     protected Card findCardById(String cardId) {
-        for (Card card : player.getHandManager().getAllCards()) {
-            if (card.getId().equals(cardId)) {
-                return card;
-            }
-        }
-        throw new CommandExecutionException("Card with ID " + cardId + " does not exist in your hand.");
+        return player.getHandManager()
+                .getAllCards()
+                .stream()
+                .filter(card -> card.getId().toString().equals(cardId))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Card with ID " + cardId
+                        + " does not exist in your hand."));
     }
 
     protected Color parseColor(String colorArg) {

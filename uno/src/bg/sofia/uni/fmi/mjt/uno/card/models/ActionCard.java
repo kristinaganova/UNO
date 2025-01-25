@@ -24,7 +24,7 @@ public non-sealed class ActionCard extends Card {
 
     @Override
     public String getCardDescription() {
-        return type.getDescription();
+        return type.getDescription() + " " + getColor().toString();
     }
 
     @Override

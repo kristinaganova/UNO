@@ -23,7 +23,6 @@ public class JoinCommand extends AbstractCommand {
     @Override
     protected String executeCommand(String[] args) {
         CommandValidator.validateArgsLength(args, 1, USAGE);
-
         String gameId = CommandValidator.extractArgument(args, "--game-id=", USAGE);
 
         if (!userManager.isLoggedIn(client)) {
@@ -39,7 +38,11 @@ public class JoinCommand extends AbstractCommand {
             throw new CommandExecutionException("Game with ID " + gameId + " does not exist.");
         }
 
-        Player player = new Player(userManager.getLoggedInUser(client), client);
+        Player player = userManager.getPlayerByUsername(username);
+        if (player == null) {
+            throw new CommandExecutionException("Player instance not found for the logged-in user.");
+        }
+
         if (!gameManager.joinGame(gameId, player)) {
             throw new CommandExecutionException("Unable to join game. It may be full or already started.");
         }
@@ -48,6 +51,4 @@ public class JoinCommand extends AbstractCommand {
 
         return "Successfully joined game with ID: " + gameId;
     }
-
 }
-

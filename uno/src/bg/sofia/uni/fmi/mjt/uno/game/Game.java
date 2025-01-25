@@ -12,40 +12,130 @@ import java.util.List;
 public class Game implements Serializable {
     private static final long serialVersionUID = -5799475912042338739L;
 
-    public static final int MAX_PLAYERS = 10;
-    public static final int MIN_PLAYERS = 2;
-    public static final int START_HAND_CARDS_COUNT = 7;
-
     private final String id;
     private final Player creator;
     private final List<Player> players;
-    private TurnManager turnManager;
     private final UnoDeck deck;
+    private TurnManager turnManager;
     private GameState state;
-    private final int playersCount;
     private Color currentColor;
+
+    public static final int MAX_PLAYERS = 10;
+    public static final int MIN_PLAYERS = 2;
 
     public Game(String id, int playersCount, Player creator) {
         if (id == null || id.isBlank()) {
-            throw new IllegalArgumentException("Game ID cannot be null or empty.");
+            throw new IllegalArgumentException("Game ID cannot be null or blank.");
         }
         if (playersCount < MIN_PLAYERS || playersCount > MAX_PLAYERS) {
-            throw new IllegalArgumentException("Number of players must be between " +
-                    MIN_PLAYERS + " and " + MAX_PLAYERS);
+            throw new IllegalArgumentException("Players count must be between 2 and 10.");
         }
         if (creator == null) {
             throw new IllegalArgumentException("Creator cannot be null.");
         }
 
         this.id = id;
-        this.playersCount = playersCount;
         this.creator = creator;
         this.players = new ArrayList<>(playersCount);
         this.deck = new UnoDeck();
         this.state = GameState.AVAILABLE;
-        this.turnManager = null;
 
         addPlayer(creator);
+    }
+
+    public synchronized void startGame(Player requestingPlayer) {
+        if (!creator.equals(requestingPlayer)) {
+            throw new IllegalStateException("Only the game creator can start the game.");
+        }
+        if (state != GameState.AVAILABLE) {
+            throw new IllegalStateException("Game is not available to start.");
+        }
+        if (players.size() < 2) {
+            throw new IllegalStateException("At least 2 players are required to start the game.");
+        }
+
+        this.turnManager = new TurnManager(players);
+        setFirstDiscardCard();
+        distributeInitialCards();
+        this.state = GameState.STARTED;
+
+        notifyPlayers("The game has started!");
+        notifyPlayersOfCurrentTurn();
+    }
+
+    private void setFirstDiscardCard() {
+        Card firstCard = deck.drawCard();
+        deck.discardCard(firstCard);
+        currentColor = firstCard.getColor();
+        notifyPlayers("The base card is: " + firstCard.getCardDescription());
+    }
+
+    private static final int INITIAL_CARDS = 7;
+    private void distributeInitialCards() {
+        for (Player player : players) {
+            for (int i = 0; i < INITIAL_CARDS; i++) {
+                drawCard(player);
+            }
+            player.sendMessage("Your initial hand: " + player.showHand());
+        }
+    }
+
+    public synchronized Card drawCard(Player player) {
+        Card card = deck.drawCard();
+        player.addCardToHand(card);
+        player.sendMessage("You drew a card: " + card.getCardDescription());
+        return card;
+    }
+
+    public Card getTopCard() {
+        return deck.getTopDiscardCard();
+    }
+
+    public void notifyPlayers(String message) {
+        for (Player player : players) {
+            player.sendMessage(message);
+        }
+    }
+
+    private void notifyPlayersOfCurrentTurn() {
+        Player currentPlayer = turnManager.getCurrentPlayer();
+        notifyPlayers("It's " + currentPlayer.getAccount().getUsername() + "'s turn.");
+        notifyPlayers("The top card is: " + getTopCard().getCardDescription());
+    }
+
+    public void playTurn() {
+        Player currentPlayer = turnManager.getCurrentPlayer();
+        notifyPlayers("It's " + currentPlayer.getAccount().getUsername() + "'s turn.");
+        notifyPlayers("The top card is: " + getTopCard().getCardDescription());
+    }
+
+    public synchronized void addPlayer(Player player) {
+        if (state != GameState.AVAILABLE) {
+            throw new IllegalStateException("Cannot add players to a game that has already started or finished.");
+        }
+        if (players.contains(player)) {
+            throw new IllegalStateException("Player is already in the game.");
+        }
+        players.add(player);
+        player.setGame(this);
+        notifyPlayers(player.getAccount().getUsername() + " joined the game.");
+    }
+
+    public synchronized void removePlayer(Player player) {
+        if (!players.contains(player)) {
+            throw new IllegalArgumentException("Player not found in the game.");
+        }
+
+        players.remove(player);
+        notifyPlayers(player.getAccount().getUsername() + " has left the game.");
+
+        if (players.size() < 2) {
+            state = GameState.FINISHED;
+            notifyPlayers("Game has ended due to insufficient players.");
+        } else {
+            turnManager.removePlayer(player);
+            notifyPlayersOfCurrentTurn();
+        }
     }
 
     public String getId() {
@@ -60,78 +150,46 @@ public class Game implements Serializable {
         return state;
     }
 
-    public int getPlayersCount() {
-        return playersCount;
-    }
-
     public List<Player> getPlayers() {
         return List.copyOf(players);
     }
 
-    public UnoDeck getDeck() {
-        return deck;
+    public void setGameState(GameState gameState) {
+        this.state = gameState;
     }
 
-    public void addPlayer(Player player) {
-        if (state != GameState.AVAILABLE) {
-            throw new IllegalStateException("Cannot add players to a game that has already started or finished.");
-        }
-        if (players.size() >= playersCount) {
-            throw new IllegalStateException("The game is full. Maximum players: " + playersCount);
-        }
-        if (player == null) {
-            throw new IllegalArgumentException("Player cannot be null.");
-        }
-
-        players.add(player);
-        player.sendMessage("You have joined the game: " + id);
+    public TurnManager getTurnManager() {
+        return turnManager;
     }
 
-    public void removePlayer(Player player) {
-        if (!players.contains(player)) {
-            throw new IllegalArgumentException("Player not found in the game.");
-        }
-
-        players.remove(player);
-
-        if (players.size() < MIN_PLAYERS) {
-            state = GameState.FINISHED;
-        }
+    public Color getCurrentColor() {
+        return currentColor;
     }
 
-    public synchronized boolean startGame(Player requestingPlayer) {
-        if (!isCreator(requestingPlayer)) {
-            throw new IllegalStateException("Only the creator of the game can start it.");
-        }
+    public void setCurrentColor(Color color) {
+        this.currentColor = color;
+    }
 
-        if (getState() != GameState.AVAILABLE) {
-            throw new IllegalStateException("Game cannot be started. Current state: " + getState());
-        }
-
-        if (getPlayers().size() < Game.MIN_PLAYERS) {
-            throw new IllegalStateException("At least " + Game.MIN_PLAYERS + " players are required to start the game.");
-        }
-
-        initializeTurnManager();
-        distributeInitialCards();
-        setFirstDiscardCard();
-        setGameState(GameState.STARTED);
-        notifyPlayers("The game has started!");
-
-        return true;
+    public int getPlayersCount() {
+        return players.size();
     }
 
     public String promptPlayerToChooseColor(Player player) {
         player.sendMessage("You played a Wild Card! Please choose a color (RED, GREEN, BLUE, YELLOW):");
 
-        String chosenColor = player.getInput();
+        while (true) {
+            try {
+                String chosenColor = player.getInput();
 
-        while (!isValidColor(chosenColor)) {
-            player.sendMessage("Invalid color. Please choose again (RED, GREEN, BLUE, YELLOW):");
-            chosenColor = player.getInput();
+                if (isValidColor(chosenColor)) {
+                    return chosenColor;
+                }
+
+                player.sendMessage("Invalid color. Please choose again (RED, GREEN, BLUE, YELLOW):");
+            } catch (Exception e) {
+                player.sendMessage("Error receiving input. Please choose a color (RED, GREEN, BLUE, YELLOW):");
+            }
         }
-
-        return chosenColor;
     }
 
     private boolean isValidColor(String color) {
@@ -143,82 +201,7 @@ public class Game implements Serializable {
         }
     }
 
-    private void initializeTurnManager() {
-        if (turnManager == null) {
-            turnManager = new TurnManager(players);
-        }
-        System.out.println(turnManager.getCurrentPlayer().getAccount().getUsername());
-    }
-
-    private void distributeInitialCards() {
-        for (Player player : players) {
-            for (int i = 0; i < START_HAND_CARDS_COUNT; i++) {
-                drawCard(player);
-            }
-        }
-    }
-
-    private void setFirstDiscardCard() {
-        Card firstCard = deck.drawCard();
-
-        deck.discardCard(firstCard);
-        firstCard.applyEffect(this);
-        currentColor = firstCard.getColor();
-        notifyPlayers("The base card is: " + firstCard.getCardDescription());
-    }
-
-    public void notifyPlayersOfGameState() {
-        if (turnManager == null) {
-            throw new IllegalStateException("The game has not started yet. TurnManager is not initialized.");
-        }
-
-        for (Player player : players) {
-            player.sendMessage("The game has started!");
-            Card topDiscardCard = deck.getTopDiscardCard();
-            player.sendMessage("Top discard card: " +
-                    (topDiscardCard != null ? topDiscardCard.getCardDescription() : "No card played yet."));
-            player.sendMessage("It's " + turnManager.getCurrentPlayer().getAccount().getUsername() + "'s turn!");
-        }
-    }
-
-    public Card drawCard(Player player) {
-        Card card = deck.drawCard();
-        player.addCardToHand(card);
-        player.sendMessage("You drew a card with id: " + card.getId()+ " that is " + card.getCardDescription());
-        turnManager.advanceTurn();
-        return card;
-    }
-
-    public void setCurrentColor(Color color) {
-        this.currentColor = color;
-    }
-
-    public Color getCurrentColor() {
-        return currentColor;
-    }
-
-    public void notifyPlayers(String message) {
-        if (message == null || message.isBlank()) {
-            throw new IllegalArgumentException("Message cannot be null or blank.");
-        }
-
-        for (Player player : players) {
-            player.sendMessage(message);
-        }
-    }
-
-    public TurnManager getTurnManager() {
-        return turnManager;
-    }
-
-    public boolean isCreator(Player requestingPlayer) {
-        return creator.equals(requestingPlayer);
-    }
-
-    public void setGameState(GameState gameState) {
-        if (gameState == null) {
-            return;
-        }
-        this.state = gameState;
+    public UnoDeck getDeck() {
+        return deck;
     }
 }

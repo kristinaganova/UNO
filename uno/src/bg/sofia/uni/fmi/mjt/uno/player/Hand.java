@@ -23,6 +23,7 @@ public class Hand {
         if (card == null) {
             throw new IllegalArgumentException("Card cannot be null.");
         }
+        System.out.println("Adding card: " + card.getCardDescription() + " with color: " + card.getColor());
         hand.get(card.getColor()).add(card);
     }
 
@@ -34,6 +35,7 @@ public class Hand {
     }
 
     public List<Card> getAllCards() {
+        System.out.println("Current hand content: " + hand);
         return hand.values().stream().flatMap(List::stream).collect(Collectors.toList());
     }
 

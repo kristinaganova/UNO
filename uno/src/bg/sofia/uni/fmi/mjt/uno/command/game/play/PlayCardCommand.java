@@ -28,8 +28,12 @@ public class PlayCardCommand extends PlayerCommand {
 
         player.removeCardFromHand(cardToPlay);
         game.getDeck().discardCard(cardToPlay);
+        game.getTurnManager().advanceTurn();
 
         cardToPlay.applyEffect(game);
+
+        game.notifyPlayers("Player: " + player.getAccount().getUsername()
+                + " played card: " + cardToPlay.getCardDescription());
 
         return "You played " + cardToPlay.getCardDescription() + ".";
     }

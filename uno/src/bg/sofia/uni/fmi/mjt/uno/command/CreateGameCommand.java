@@ -37,7 +37,11 @@ public class CreateGameCommand extends AbstractCommand {
             throw new CommandExecutionException("You are already part of another game. Leave it before creating a new one.");
         }
 
-        Player creator = new Player(userManager.getLoggedInUser(client), client);
+        Player creator = userManager.getPlayerByUsername(username);
+
+        if (creator == null) {
+            throw new CommandExecutionException("Unable to retrieve player information for the logged-in user.");
+        }
 
         if (gameManager.createGame(gameId, numberOfPlayers, creator)) {
             return "Game created successfully with ID: " + gameId + ". You have joined the game.";

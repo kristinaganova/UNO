@@ -33,6 +33,7 @@ public class PlayChooseColorCommand extends PlayerCommand {
 
         player.removeCardFromHand(cardToPlay);
         game.getDeck().discardCard(cardToPlay);
+        game.getTurnManager().advanceTurn();
 
         game.setCurrentColor(chosenColor);
 

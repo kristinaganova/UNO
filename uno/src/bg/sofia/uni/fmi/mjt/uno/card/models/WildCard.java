@@ -19,7 +19,7 @@ public non-sealed class WildCard extends Card {
 
     @Override
     public String getCardDescription() {
-        return type.getDescription();
+        return type.getDescription() + " " + getColor();
     }
 
     @Override
@@ -45,8 +45,16 @@ public non-sealed class WildCard extends Card {
     @Override
     public void applyEffect(Game game) {
         Player currentPlayer = game.getTurnManager().getCurrentPlayer();
+        String chosenColor = null;
 
-        String chosenColor = game.promptPlayerToChooseColor(currentPlayer);
+        while (chosenColor == null) {
+            chosenColor = game.promptPlayerToChooseColor(currentPlayer);
+
+            if (chosenColor == null) {
+                currentPlayer.sendMessage("You took too long. Please try again.");
+            }
+        }
+
         game.setCurrentColor(Color.valueOf(chosenColor.toUpperCase()));
         game.notifyPlayers(currentPlayer.getAccount().getUsername() + " chose " + chosenColor + " as the new color.");
 
