@@ -12,6 +12,10 @@ import java.util.List;
 public class Game implements Serializable {
     private static final long serialVersionUID = -5799475912042338739L;
 
+    public static final int MAX_PLAYERS = 10;
+    public static final int MIN_PLAYERS = 2;
+    public static final int INITIAL_CARDS = 7;
+
     private final String id;
     private final Player creator;
     private final List<Player> players;
@@ -19,9 +23,6 @@ public class Game implements Serializable {
     private TurnManager turnManager;
     private GameState state;
     private Color currentColor;
-
-    public static final int MAX_PLAYERS = 10;
-    public static final int MIN_PLAYERS = 2;
 
     public Game(String id, int playersCount, Player creator) {
         if (id == null || id.isBlank()) {
@@ -50,7 +51,7 @@ public class Game implements Serializable {
         if (state != GameState.AVAILABLE) {
             throw new IllegalStateException("Game is not available to start.");
         }
-        if (players.size() < 2) {
+        if (players.size() < MIN_PLAYERS) {
             throw new IllegalStateException("At least 2 players are required to start the game.");
         }
 
@@ -70,7 +71,6 @@ public class Game implements Serializable {
         notifyPlayers("The base card is: " + firstCard.getCardDescription());
     }
 
-    private static final int INITIAL_CARDS = 7;
     private void distributeInitialCards() {
         for (Player player : players) {
             for (int i = 0; i < INITIAL_CARDS; i++) {
@@ -84,6 +84,7 @@ public class Game implements Serializable {
         Card card = deck.drawCard();
         player.addCardToHand(card);
         player.sendMessage("You drew a card: " + card.getCardDescription());
+
         return card;
     }
 
@@ -98,12 +99,6 @@ public class Game implements Serializable {
     }
 
     private void notifyPlayersOfCurrentTurn() {
-        Player currentPlayer = turnManager.getCurrentPlayer();
-        notifyPlayers("It's " + currentPlayer.getAccount().getUsername() + "'s turn.");
-        notifyPlayers("The top card is: " + getTopCard().getCardDescription());
-    }
-
-    public void playTurn() {
         Player currentPlayer = turnManager.getCurrentPlayer();
         notifyPlayers("It's " + currentPlayer.getAccount().getUsername() + "'s turn.");
         notifyPlayers("The top card is: " + getTopCard().getCardDescription());
@@ -129,66 +124,12 @@ public class Game implements Serializable {
         players.remove(player);
         notifyPlayers(player.getAccount().getUsername() + " has left the game.");
 
-        if (players.size() < 2) {
+        if (players.size() < MIN_PLAYERS) {
             state = GameState.FINISHED;
             notifyPlayers("Game has ended due to insufficient players.");
         } else {
             turnManager.removePlayer(player);
             notifyPlayersOfCurrentTurn();
-        }
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public Player getCreator() {
-        return creator;
-    }
-
-    public GameState getState() {
-        return state;
-    }
-
-    public List<Player> getPlayers() {
-        return List.copyOf(players);
-    }
-
-    public void setGameState(GameState gameState) {
-        this.state = gameState;
-    }
-
-    public TurnManager getTurnManager() {
-        return turnManager;
-    }
-
-    public Color getCurrentColor() {
-        return currentColor;
-    }
-
-    public void setCurrentColor(Color color) {
-        this.currentColor = color;
-    }
-
-    public int getPlayersCount() {
-        return players.size();
-    }
-
-    public String promptPlayerToChooseColor(Player player) {
-        player.sendMessage("You played a Wild Card! Please choose a color (RED, GREEN, BLUE, YELLOW):");
-
-        while (true) {
-            try {
-                String chosenColor = player.getInput();
-
-                if (isValidColor(chosenColor)) {
-                    return chosenColor;
-                }
-
-                player.sendMessage("Invalid color. Please choose again (RED, GREEN, BLUE, YELLOW):");
-            } catch (Exception e) {
-                player.sendMessage("Error receiving input. Please choose a color (RED, GREEN, BLUE, YELLOW):");
-            }
         }
     }
 
@@ -203,5 +144,37 @@ public class Game implements Serializable {
 
     public UnoDeck getDeck() {
         return deck;
+    }
+
+    public TurnManager getTurnManager() {
+        return turnManager;
+    }
+
+    public Color getCurrentColor() {
+        return currentColor;
+    }
+
+    public void setCurrentColor(Color color) {
+        this.currentColor = color;
+    }
+
+    public GameState getState() {
+        return state;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Player getCreator() {
+        return creator;
+    }
+
+    public List<Player> getPlayers() {
+        return List.copyOf(players);
+    }
+
+    public Object getPlayersCount() {
+        return players.size();
     }
 }

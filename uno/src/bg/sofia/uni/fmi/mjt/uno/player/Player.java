@@ -52,26 +52,6 @@ public class Player {
         return account;
     }
 
-    public String getInput() {
-        try {
-            client.configureBlocking(false);
-            ByteBuffer buffer = ByteBuffer.allocate(1024);
-            int bytesRead = client.read(buffer);
-
-            if (bytesRead > 0) {
-                buffer.flip();
-                return new String(buffer.array(), 0, buffer.limit()).trim();
-            } else if (bytesRead == 0) {
-                return null;
-            } else {
-                throw new IOException("Client disconnected.");
-            }
-        } catch (IOException e) {
-            System.err.println("Error reading input from player " + account.getUsername() + ": " + e.getMessage());
-            return null;
-        }
-    }
-
     public void setGame(Game game) {
         if (game == null) {
             throw new IllegalArgumentException("Game cannot be null.");

@@ -34,10 +34,9 @@ public class PlayPlusFourCommand extends PlayerCommand {
 
         player.removeCardFromHand(cardToPlay);
         game.getDeck().discardCard(cardToPlay);
-        game.getTurnManager().advanceTurn();
         game.setCurrentColor(chosenColor);
 
-        ((WildCard) cardToPlay).applyEffect(game);
+        cardToPlay.applyEffect(game);
 
         return "You played a +4 WildCard. The color is now " + chosenColor + ".";
     }

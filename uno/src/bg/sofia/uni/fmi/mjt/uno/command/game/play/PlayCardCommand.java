@@ -1,6 +1,7 @@
 package bg.sofia.uni.fmi.mjt.uno.command.game.play;
 
 import bg.sofia.uni.fmi.mjt.uno.card.models.Card;
+import bg.sofia.uni.fmi.mjt.uno.card.types.Color;
 import bg.sofia.uni.fmi.mjt.uno.command.game.PlayerCommand;
 import bg.sofia.uni.fmi.mjt.uno.game.Game;
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
@@ -22,13 +23,17 @@ public class PlayCardCommand extends PlayerCommand {
         Card cardToPlay = findCardById(cardId);
 
         Card topCard = game.getDeck().getTopDiscardCard();
+
+        if(cardToPlay.getColor() == Color.BLACK) {
+            throw new IllegalArgumentException("Black cards have other commands");
+        }
+
         if (!cardToPlay.isPlayable(topCard, game.getCurrentColor())) {
             throw new IllegalArgumentException("The selected card cannot be played on the current top card.");
         }
 
         player.removeCardFromHand(cardToPlay);
         game.getDeck().discardCard(cardToPlay);
-        game.getTurnManager().advanceTurn();
 
         cardToPlay.applyEffect(game);
 

@@ -47,7 +47,7 @@ public final class StandardCard extends Card {
 
     @Override
     public boolean isPlayableWithAction(ActionCard other, Color currentColor) {
-        return this.getColor() == other.getColor() || this.getColor() == currentColor;
+        return this.getColor() == other.getColor();
     }
 
     @Override
@@ -57,7 +57,7 @@ public final class StandardCard extends Card {
 
     @Override
     public void applyEffect(Game game) {
-        //staying empty because standard cards have no effect on the game
+        game.getTurnManager().advanceTurn();
     }
 
 }

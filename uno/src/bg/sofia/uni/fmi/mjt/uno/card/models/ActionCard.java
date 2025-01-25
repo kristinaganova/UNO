@@ -63,7 +63,6 @@ public non-sealed class ActionCard extends Card {
                 for (int i = 0; i < 2; i++) {
                     game.drawCard(nextPlayer);
                 }
-                turnManager.advanceTurn();
                 break;
             default:
                 throw new IllegalArgumentException("Unknown action card type: " + type);

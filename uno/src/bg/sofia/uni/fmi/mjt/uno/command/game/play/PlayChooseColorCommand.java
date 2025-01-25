@@ -33,9 +33,12 @@ public class PlayChooseColorCommand extends PlayerCommand {
 
         player.removeCardFromHand(cardToPlay);
         game.getDeck().discardCard(cardToPlay);
-        game.getTurnManager().advanceTurn();
 
         game.setCurrentColor(chosenColor);
+
+        cardToPlay.applyEffect(game);
+
+        game.notifyPlayers("New color is: " + chosenColor);
 
         return "You played a choose color WildCard. The color is now " + chosenColor + ".";
     }

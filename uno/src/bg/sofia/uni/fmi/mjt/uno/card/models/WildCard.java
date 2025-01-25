@@ -44,20 +44,6 @@ public non-sealed class WildCard extends Card {
 
     @Override
     public void applyEffect(Game game) {
-        Player currentPlayer = game.getTurnManager().getCurrentPlayer();
-        String chosenColor = null;
-
-        while (chosenColor == null) {
-            chosenColor = game.promptPlayerToChooseColor(currentPlayer);
-
-            if (chosenColor == null) {
-                currentPlayer.sendMessage("You took too long. Please try again.");
-            }
-        }
-
-        game.setCurrentColor(Color.valueOf(chosenColor.toUpperCase()));
-        game.notifyPlayers(currentPlayer.getAccount().getUsername() + " chose " + chosenColor + " as the new color.");
-
         if (type == WildCardType.PLUS_FOUR) {
             Player nextPlayer = game.getTurnManager().getNextPlayer();
             for (int i = 0; i < CARDS_TO_DRAW; i++) {
