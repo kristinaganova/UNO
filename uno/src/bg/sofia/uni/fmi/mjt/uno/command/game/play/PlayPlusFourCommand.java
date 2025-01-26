@@ -37,6 +37,7 @@ public class PlayPlusFourCommand extends PlayerCommand {
         game.setCurrentColor(chosenColor);
 
         cardToPlay.applyEffect(game);
+        game.getCardLogger().logCard(cardToPlay);
 
         return "You played a +4 WildCard. The color is now " + chosenColor + ".";
     }

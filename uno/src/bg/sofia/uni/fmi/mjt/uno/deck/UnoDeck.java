@@ -1,6 +1,12 @@
 package bg.sofia.uni.fmi.mjt.uno.deck;
 
 import bg.sofia.uni.fmi.mjt.uno.card.models.Card;
+import bg.sofia.uni.fmi.mjt.uno.card.strategy.PickColorEffect;
+import bg.sofia.uni.fmi.mjt.uno.card.strategy.PlusFourEffect;
+import bg.sofia.uni.fmi.mjt.uno.card.strategy.PlusTwoEffect;
+import bg.sofia.uni.fmi.mjt.uno.card.strategy.ReverseTurnEffect;
+import bg.sofia.uni.fmi.mjt.uno.card.strategy.SkipTurnEffect;
+import bg.sofia.uni.fmi.mjt.uno.card.strategy.StandardCardEffect;
 import bg.sofia.uni.fmi.mjt.uno.card.types.Color;
 import bg.sofia.uni.fmi.mjt.uno.card.models.StandardCard;
 import bg.sofia.uni.fmi.mjt.uno.card.models.ActionCard;
@@ -36,19 +42,19 @@ public class UnoDeck implements Deck {
         for (Color color : Color.values()) {
             if (color == Color.BLACK) continue;
 
-            drawPile.add(new StandardCard(color, 0));
+            drawPile.add(new StandardCard(color, 0, new StandardCardEffect()));
 
             for (int i = 1; i <= MAX_VALUE; i++) {
-                drawPile.add(new StandardCard(color, i));
-                drawPile.add(new StandardCard(color, i));
+                drawPile.add(new StandardCard(color, i, new StandardCardEffect()));
+                drawPile.add(new StandardCard(color, i, new StandardCardEffect()));
             }
         }
     }
 
     private void createWildCards() {
         for (int i = 0; i < MAX_BLACK_COUNT; i++) {
-            drawPile.add(new WildCard(WildCardType.PICK_COLOR));
-            drawPile.add(new WildCard(WildCardType.PLUS_FOUR));
+            drawPile.add(new WildCard(WildCardType.PICK_COLOR, new PickColorEffect()));
+            drawPile.add(new WildCard(WildCardType.PLUS_FOUR, new PlusFourEffect()));
         }
     }
 
@@ -58,14 +64,14 @@ public class UnoDeck implements Deck {
                 continue;
             }
 
-            drawPile.add(new ActionCard(ActionCardType.PLUS_TWO, color));
-            drawPile.add(new ActionCard(ActionCardType.PLUS_TWO, color));
+            drawPile.add(new ActionCard(color, ActionCardType.PLUS_TWO, new PlusTwoEffect()));
+            drawPile.add(new ActionCard(color, ActionCardType.PLUS_TWO, new PlusTwoEffect()));
 
-            drawPile.add(new ActionCard(ActionCardType.SKIP, color));
-            drawPile.add(new ActionCard(ActionCardType.SKIP, color));
+            drawPile.add(new ActionCard(color, ActionCardType.SKIP, new SkipTurnEffect()));
+            drawPile.add(new ActionCard(color, ActionCardType.SKIP, new SkipTurnEffect()));
 
-            drawPile.add(new ActionCard(ActionCardType.REVERSE, color));
-            drawPile.add(new ActionCard(ActionCardType.REVERSE, color));
+            drawPile.add(new ActionCard(color, ActionCardType.REVERSE, new ReverseTurnEffect()));
+            drawPile.add(new ActionCard(color, ActionCardType.REVERSE, new ReverseTurnEffect()));
         }
     }
 

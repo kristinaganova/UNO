@@ -1,5 +1,6 @@
 package bg.sofia.uni.fmi.mjt.uno.card.models;
 
+import bg.sofia.uni.fmi.mjt.uno.card.strategy.CardEffectStrategy;
 import bg.sofia.uni.fmi.mjt.uno.card.types.CardType;
 import bg.sofia.uni.fmi.mjt.uno.card.types.Color;
 import bg.sofia.uni.fmi.mjt.uno.card.types.WildCardType;
@@ -12,8 +13,8 @@ public non-sealed class WildCard extends Card {
 
     private static final int CARDS_TO_DRAW = 4;
 
-    public WildCard(WildCardType type) {
-        super(Color.BLACK, CardType.WILD);
+    public WildCard(WildCardType type, CardEffectStrategy strategy) {
+        super(Color.BLACK, CardType.WILD, strategy);
         this.type = type;
     }
 
@@ -40,19 +41,6 @@ public non-sealed class WildCard extends Card {
     @Override
     public boolean isPlayableWithWild(WildCard other, Color currentColor) {
         return true;
-    }
-
-    @Override
-    public void applyEffect(Game game) {
-        if (type == WildCardType.PLUS_FOUR) {
-            Player nextPlayer = game.getTurnManager().getNextPlayer();
-            for (int i = 0; i < CARDS_TO_DRAW; i++) {
-                game.drawCard(nextPlayer);
-            }
-            game.notifyPlayers(nextPlayer.getAccount().getUsername() + " drew " + CARDS_TO_DRAW + " cards.");
-        }
-
-        game.getTurnManager().advanceTurn();
     }
 
     public WildCardType getWildCardType() {

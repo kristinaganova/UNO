@@ -16,10 +16,10 @@ public class ShowPlayedCardsCommand extends PlayCardCommand {
 
     @Override
     public String execute(String[] args) {
-        List<Card> playedCardsList = player.getCardLogger().getPlayedCards();
+        List<Card> playedCardsList = game.getCardLogger().getPlayedCards();
 
         if (playedCardsList.isEmpty()) {
-            throw new CommandExecutionException("No played cards found");
+            throw new CommandExecutionException("No played cards found.");
         }
 
         StringBuilder playedCards = new StringBuilder("Played cards:\n");
@@ -28,4 +28,5 @@ public class ShowPlayedCardsCommand extends PlayCardCommand {
         }
         return playedCards.toString();
     }
+
 }

@@ -24,7 +24,7 @@ public class PlayCardCommand extends PlayerCommand {
 
         Card topCard = game.getDeck().getTopDiscardCard();
 
-        if(cardToPlay.getColor() == Color.BLACK) {
+        if (cardToPlay.getColor() == Color.BLACK) {
             throw new IllegalArgumentException("Black cards have other commands");
         }
 
@@ -36,6 +36,7 @@ public class PlayCardCommand extends PlayerCommand {
         game.getDeck().discardCard(cardToPlay);
 
         cardToPlay.applyEffect(game);
+        game.getCardLogger().logCard(cardToPlay);
 
         game.notifyPlayers("Player: " + player.getAccount().getUsername()
                 + " played card: " + cardToPlay.getCardDescription());

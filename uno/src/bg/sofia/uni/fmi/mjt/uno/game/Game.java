@@ -3,10 +3,12 @@ package bg.sofia.uni.fmi.mjt.uno.game;
 import bg.sofia.uni.fmi.mjt.uno.card.models.Card;
 import bg.sofia.uni.fmi.mjt.uno.card.types.Color;
 import bg.sofia.uni.fmi.mjt.uno.deck.UnoDeck;
+import bg.sofia.uni.fmi.mjt.uno.logging.CardLogger;
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Game implements Serializable {
@@ -19,10 +21,12 @@ public class Game implements Serializable {
     private final String id;
     private final Player creator;
     private final List<Player> players;
+    private final List<Player> finishedPlayers;
     private final UnoDeck deck;
     private TurnManager turnManager;
     private GameState state;
     private Color currentColor;
+    private final CardLogger cardLogger;
 
     public Game(String id, int playersCount, Player creator) {
         if (id == null || id.isBlank()) {
@@ -38,8 +42,10 @@ public class Game implements Serializable {
         this.id = id;
         this.creator = creator;
         this.players = new ArrayList<>(playersCount);
+        this.finishedPlayers = new LinkedList<>();
         this.deck = new UnoDeck();
         this.state = GameState.AVAILABLE;
+        this.cardLogger = new CardLogger();
 
         addPlayer(creator);
     }
@@ -68,6 +74,7 @@ public class Game implements Serializable {
         Card firstCard = deck.drawCard();
         deck.discardCard(firstCard);
         currentColor = firstCard.getColor();
+        firstCard.applyEffect(this);
         notifyPlayers("The base card is: " + firstCard.getCardDescription());
     }
 
@@ -85,7 +92,87 @@ public class Game implements Serializable {
         player.addCardToHand(card);
         player.sendMessage("You drew a card: " + card.getCardDescription());
 
+        if (isGameOver()) {
+            endGame();
+            return card;
+        }
+
+        turnManager.advanceTurn();
         return card;
+    }
+
+    private boolean isGameOver() {
+        int playersWithCards = 0;
+
+        for (Player player : players) {
+            if (!player.getHand().getAllCards().isEmpty()) {
+                playersWithCards++;
+            }
+        }
+
+        return playersWithCards == 1;
+    }
+
+    public synchronized void playerFinished(Player player) {
+        if (!players.contains(player)) {
+            throw new IllegalArgumentException("Player not found in the game.");
+        }
+
+        finishedPlayers.add(player);
+        players.remove(player);
+        notifyPlayers(player.getAccount().getUsername() + " has finished the game!");
+
+        if (isGameOver()) {
+            endGame();
+        } else {
+            notifyPlayersOfCurrentTurn();
+        }
+    }
+
+    public synchronized void removePlayer(Player player) {
+        if (!players.contains(player)) {
+            throw new IllegalArgumentException("Player not found in the game.");
+        }
+
+        List<Card> handCards = player.getHand().getAllCards();
+        for (Card card : handCards) {
+            deck.discardCard(card);
+        }
+
+        players.remove(player);
+        notifyPlayers(player.getAccount().getUsername() + " has left the game.");
+
+        if (players.size() < MIN_PLAYERS) {
+            state = GameState.FINISHED;
+            notifyPlayers("Game has ended due to insufficient players.");
+            return;
+        }
+
+        if (isGameOver()) {
+            endGame();
+        } else {
+            turnManager.removePlayer(player);
+            notifyPlayersOfCurrentTurn();
+        }
+    }
+
+    private void endGame() {
+        Player winner = null;
+        for (Player player : players) {
+            if (!player.getHand().getAllCards().isEmpty()) {
+                winner = player;
+                break;
+            }
+        }
+
+        if (winner != null) {
+            finishedPlayers.add(winner);
+            notifyPlayers("The game is over! The winner is " + winner.getAccount().getUsername() + "!");
+        } else {
+            notifyPlayers("The game is over! It's a draw.");
+        }
+
+        state = GameState.FINISHED;
     }
 
     public Card getTopCard() {
@@ -112,34 +199,9 @@ public class Game implements Serializable {
             throw new IllegalStateException("Player is already in the game.");
         }
         players.add(player);
+        player.getHand().removeCards();
         player.setGame(this);
         notifyPlayers(player.getAccount().getUsername() + " joined the game.");
-    }
-
-    public synchronized void removePlayer(Player player) {
-        if (!players.contains(player)) {
-            throw new IllegalArgumentException("Player not found in the game.");
-        }
-
-        players.remove(player);
-        notifyPlayers(player.getAccount().getUsername() + " has left the game.");
-
-        if (players.size() < MIN_PLAYERS) {
-            state = GameState.FINISHED;
-            notifyPlayers("Game has ended due to insufficient players.");
-        } else {
-            turnManager.removePlayer(player);
-            notifyPlayersOfCurrentTurn();
-        }
-    }
-
-    private boolean isValidColor(String color) {
-        try {
-            Color.valueOf(color.toUpperCase());
-            return true;
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
     }
 
     public UnoDeck getDeck() {
@@ -174,7 +236,15 @@ public class Game implements Serializable {
         return List.copyOf(players);
     }
 
+    public List<Player> getFinishedPlayers() {
+        return List.copyOf(finishedPlayers);
+    }
+
     public Object getPlayersCount() {
         return players.size();
+    }
+
+    public CardLogger getCardLogger() {
+        return cardLogger;
     }
 }

@@ -1,5 +1,6 @@
 package bg.sofia.uni.fmi.mjt.uno.card.models;
 
+import bg.sofia.uni.fmi.mjt.uno.card.strategy.CardEffectStrategy;
 import bg.sofia.uni.fmi.mjt.uno.card.types.CardType;
 import bg.sofia.uni.fmi.mjt.uno.card.types.Color;
 import bg.sofia.uni.fmi.mjt.uno.game.Game;
@@ -8,11 +9,11 @@ public final class StandardCard extends Card {
     private final int value;
     private static final int MAX_VALUE = 9;
 
-    public StandardCard(Color color, int value) {
+    public StandardCard(Color color, int value, CardEffectStrategy strategy) {
         if(color == Color.BLACK) {
             throw new IllegalArgumentException("There are no black standard cards.");
         }
-        super(color, CardType.STANDARD);
+        super(color, CardType.STANDARD, strategy);
         validateValue(value);
         this.value = value;
     }
@@ -54,10 +55,4 @@ public final class StandardCard extends Card {
     public boolean isPlayableWithWild(WildCard other, Color currentColor) {
         return this.getColor() == currentColor;
     }
-
-    @Override
-    public void applyEffect(Game game) {
-        game.getTurnManager().advanceTurn();
-    }
-
 }

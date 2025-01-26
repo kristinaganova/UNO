@@ -77,7 +77,8 @@ public class CommandFactory {
 
         Game game = player.getCurrentGame();
         if (game == null) {
-            throw new IllegalStateException("Player " + player.getAccount().getUsername() + " is not part of any game.");
+            throw new IllegalStateException("Player " + player.getAccount().getUsername() +
+                    " is not part of any game.");
         }
 
         return game;

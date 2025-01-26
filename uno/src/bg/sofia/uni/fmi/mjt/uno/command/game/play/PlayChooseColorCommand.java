@@ -37,6 +37,7 @@ public class PlayChooseColorCommand extends PlayerCommand {
         game.setCurrentColor(chosenColor);
 
         cardToPlay.applyEffect(game);
+        game.getCardLogger().logCard(cardToPlay);
 
         game.notifyPlayers("New color is: " + chosenColor);
 

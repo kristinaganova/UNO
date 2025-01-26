@@ -2,7 +2,6 @@ package bg.sofia.uni.fmi.mjt.uno.player;
 
 import bg.sofia.uni.fmi.mjt.uno.card.models.Card;
 import bg.sofia.uni.fmi.mjt.uno.game.Game;
-import bg.sofia.uni.fmi.mjt.uno.logging.CardLogger;
 import bg.sofia.uni.fmi.mjt.uno.player.account.Account;
 
 import java.io.IOException;
@@ -15,7 +14,6 @@ import java.util.stream.Collectors;
 public class Player {
     private final Account account;
     private final Hand handManager;
-    private final CardLogger cardLogger;
     private final SocketChannel client;
     private boolean unoCalled;
     private Game currentGame;
@@ -27,7 +25,6 @@ public class Player {
         this.account = account;
         this.client = client;
         this.handManager = new Hand();
-        this.cardLogger = new CardLogger();
         this.unoCalled = false;
     }
 
@@ -42,10 +39,6 @@ public class Player {
 
     public SocketChannel getClient() {
         return client;
-    }
-
-    public CardLogger getCardLogger() {
-        return cardLogger;
     }
 
     public Account getAccount() {
@@ -101,7 +94,9 @@ public class Player {
         if (cards.isEmpty()) {
             return "Your hand is empty.";
         }
-        return cards.stream()
+
+        return "The top card is: " + currentGame.getTopCard().getCardDescription() + System.lineSeparator() +
+                cards.stream()
                 .map(card -> card.getId() + " - " + card.getCardDescription())
                 .collect(Collectors.joining("\n"));
     }
@@ -121,5 +116,9 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(account);
+    }
+
+    public Hand getHand() {
+        return handManager;
     }
 }

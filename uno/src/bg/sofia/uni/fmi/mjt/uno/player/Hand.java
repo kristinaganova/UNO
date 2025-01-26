@@ -49,4 +49,14 @@ public class Hand {
                 .map(entry -> entry.getKey() + ": " + entry.getValue())
                 .collect(Collectors.joining(", "));
     }
+
+    public  Map<Color, List<Card>> getHand() {
+        return hand;
+    }
+
+    public void removeCards() {
+        for (Color color : hand.keySet()) {
+            hand.put(color, new ArrayList<>());
+        }
+    }
 }
