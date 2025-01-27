@@ -22,8 +22,11 @@ public abstract class PlayerCommand implements Command {
     @Override
     public String execute(String[] args) {
         try {
-            validatePlayerTurn();
-            return executePlayerCommand(args);
+            String commandString = String.join(" ", args);
+            String result = executePlayerCommand(args);
+            game.logCommand(commandString);
+
+            return result;
         } catch (Exception e) {
             return "Error: " + e.getMessage();
         }
@@ -55,12 +58,49 @@ public abstract class PlayerCommand implements Command {
     }
 
     protected Color parseColor(String colorArg) {
-        try {
-            return Color.valueOf(colorArg.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new CommandExecutionException("Invalid color. Allowed values are: red, green, blue, yellow.");
+        if (colorArg == null || colorArg.isBlank()) {
+            throw new CommandExecutionException("Color argument cannot be null or empty.");
+        }
+
+        switch (colorArg.trim().toLowerCase()) {
+            case "red":
+            case "r":
+                return Color.RED;
+            case "blue":
+            case "b":
+                return Color.BLUE;
+            case "green":
+            case "g":
+                return Color.GREEN;
+            case "yellow":
+            case "y":
+                return Color.YELLOW;
+            default:
+                throw new CommandExecutionException("Invalid color. Allowed values are: red (r), blue (b), green (g), yellow (y).");
         }
     }
 
     protected abstract String executePlayerCommand(String[] args);
+
+    protected void playCard(Card card, Color newColor) {
+        if (card == null) {
+            throw new CommandExecutionException("The card cannot be null.");
+        }
+
+        player.removeCardFromHand(card);
+
+        game.getDeckHandler().getDeck().discardCard(card);
+
+        game.getLogger().logCard(card);
+
+        if (newColor != null) {
+            game.getDeckHandler().setCurrentColor(newColor);
+        }
+
+        card.applyEffect(game);
+
+        game.getGameMessenger().notifyAll("Player: " + player.getAccount().getUsername()
+                + " played: " + card.getCardDescription());
+    }
+
 }

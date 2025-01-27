@@ -1,7 +1,8 @@
-package bg.sofia.uni.fmi.mjt.uno.command;
+package bg.sofia.uni.fmi.mjt.uno.command.logged;
 
+import bg.sofia.uni.fmi.mjt.uno.command.AbstractCommand;
 import bg.sofia.uni.fmi.mjt.uno.exceptions.CommandExecutionException;
-import bg.sofia.uni.fmi.mjt.uno.game.GameManager;
+import bg.sofia.uni.fmi.mjt.uno.games.GameManager;
 
 public class ListGamesCommand extends AbstractCommand {
     private final GameManager gameManager;
@@ -16,18 +17,13 @@ public class ListGamesCommand extends AbstractCommand {
     protected String executeCommand(String[] args) {
         String status = parseStatusArgument(args);
 
-        switch (status) {
-            case "started":
-                return gameManager.getGamesByStatus("started");
-            case "ended":
-                return gameManager.getGamesByStatus("ended");
-            case "available":
-                return gameManager.getGamesByStatus("available");
-            case "all":
-                return gameManager.getGamesByStatus("all");
-            default:
-                throw new CommandExecutionException("Unknown status: " + status + ". " + USAGE);
-        }
+        return switch (status) {
+            case "started" -> gameManager.getGamesByStatus("started");
+            case "ended" -> gameManager.getGamesByStatus("ended");
+            case "available" -> gameManager.getGamesByStatus("available");
+            case "all" -> gameManager.getGamesByStatus("all");
+            default -> throw new CommandExecutionException("Unknown status: " + status + ". " + USAGE);
+        };
     }
 
     private String parseStatusArgument(String[] args) {

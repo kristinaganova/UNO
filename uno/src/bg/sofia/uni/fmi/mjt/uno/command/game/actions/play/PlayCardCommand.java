@@ -1,4 +1,4 @@
-package bg.sofia.uni.fmi.mjt.uno.command.game.play;
+package bg.sofia.uni.fmi.mjt.uno.command.game.actions.play;
 
 import bg.sofia.uni.fmi.mjt.uno.card.models.Card;
 import bg.sofia.uni.fmi.mjt.uno.card.types.Color;
@@ -19,29 +19,19 @@ public class PlayCardCommand extends PlayerCommand {
         }
 
         String cardId = getArgumentValue(args, "--card-id");
-
         Card cardToPlay = findCardById(cardId);
-
-        Card topCard = game.getDeck().getTopDiscardCard();
+        Card topCard = game.getDeckHandler().getDeck().getTopDiscardCard();
 
         if (cardToPlay.getColor() == Color.BLACK) {
-            throw new IllegalArgumentException("Black cards have other commands");
+            throw new IllegalArgumentException("Black cards have other commands.");
         }
 
-        if (!cardToPlay.isPlayable(topCard, game.getCurrentColor())) {
+        if (!cardToPlay.isPlayable(topCard, game.getDeckHandler().getCurrentColor())) {
             throw new IllegalArgumentException("The selected card cannot be played on the current top card.");
         }
 
-        player.removeCardFromHand(cardToPlay);
-        game.getDeck().discardCard(cardToPlay);
-
-        cardToPlay.applyEffect(game);
-        game.getCardLogger().logCard(cardToPlay);
-
-        game.notifyPlayers("Player: " + player.getAccount().getUsername()
-                + " played card: " + cardToPlay.getCardDescription());
+        playCard(cardToPlay, null);
 
         return "You played " + cardToPlay.getCardDescription() + ".";
     }
-
 }

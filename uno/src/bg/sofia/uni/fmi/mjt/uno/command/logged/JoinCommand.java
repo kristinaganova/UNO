@@ -1,7 +1,9 @@
-package bg.sofia.uni.fmi.mjt.uno.command;
+package bg.sofia.uni.fmi.mjt.uno.command.logged;
 
+import bg.sofia.uni.fmi.mjt.uno.command.AbstractCommand;
+import bg.sofia.uni.fmi.mjt.uno.command.CommandValidator;
 import bg.sofia.uni.fmi.mjt.uno.exceptions.CommandExecutionException;
-import bg.sofia.uni.fmi.mjt.uno.game.GameManager;
+import bg.sofia.uni.fmi.mjt.uno.games.GameManager;
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
 import bg.sofia.uni.fmi.mjt.uno.player.account.UserManager;
 
@@ -31,9 +33,9 @@ public class JoinCommand extends AbstractCommand {
 
         String username = userManager.getLoggedInUsername(client);
         if (gameManager.isPlayerInAnyGame(username)) {
-            throw new CommandExecutionException("You are already part of another game. You must leave it before joining a new one.");
+            throw new CommandExecutionException("You are already part of another game. " +
+                    "You must leave it before joining a new one.");
         }
-
         if (!gameManager.doesGameExist(gameId)) {
             throw new CommandExecutionException("Game with ID " + gameId + " does not exist.");
         }
@@ -46,8 +48,6 @@ public class JoinCommand extends AbstractCommand {
         if (!gameManager.joinGame(gameId, player)) {
             throw new CommandExecutionException("Unable to join game. It may be full or already started.");
         }
-
-        player.setGame(gameManager.getGame(gameId));
 
         return "Successfully joined game with ID: " + gameId;
     }

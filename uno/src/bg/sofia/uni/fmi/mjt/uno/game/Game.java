@@ -1,32 +1,38 @@
 package bg.sofia.uni.fmi.mjt.uno.game;
 
 import bg.sofia.uni.fmi.mjt.uno.card.models.Card;
-import bg.sofia.uni.fmi.mjt.uno.card.types.Color;
-import bg.sofia.uni.fmi.mjt.uno.deck.UnoDeck;
+import bg.sofia.uni.fmi.mjt.uno.command.CommandLogger;
+import bg.sofia.uni.fmi.mjt.uno.game.components.DeckHandler;
+import bg.sofia.uni.fmi.mjt.uno.game.components.GameMessenger;
+import bg.sofia.uni.fmi.mjt.uno.game.components.GameRules;
+import bg.sofia.uni.fmi.mjt.uno.game.components.PlayerRegistry;
+import bg.sofia.uni.fmi.mjt.uno.game.components.TurnManager;
 import bg.sofia.uni.fmi.mjt.uno.logging.CardLogger;
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.LinkedList;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Game implements Serializable {
-    private static final long serialVersionUID = -5799475912042338739L;
-
     public static final int MAX_PLAYERS = 10;
     public static final int MIN_PLAYERS = 2;
-    public static final int INITIAL_CARDS = 7;
+    private static final int INITIAL_CARDS = 7;
+
+    private static final long serialVersionUID = -4015997933952996744L;
 
     private final String id;
     private final Player creator;
-    private final List<Player> players;
-    private final List<Player> finishedPlayers;
-    private final UnoDeck deck;
-    private TurnManager turnManager;
-    private GameState state;
-    private Color currentColor;
-    private final CardLogger cardLogger;
+    private final DeckHandler deckHandler;
+    private final PlayerRegistry playerRegistry;
+    private final GameRules gameRules;
+    private final GameMessenger gameMessenger;
+    private TurnManager turnManager = null;
+    private final CardLogger logger;
+    private GameState gameState;
+    private final CommandLogger commandLogger;
+    private GameMonitor gameMonitor;
 
     public Game(String id, int playersCount, Player creator) {
         if (id == null || id.isBlank()) {
@@ -41,187 +47,13 @@ public class Game implements Serializable {
 
         this.id = id;
         this.creator = creator;
-        this.players = new ArrayList<>(playersCount);
-        this.finishedPlayers = new LinkedList<>();
-        this.deck = new UnoDeck();
-        this.state = GameState.AVAILABLE;
-        this.cardLogger = new CardLogger();
-
-        addPlayer(creator);
-    }
-
-    public synchronized void startGame(Player requestingPlayer) {
-        if (!creator.equals(requestingPlayer)) {
-            throw new IllegalStateException("Only the game creator can start the game.");
-        }
-        if (state != GameState.AVAILABLE) {
-            throw new IllegalStateException("Game is not available to start.");
-        }
-        if (players.size() < MIN_PLAYERS) {
-            throw new IllegalStateException("At least 2 players are required to start the game.");
-        }
-
-        this.turnManager = new TurnManager(players);
-        setFirstDiscardCard();
-        distributeInitialCards();
-        this.state = GameState.STARTED;
-
-        notifyPlayers("The game has started!");
-        notifyPlayersOfCurrentTurn();
-    }
-
-    private void setFirstDiscardCard() {
-        Card firstCard = deck.drawCard();
-        deck.discardCard(firstCard);
-        currentColor = firstCard.getColor();
-        firstCard.applyEffect(this);
-        notifyPlayers("The base card is: " + firstCard.getCardDescription());
-    }
-
-    private void distributeInitialCards() {
-        for (Player player : players) {
-            for (int i = 0; i < INITIAL_CARDS; i++) {
-                drawCard(player);
-            }
-            player.sendMessage("Your initial hand: " + player.showHand());
-        }
-    }
-
-    public synchronized Card drawCard(Player player) {
-        Card card = deck.drawCard();
-        player.addCardToHand(card);
-        player.sendMessage("You drew a card: " + card.getCardDescription());
-
-        if (isGameOver()) {
-            endGame();
-            return card;
-        }
-
-        turnManager.advanceTurn();
-        return card;
-    }
-
-    private boolean isGameOver() {
-        int playersWithCards = 0;
-
-        for (Player player : players) {
-            if (!player.getHand().getAllCards().isEmpty()) {
-                playersWithCards++;
-            }
-        }
-
-        return playersWithCards == 1;
-    }
-
-    public synchronized void playerFinished(Player player) {
-        if (!players.contains(player)) {
-            throw new IllegalArgumentException("Player not found in the game.");
-        }
-
-        finishedPlayers.add(player);
-        players.remove(player);
-        notifyPlayers(player.getAccount().getUsername() + " has finished the game!");
-
-        if (isGameOver()) {
-            endGame();
-        } else {
-            notifyPlayersOfCurrentTurn();
-        }
-    }
-
-    public synchronized void removePlayer(Player player) {
-        if (!players.contains(player)) {
-            throw new IllegalArgumentException("Player not found in the game.");
-        }
-
-        List<Card> handCards = player.getHand().getAllCards();
-        for (Card card : handCards) {
-            deck.discardCard(card);
-        }
-
-        players.remove(player);
-        notifyPlayers(player.getAccount().getUsername() + " has left the game.");
-
-        if (players.size() < MIN_PLAYERS) {
-            state = GameState.FINISHED;
-            notifyPlayers("Game has ended due to insufficient players.");
-            return;
-        }
-
-        if (isGameOver()) {
-            endGame();
-        } else {
-            turnManager.removePlayer(player);
-            notifyPlayersOfCurrentTurn();
-        }
-    }
-
-    private void endGame() {
-        Player winner = null;
-        for (Player player : players) {
-            if (!player.getHand().getAllCards().isEmpty()) {
-                winner = player;
-                break;
-            }
-        }
-
-        if (winner != null) {
-            finishedPlayers.add(winner);
-            notifyPlayers("The game is over! The winner is " + winner.getAccount().getUsername() + "!");
-        } else {
-            notifyPlayers("The game is over! It's a draw.");
-        }
-
-        state = GameState.FINISHED;
-    }
-
-    public Card getTopCard() {
-        return deck.getTopDiscardCard();
-    }
-
-    public void notifyPlayers(String message) {
-        for (Player player : players) {
-            player.sendMessage(message);
-        }
-    }
-
-    private void notifyPlayersOfCurrentTurn() {
-        Player currentPlayer = turnManager.getCurrentPlayer();
-        notifyPlayers("It's " + currentPlayer.getAccount().getUsername() + "'s turn.");
-        notifyPlayers("The top card is: " + getTopCard().getCardDescription());
-    }
-
-    public synchronized void addPlayer(Player player) {
-        if (state != GameState.AVAILABLE) {
-            throw new IllegalStateException("Cannot add players to a game that has already started or finished.");
-        }
-        if (players.contains(player)) {
-            throw new IllegalStateException("Player is already in the game.");
-        }
-        players.add(player);
-        player.getHand().removeCards();
-        player.setGame(this);
-        notifyPlayers(player.getAccount().getUsername() + " joined the game.");
-    }
-
-    public UnoDeck getDeck() {
-        return deck;
-    }
-
-    public TurnManager getTurnManager() {
-        return turnManager;
-    }
-
-    public Color getCurrentColor() {
-        return currentColor;
-    }
-
-    public void setCurrentColor(Color color) {
-        this.currentColor = color;
-    }
-
-    public GameState getState() {
-        return state;
+        this.deckHandler = new DeckHandler();
+        this.playerRegistry = new PlayerRegistry(playersCount);
+        this.gameRules = new GameRules(playerRegistry);
+        this.gameMessenger = new GameMessenger(playerRegistry.getPlayers());
+        this.logger = new CardLogger();
+        this.commandLogger = new CommandLogger(id);
+        gameState = GameState.AVAILABLE;
     }
 
     public String getId() {
@@ -232,19 +64,167 @@ public class Game implements Serializable {
         return creator;
     }
 
-    public List<Player> getPlayers() {
-        return List.copyOf(players);
+    public DeckHandler getDeckHandler() {
+        return deckHandler;
     }
 
-    public List<Player> getFinishedPlayers() {
-        return List.copyOf(finishedPlayers);
+    public PlayerRegistry getPlayerRegistry() {
+        return playerRegistry;
     }
 
-    public Object getPlayersCount() {
-        return players.size();
+    public GameRules getGameRules() {
+        return gameRules;
     }
 
-    public CardLogger getCardLogger() {
-        return cardLogger;
+    public GameMessenger getGameMessenger() {
+        return gameMessenger;
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public CardLogger getLogger() {
+        return logger;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
+    public synchronized void startGame(Player requestingPlayer) {
+        if (!creator.equals(requestingPlayer)) {
+            throw new IllegalStateException("Only the game creator can start the game.");
+        }
+        if (!playerRegistry.hasEnoughPlayers()) {
+            throw new IllegalStateException("At least 2 players are required to start the game.");
+        }
+
+        turnManager = new TurnManager(playerRegistry.getPlayers());
+        distributeInitialCards();
+        gameMessenger.notifyAll("The game has started!");
+        setGameState(GameState.STARTED);
+
+        gameMonitor = new GameMonitor(playerRegistry, gameMessenger);
+        Thread monitorThread = new Thread(gameMonitor);
+        monitorThread.start();
+    }
+
+    private void distributeInitialCards() {
+        for (Player player : playerRegistry.getPlayers()) {
+            for (int i = 0; i < INITIAL_CARDS; i++) {
+                Card card = deckHandler.drawCard(player);
+            }
+            gameMessenger.notifyPlayer(player, "Your initial hand: " + player.showHand());
+        }
+    }
+
+    public synchronized void endGame() {
+        if (gameMonitor != null) {
+            gameMonitor.stop();
+        }
+
+        List<Player> ranking = gameRules.calculateRanking(null);
+
+        StringBuilder summary = new StringBuilder("Game Over! Final Ranking:\n");
+        AtomicInteger rank = new AtomicInteger(1);
+        ranking.forEach(player -> summary.append(rank.getAndIncrement())
+                .append(". ")
+                .append(player.getAccount().getUsername())
+                .append(player.getHand().getAllCards().isEmpty() ?
+                        " (Finished)" : " - Cards left: " + player.getHand().getAllCards().size())
+                .append("\n"));
+
+        gameMessenger.notifyAll(summary.toString());
+        setGameState(GameState.FINISHED);
+    }
+
+    public TurnManager getTurnManager() {
+        return turnManager;
+    }
+
+    public void logCommand(String command) {
+        String metadata = String.format("[Player: %s] [Time: %s] %s",
+                turnManager.getCurrentPlayer().getAccount().getUsername(),
+                LocalDateTime.now(),
+                command);
+        commandLogger.logCommand(metadata);
+    }
+
+    public void disconnectPlayer(String username) {
+
+        Player player = getPlayerRegistry().getPlayers().stream()
+                .filter(p -> p.getAccount().getUsername().equals(username))
+                .findFirst()
+                .orElse(null);
+        if (player != null) {
+            player.setOnline(false);
+            getGameMessenger().notifyAll(username + " has disconnected.");
+        }
+
+    }
+
+    public boolean reconnectPlayer(String username) {
+        Player player = getPlayerRegistry().getPlayers().stream()
+                .filter(p -> p.getAccount().getUsername().equals(username))
+                .findFirst()
+                .orElse(null);
+
+        if (player == null) {
+            return false;
+        }
+
+        player.setOnline(true);
+        getGameMessenger().notifyAll(username + " has reconnected.");
+        return true;
+    }
+
+    public String getSummary() {
+        StringBuilder summary = new StringBuilder("Game Summary:\n");
+        summary.append("Game ID: ").append(id).append("\n");
+        summary.append("Creator: ").append(creator.getAccount().getUsername()).append("\n");
+        summary.append("State: ").append(gameState).append("\n");
+
+        summary.append("Players:\n");
+        AtomicInteger rank = new AtomicInteger(1);
+        playerRegistry.getPlayers().forEach(player -> summary.append(rank.getAndIncrement())
+                .append(". ")
+                .append(player.getAccount().getUsername())
+                .append(player.isOnline() ? " (Online)" : " (Offline)")
+                .append("\n"));
+
+        if (!playerRegistry.getFinishedPlayers().isEmpty()) {
+            summary.append("\nFinished Players:\n");
+            rank.set(1);
+            playerRegistry.getFinishedPlayers().forEach(player -> summary.append(rank.getAndIncrement())
+                    .append(". ")
+                    .append(player.getAccount().getUsername())
+                    .append("\n"));
+        }
+
+        return summary.toString();
+    }
+
+    public synchronized String leaveGame(Player player) {
+        if (player == null) {
+            throw new IllegalArgumentException("Player cannot be null.");
+        }
+
+        List<Card> hand = player.getHandManager().getAllCards();
+        if (!hand.isEmpty()) {
+            for (Card card : hand) {
+                deckHandler.discardCard(card);
+            }
+        }
+
+        playerRegistry.removePlayer(player);
+        gameMessenger.notifyAll("Player " + player.getAccount().getUsername() + " has left the game.");
+
+        if (playerRegistry.getPlayers().isEmpty()) {
+            gameMessenger.notifyAll("No players left in the game. The game will now end.");
+            endGame();
+        }
+
+        return "Player " + player.getAccount().getUsername() + " has left the game.";
     }
 }

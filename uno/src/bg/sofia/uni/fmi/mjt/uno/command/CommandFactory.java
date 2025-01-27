@@ -1,11 +1,23 @@
 package bg.sofia.uni.fmi.mjt.uno.command;
 
-import bg.sofia.uni.fmi.mjt.uno.command.auth.*;
-import bg.sofia.uni.fmi.mjt.uno.command.game.*;
-import bg.sofia.uni.fmi.mjt.uno.command.game.play.*;
+import bg.sofia.uni.fmi.mjt.uno.command.auth.LoginCommand;
+import bg.sofia.uni.fmi.mjt.uno.command.auth.LogoutCommand;
+import bg.sofia.uni.fmi.mjt.uno.command.auth.RegisterCommand;
+import bg.sofia.uni.fmi.mjt.uno.command.game.actions.DrawCardCommand;
+import bg.sofia.uni.fmi.mjt.uno.command.game.actions.LeaveCommand;
+import bg.sofia.uni.fmi.mjt.uno.command.game.actions.play.PlayCardCommand;
+import bg.sofia.uni.fmi.mjt.uno.command.game.actions.play.PlayChooseColorCommand;
+import bg.sofia.uni.fmi.mjt.uno.command.game.actions.play.PlayPlusFourCommand;
+import bg.sofia.uni.fmi.mjt.uno.command.game.info.ShowHandCommand;
+import bg.sofia.uni.fmi.mjt.uno.command.game.info.ShowLastCardCommand;
+import bg.sofia.uni.fmi.mjt.uno.command.game.info.ShowPlayedCardsCommand;
+import bg.sofia.uni.fmi.mjt.uno.command.logged.CreateGameCommand;
+import bg.sofia.uni.fmi.mjt.uno.command.logged.JoinCommand;
+import bg.sofia.uni.fmi.mjt.uno.command.logged.ListGamesCommand;
+import bg.sofia.uni.fmi.mjt.uno.command.logged.StartCommand;
 import bg.sofia.uni.fmi.mjt.uno.exceptions.CommandNotFoundException;
 import bg.sofia.uni.fmi.mjt.uno.game.Game;
-import bg.sofia.uni.fmi.mjt.uno.game.GameManager;
+import bg.sofia.uni.fmi.mjt.uno.games.GameManager;
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
 import bg.sofia.uni.fmi.mjt.uno.player.account.UserManager;
 
@@ -26,7 +38,7 @@ public class CommandFactory {
             case "register":
                 return new RegisterCommand(userManager);
             case "login":
-                return new LoginCommand(userManager, client);
+                return new LoginCommand(userManager, gameManager, client);
             case "logout":
                 return new LogoutCommand(userManager, client);
             case "create-game":

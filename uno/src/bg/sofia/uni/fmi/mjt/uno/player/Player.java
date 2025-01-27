@@ -17,6 +17,7 @@ public class Player {
     private final SocketChannel client;
     private boolean unoCalled;
     private Game currentGame;
+    private boolean isOnline;
 
     public Player(Account account, SocketChannel client) {
         if (account == null || client == null) {
@@ -35,6 +36,14 @@ public class Player {
         } catch (IOException e) {
             System.err.println("Error sending message to player " + account.getUsername() + ": " + e.getMessage());
         }
+    }
+
+    public boolean isOnline() {
+        return isOnline;
+    }
+
+    public void setOnline(boolean online) {
+        this.isOnline = online;
     }
 
     public SocketChannel getClient() {
@@ -95,7 +104,9 @@ public class Player {
             return "Your hand is empty.";
         }
 
-        return "The top card is: " + currentGame.getTopCard().getCardDescription() + System.lineSeparator() +
+        return "The top card is: " + currentGame.getDeckHandler().getTopDiscardCard().getCardDescription() + " " +
+                currentGame.getDeckHandler().getCurrentColor().toString()
+                + System.lineSeparator() +
                 cards.stream()
                 .map(card -> card.getId() + " - " + card.getCardDescription())
                 .collect(Collectors.joining("\n"));

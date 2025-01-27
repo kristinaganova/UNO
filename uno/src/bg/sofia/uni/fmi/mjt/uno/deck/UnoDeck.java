@@ -1,6 +1,7 @@
 package bg.sofia.uni.fmi.mjt.uno.deck;
 
 import bg.sofia.uni.fmi.mjt.uno.card.models.Card;
+import bg.sofia.uni.fmi.mjt.uno.card.strategy.CardEffectStrategy;
 import bg.sofia.uni.fmi.mjt.uno.card.strategy.PickColorEffect;
 import bg.sofia.uni.fmi.mjt.uno.card.strategy.PlusFourEffect;
 import bg.sofia.uni.fmi.mjt.uno.card.strategy.PlusTwoEffect;
@@ -33,46 +34,44 @@ public class UnoDeck implements Deck {
     }
 
     private void initializeDeck() {
-        createStandardCards();
-        createActionCards();
-        createWildCards();
+        for (Color color : Color.values()) {
+            if (color != Color.BLACK) {
+                addStandardCards(color);
+                addActionCards(color);
+            }
+        }
+        addWildCards();
     }
 
-    private void createStandardCards() {
-        for (Color color : Color.values()) {
-            if (color == Color.BLACK) continue;
+    private void addStandardCards(Color color) {
+        drawPile.add(new StandardCard(color, 0, new StandardCardEffect()));
 
-            drawPile.add(new StandardCard(color, 0, new StandardCardEffect()));
-
-            for (int i = 1; i <= MAX_VALUE; i++) {
-                drawPile.add(new StandardCard(color, i, new StandardCardEffect()));
-                drawPile.add(new StandardCard(color, i, new StandardCardEffect()));
-            }
+        for (int i = 1; i <= MAX_VALUE; i++) {
+            drawPile.add(new StandardCard(color, i, new StandardCardEffect()));
+            drawPile.add(new StandardCard(color, i, new StandardCardEffect()));
         }
     }
 
-    private void createWildCards() {
+    private void addActionCards(Color color) {
+        for (ActionCardType type : ActionCardType.values()) {
+            drawPile.add(new ActionCard(color, type, getEffectForActionCard(type)));
+            drawPile.add(new ActionCard(color, type, getEffectForActionCard(type)));
+        }
+    }
+
+    private void addWildCards() {
         for (int i = 0; i < MAX_BLACK_COUNT; i++) {
             drawPile.add(new WildCard(WildCardType.PICK_COLOR, new PickColorEffect()));
             drawPile.add(new WildCard(WildCardType.PLUS_FOUR, new PlusFourEffect()));
         }
     }
 
-    private void createActionCards() {
-        for (Color color : Color.values()) {
-            if (color == Color.BLACK) {
-                continue;
-            }
-
-            drawPile.add(new ActionCard(color, ActionCardType.PLUS_TWO, new PlusTwoEffect()));
-            drawPile.add(new ActionCard(color, ActionCardType.PLUS_TWO, new PlusTwoEffect()));
-
-            drawPile.add(new ActionCard(color, ActionCardType.SKIP, new SkipTurnEffect()));
-            drawPile.add(new ActionCard(color, ActionCardType.SKIP, new SkipTurnEffect()));
-
-            drawPile.add(new ActionCard(color, ActionCardType.REVERSE, new ReverseTurnEffect()));
-            drawPile.add(new ActionCard(color, ActionCardType.REVERSE, new ReverseTurnEffect()));
-        }
+    private CardEffectStrategy getEffectForActionCard(ActionCardType type) {
+        return switch (type) {
+            case SKIP -> new SkipTurnEffect();
+            case REVERSE -> new ReverseTurnEffect();
+            case PLUS_TWO -> new PlusTwoEffect();
+        };
     }
 
     @Override
@@ -86,7 +85,7 @@ public class UnoDeck implements Deck {
             replenishDrawPile();
         }
         if (drawPile.isEmpty()) {
-            throw new IllegalStateException("No cards left in the deck.");
+            throw new IllegalStateException("No cards left in the deck. Game cannot continue.");
         }
         return drawPile.remove(drawPile.size() - 1);
     }

@@ -33,10 +33,6 @@ public class UserManager {
         return false;
     }
 
-    public synchronized void saveUsers() {
-        AccountRepository.saveAccounts(accounts);
-    }
-
     public synchronized boolean login(SocketChannel client, String username) {
         if (isLoggedIn(client)) {
             throw new IllegalStateException("Client is already logged in.");
@@ -56,10 +52,6 @@ public class UserManager {
         accountToPlayerMap.putIfAbsent(account, new Player(account, client));
 
         return true;
-    }
-
-    public synchronized Player getPlayerByAccount(Account account) {
-        return accountToPlayerMap.get(account);
     }
 
     public synchronized Player getPlayerByUsername(String username) {

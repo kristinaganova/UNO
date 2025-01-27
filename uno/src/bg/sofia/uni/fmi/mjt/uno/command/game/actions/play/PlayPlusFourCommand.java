@@ -1,4 +1,4 @@
-package bg.sofia.uni.fmi.mjt.uno.command.game.play;
+package bg.sofia.uni.fmi.mjt.uno.command.game.actions.play;
 
 import bg.sofia.uni.fmi.mjt.uno.card.models.Card;
 import bg.sofia.uni.fmi.mjt.uno.card.models.WildCard;
@@ -18,8 +18,8 @@ public class PlayPlusFourCommand extends PlayerCommand {
     @Override
     protected String executePlayerCommand(String[] args) {
         if (args == null || args.length < 2) {
-            throw new CommandExecutionException("Usage:" +
-                    " play-plus-four --card-id=<card-id> --color=<red/green/blue/yellow>");
+            throw new CommandExecutionException("Usage: play-plus-four " +
+                    "--card-id=<card-id> --color=<red/green/blue/yellow>");
         }
 
         String cardId = getArgumentValue(args, "--card-id");
@@ -32,14 +32,8 @@ public class PlayPlusFourCommand extends PlayerCommand {
             throw new IllegalArgumentException("The specified card is not a +4 WildCard.");
         }
 
-        player.removeCardFromHand(cardToPlay);
-        game.getDeck().discardCard(cardToPlay);
-        game.setCurrentColor(chosenColor);
-
-        cardToPlay.applyEffect(game);
-        game.getCardLogger().logCard(cardToPlay);
+        playCard(cardToPlay, chosenColor);
 
         return "You played a +4 WildCard. The color is now " + chosenColor + ".";
     }
-
 }

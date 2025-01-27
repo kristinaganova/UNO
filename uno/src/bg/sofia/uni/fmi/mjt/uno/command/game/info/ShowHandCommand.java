@@ -1,4 +1,4 @@
-package bg.sofia.uni.fmi.mjt.uno.command.game;
+package bg.sofia.uni.fmi.mjt.uno.command.game.info;
 
 import bg.sofia.uni.fmi.mjt.uno.command.game.PlayerCommand;
 import bg.sofia.uni.fmi.mjt.uno.game.Game;

@@ -1,4 +1,4 @@
-package bg.sofia.uni.fmi.mjt.uno.game;
+package bg.sofia.uni.fmi.mjt.uno.game.components;
 
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
 
@@ -31,9 +31,15 @@ public class TurnManager {
     }
 
     public void advanceTurn() {
-        currentPlayerIndex = isReversed
-                ? (currentPlayerIndex - 1 + players.size()) % players.size()
-                : (currentPlayerIndex + 1) % players.size();
+        if (players.stream().noneMatch(Player::isOnline)) {
+            throw new IllegalStateException("No online players available to take a turn.");
+        }
+
+        do {
+            currentPlayerIndex = isReversed
+                    ? (currentPlayerIndex - 1 + players.size()) % players.size()
+                    : (currentPlayerIndex + 1) % players.size();
+        } while (!players.get(currentPlayerIndex).isOnline());
     }
 
     public void skipTurn() {

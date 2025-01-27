@@ -1,6 +1,8 @@
-package bg.sofia.uni.fmi.mjt.uno.command;
+package bg.sofia.uni.fmi.mjt.uno.command.logged;
 
-import bg.sofia.uni.fmi.mjt.uno.game.GameManager;
+import bg.sofia.uni.fmi.mjt.uno.command.AbstractCommand;
+import bg.sofia.uni.fmi.mjt.uno.command.CommandValidator;
+import bg.sofia.uni.fmi.mjt.uno.games.GameManager;
 
 public class SummaryCommand extends AbstractCommand {
     private static final String USAGE = "summary --game-id=<game-id>";
@@ -15,6 +17,6 @@ public class SummaryCommand extends AbstractCommand {
         CommandValidator.validateArgsLength(args, 1, USAGE);
         String gameId = CommandValidator.extractArgument(args, "--game-id=", USAGE);
 
-        return gameManager.getGameSummary(gameId);
+        return gameManager.getGame(gameId).getSummary();
     }
 }

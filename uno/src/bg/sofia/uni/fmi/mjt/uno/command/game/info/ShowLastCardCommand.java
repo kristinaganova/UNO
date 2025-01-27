@@ -1,6 +1,7 @@
-package bg.sofia.uni.fmi.mjt.uno.command.game;
+package bg.sofia.uni.fmi.mjt.uno.command.game.info;
 
 import bg.sofia.uni.fmi.mjt.uno.card.models.Card;
+import bg.sofia.uni.fmi.mjt.uno.command.game.PlayerCommand;
 import bg.sofia.uni.fmi.mjt.uno.game.Game;
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
 
@@ -12,7 +13,7 @@ public class ShowLastCardCommand extends PlayerCommand {
 
     @Override
     protected String executePlayerCommand(String[] args) {
-        Card lastCard = game.getDeck().getTopDiscardCard();
+        Card lastCard = game.getDeckHandler().getDeck().getTopDiscardCard();
         if (lastCard == null) {
             return "No cards have been played yet.";
         }

@@ -1,9 +1,10 @@
-package bg.sofia.uni.fmi.mjt.uno.command;
+package bg.sofia.uni.fmi.mjt.uno.command.logged;
 
+import bg.sofia.uni.fmi.mjt.uno.command.AbstractCommand;
+import bg.sofia.uni.fmi.mjt.uno.command.CommandValidator;
 import bg.sofia.uni.fmi.mjt.uno.exceptions.CommandExecutionException;
-import bg.sofia.uni.fmi.mjt.uno.game.GameManager;
+import bg.sofia.uni.fmi.mjt.uno.games.GameManager;
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
-import bg.sofia.uni.fmi.mjt.uno.player.account.Account;
 import bg.sofia.uni.fmi.mjt.uno.player.account.UserManager;
 
 import java.nio.channels.SocketChannel;
@@ -34,7 +35,8 @@ public class CreateGameCommand extends AbstractCommand {
 
         String username = userManager.getLoggedInUsername(client);
         if (gameManager.isPlayerInAnyGame(username)) {
-            throw new CommandExecutionException("You are already part of another game. Leave it before creating a new one.");
+            throw new CommandExecutionException("You are already part of another game. " +
+                    "Leave it before creating a new one.");
         }
 
         Player creator = userManager.getPlayerByUsername(username);

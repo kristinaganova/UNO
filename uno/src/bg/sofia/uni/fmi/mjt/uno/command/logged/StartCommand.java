@@ -1,7 +1,9 @@
-package bg.sofia.uni.fmi.mjt.uno.command;
+package bg.sofia.uni.fmi.mjt.uno.command.logged;
 
+import bg.sofia.uni.fmi.mjt.uno.command.AbstractCommand;
+import bg.sofia.uni.fmi.mjt.uno.command.CommandValidator;
 import bg.sofia.uni.fmi.mjt.uno.exceptions.CommandExecutionException;
-import bg.sofia.uni.fmi.mjt.uno.game.GameManager;
+import bg.sofia.uni.fmi.mjt.uno.games.GameManager;
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
 import bg.sofia.uni.fmi.mjt.uno.player.account.UserManager;
 

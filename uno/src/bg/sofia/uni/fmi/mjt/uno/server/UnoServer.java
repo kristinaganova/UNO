@@ -2,7 +2,7 @@ package bg.sofia.uni.fmi.mjt.uno.server;
 
 import bg.sofia.uni.fmi.mjt.uno.command.CommandExecutor;
 import bg.sofia.uni.fmi.mjt.uno.command.CommandFactory;
-import bg.sofia.uni.fmi.mjt.uno.game.GameManager;
+import bg.sofia.uni.fmi.mjt.uno.games.GameManager;
 import bg.sofia.uni.fmi.mjt.uno.player.account.UserManager;
 
 import java.io.IOException;

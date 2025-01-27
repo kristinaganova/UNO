@@ -83,11 +83,11 @@ public class UnoClient {
     }
 
     public static void main(String[] args) {
-        final String HOST = "localhost";
-        final int PORT = 1503;
+        final String host = "localhost";
+        final int port = 1503;
 
         try {
-            UnoClient client = new UnoClient(HOST, PORT);
+            UnoClient client = new UnoClient(host, port);
             client.start();
         } catch (IOException e) {
             System.err.println("Failed to connect to server: " + e.getMessage());
