@@ -9,14 +9,21 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class GameManager {
+    private static GameManager instance;
 
     private final Map<String, Game> games;
     private final GameStorage gameStorage;
 
-    public GameManager() {
+    private GameManager() {
         this.games = new ConcurrentHashMap<>();
         this.gameStorage = new GameStorage();
-        loadGames();
+    }
+
+    public static GameManager getInstance() {
+        if (instance == null) {
+            instance = new GameManager();
+        }
+        return instance;
     }
 
     public synchronized boolean createGame(String gameId, int playersCount, Player creator) {
@@ -29,7 +36,6 @@ public class GameManager {
         }
         Game game = new Game(gameId, playersCount, creator);
         games.put(gameId, game);
-        saveGames();
         System.out.println("Game created with ID: " + gameId);
         return true;
     }
@@ -43,7 +49,6 @@ public class GameManager {
         game.getPlayerRegistry().addPlayer(player);
         player.setGame(game);
         notifyPlayersInGame(game, player.getAccount().getUsername() + " has joined the game.");
-        saveGames();
         return true;
     }
 
@@ -54,7 +59,6 @@ public class GameManager {
         }
 
         game.startGame(requestingPlayer);
-        saveGames();
         return true;
     }
 
@@ -62,7 +66,6 @@ public class GameManager {
         Game game = getGameByPlayer(username);
         if (game != null) {
             game.disconnectPlayer(username);
-            saveGames();
         }
     }
 
@@ -70,7 +73,6 @@ public class GameManager {
         Game game = getGameByPlayer(username);
         if (game != null) {
             boolean reconnected = game.reconnectPlayer(username);
-            saveGames();
             return reconnected;
         }
         return false;

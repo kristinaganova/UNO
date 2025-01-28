@@ -12,6 +12,6 @@ public class ShowHandCommand extends PlayerCommand {
 
     @Override
     protected String executePlayerCommand(String[] args) {
-        return "Your hand: " + player.showHand();
+        return player.showHand();
     }
 }

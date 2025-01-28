@@ -21,8 +21,8 @@ public class UnoServer {
     public UnoServer(int port) throws IOException {
         this.selector = Selector.open();
 
-        GameManager gameManager = new GameManager();
-        UserManager userManager = new UserManager();
+        GameManager gameManager = GameManager.getInstance();
+        UserManager userManager = UserManager.getInstance();
         this.commandExecutor = new CommandExecutor(new CommandFactory(userManager, gameManager));
 
         ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();

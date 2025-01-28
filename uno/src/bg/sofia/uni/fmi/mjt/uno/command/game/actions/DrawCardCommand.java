@@ -14,6 +14,7 @@ public class DrawCardCommand extends PlayerCommand {
     @Override
     protected String executePlayerCommand(String[] args) {
         Card drawnCard = game.getDeckHandler().drawCard(player);
+        game.getTurnManager().advanceTurn();
         return "You drew: " + drawnCard.getCardDescription();
     }
 }

@@ -1,4 +1,4 @@
-package bg.sofia.uni.fmi.mjt.uno.command;
+package bg.sofia.uni.fmi.mjt.uno.logging;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

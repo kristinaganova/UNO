@@ -65,7 +65,10 @@ public class Player implements Serializable {
     }
 
     public Game getCurrentGame() {
-        return this.currentGame;
+        if (currentGame == null) {
+            throw new IllegalStateException("Player is not associated with any game.");
+        }
+        return currentGame;
     }
 
     public void addCardToHand(Card card) {
@@ -107,9 +110,12 @@ public class Player implements Serializable {
             return "Your hand is empty.";
         }
 
-        return "The top card is: " + currentGame.getDeckHandler().getTopDiscardCard().getCardDescription() + " " +
-                currentGame.getDeckHandler().getCurrentColor().toString()
-                + System.lineSeparator() +
+        return "The top card is: " + currentGame.getDeckHandler().getTopDiscardCard().getCardDescription() +
+                System.lineSeparator() +
+                "Current game color:  " + currentGame.getDeckHandler().getCurrentColor().toString() +
+                System.lineSeparator() +
+                "Your hand: " +
+                System.lineSeparator() +
                 cards.stream()
                 .map(card -> card.getId() + " - " + card.getCardDescription())
                 .collect(Collectors.joining("\n"));

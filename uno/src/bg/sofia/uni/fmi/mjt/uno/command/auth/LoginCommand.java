@@ -3,6 +3,7 @@ package bg.sofia.uni.fmi.mjt.uno.command.auth;
 import bg.sofia.uni.fmi.mjt.uno.command.AbstractCommand;
 import bg.sofia.uni.fmi.mjt.uno.command.CommandValidator;
 import bg.sofia.uni.fmi.mjt.uno.exceptions.CommandExecutionException;
+import bg.sofia.uni.fmi.mjt.uno.game.Game;
 import bg.sofia.uni.fmi.mjt.uno.games.GameManager;
 import bg.sofia.uni.fmi.mjt.uno.player.account.UserManager;
 
@@ -36,13 +37,18 @@ public class LoginCommand extends AbstractCommand {
             throw new CommandExecutionException("Invalid username or password.");
         }
 
-        if (gameManager.reconnectPlayer(username)) {
-            return "Welcome back, " + username + "! You have been reconnected to your ongoing game.";
+        userManager.login(client, username);
+
+        Game currentGame = gameManager.getGameByPlayer(username);
+
+        if (currentGame != null) {
+            if (currentGame.reconnectPlayer(username)) {
+                return "Welcome back, " + username + "! You have been reconnected to your ongoing game.";
+            } else {
+                return "Failed to reconnect you to your game.";
+            }
         }
 
-        userManager.login(client, username);
-        return "Login successful.";
+        return "Login successful. No ongoing game found.";
     }
-
 }
-

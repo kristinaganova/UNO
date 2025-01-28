@@ -22,6 +22,7 @@ public abstract class PlayerCommand implements Command {
     @Override
     public String execute(String[] args) {
         try {
+            validatePlayerTurn();
             String commandString = String.join(" ", args);
             String result = executePlayerCommand(args);
             game.logCommand(commandString);
@@ -95,12 +96,15 @@ public abstract class PlayerCommand implements Command {
 
         if (newColor != null) {
             game.getDeckHandler().setCurrentColor(newColor);
+        } else {
+            game.getDeckHandler().setCurrentColor(card.getColor());
         }
 
         card.applyEffect(game);
 
         game.getGameMessenger().notifyAll("Player: " + player.getAccount().getUsername()
                 + " played: " + card.getCardDescription());
+        game.getGameMessenger().notifyAll("It is: " + game.getTurnManager().getCurrentPlayer() + "'s turn." );
     }
 
 }

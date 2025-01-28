@@ -4,25 +4,20 @@ import bg.sofia.uni.fmi.mjt.uno.game.components.GameMessenger;
 import bg.sofia.uni.fmi.mjt.uno.game.components.PlayerRegistry;
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameMonitor implements Runnable {
     private final PlayerRegistry playerRegistry;
-    private final List<Player> finishedPlayers;
-    private final List<Player> spectators;
     private final GameMessenger gameMessenger;
     private boolean isRunning;
 
     public GameMonitor(PlayerRegistry playerRegistry, GameMessenger gameMessenger) {
         this.playerRegistry = playerRegistry;
-        this.finishedPlayers = new ArrayList<>();
-        this.spectators = new ArrayList<>();
         this.gameMessenger = gameMessenger;
         this.isRunning = true;
     }
 
-    private static final int SLEEP_TIME = 100;
+    private static final int SLEEP_TIME = 1000;
     @Override
     public void run() {
         while (isRunning) {
@@ -40,7 +35,8 @@ public class GameMonitor implements Runnable {
         List<Player> activePlayers = playerRegistry.getPlayers();
 
         for (Player player : activePlayers) {
-            if (player.getHandManager().getAllCards().isEmpty() && !finishedPlayers.contains(player)) {
+            if (player.getHandManager().getAllCards().isEmpty() &&
+                    !playerRegistry.getFinishedPlayers().contains(player)) {
                 handleFinishedPlayer(player);
             }
         }
@@ -51,14 +47,14 @@ public class GameMonitor implements Runnable {
     }
 
     private void handleFinishedPlayer(Player player) {
-        finishedPlayers.add(player);
+        playerRegistry.getFinishedPlayers().add(player);
+        gameMessenger.notifyAll(player.getAccount().getUsername() + " has finished the game");
         playerRegistry.removePlayer(player);
-        gameMessenger.notifyAll(player.getAccount().getUsername() + " has finished the game and is now spectating!");
     }
 
     private void handleGameEnd(Player winner) {
         gameMessenger.notifyAll("Game over! The winner is " + winner.getAccount().getUsername() + "!");
-        finishedPlayers.add(winner);
+        playerRegistry.getFinishedPlayers().add(winner);
         playerRegistry.removePlayer(winner);
         stop();
     }

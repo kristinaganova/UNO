@@ -58,7 +58,7 @@ public class PlayerRegistry implements Serializable {
     }
 
     public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
+        return players;
     }
 
     public List<Player> getFinishedPlayers() {

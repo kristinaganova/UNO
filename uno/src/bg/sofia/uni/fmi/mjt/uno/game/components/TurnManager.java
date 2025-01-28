@@ -3,7 +3,6 @@ package bg.sofia.uni.fmi.mjt.uno.game.components;
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.List;
 
 public class TurnManager implements Serializable {
@@ -17,7 +16,7 @@ public class TurnManager implements Serializable {
         if (players == null || players.size() < 2) {
             throw new IllegalArgumentException("At least 2 players are required to start the game.");
         }
-        this.players = Collections.unmodifiableList(players);
+        this.players = players;
         this.currentPlayerIndex = 0;
         this.isReversed = false;
     }

@@ -1,7 +1,7 @@
 package bg.sofia.uni.fmi.mjt.uno.game;
 
 import bg.sofia.uni.fmi.mjt.uno.card.models.Card;
-import bg.sofia.uni.fmi.mjt.uno.command.CommandLogger;
+import bg.sofia.uni.fmi.mjt.uno.logging.CommandLogger;
 import bg.sofia.uni.fmi.mjt.uno.game.components.DeckHandler;
 import bg.sofia.uni.fmi.mjt.uno.game.components.GameMessenger;
 import bg.sofia.uni.fmi.mjt.uno.game.components.GameRules;
@@ -152,16 +152,15 @@ public class Game implements Serializable {
     }
 
     public void disconnectPlayer(String username) {
-
         Player player = getPlayerRegistry().getPlayers().stream()
                 .filter(p -> p.getAccount().getUsername().equals(username))
                 .findFirst()
                 .orElse(null);
+
         if (player != null) {
             player.setOnline(false);
             getGameMessenger().notifyAll(username + " has disconnected.");
         }
-
     }
 
     public boolean reconnectPlayer(String username) {

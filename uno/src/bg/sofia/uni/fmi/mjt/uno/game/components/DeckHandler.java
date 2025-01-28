@@ -1,6 +1,7 @@
 package bg.sofia.uni.fmi.mjt.uno.game.components;
 
 import bg.sofia.uni.fmi.mjt.uno.card.models.Card;
+import bg.sofia.uni.fmi.mjt.uno.card.types.CardType;
 import bg.sofia.uni.fmi.mjt.uno.card.types.Color;
 import bg.sofia.uni.fmi.mjt.uno.deck.UnoDeck;
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
@@ -31,8 +32,13 @@ public class DeckHandler implements Serializable {
 
     public Card getTopDiscardCard() {
         if (deck.getTopDiscardCard() == null) {
-            Card card = deck.drawCard();
-            deck.discardCard(card);
+            Card card;
+
+            do {
+                card = deck.drawCard();
+                deck.discardCard(card);
+            } while (card.getCardType() == CardType.WILD);
+
             setCurrentColor(card.getColor());
         }
         return deck.getTopDiscardCard();

@@ -1,6 +1,9 @@
 package bg.sofia.uni.fmi.mjt.uno.server;
 
 import bg.sofia.uni.fmi.mjt.uno.command.CommandExecutor;
+import bg.sofia.uni.fmi.mjt.uno.game.Game;
+import bg.sofia.uni.fmi.mjt.uno.games.GameManager;
+import bg.sofia.uni.fmi.mjt.uno.player.account.UserManager;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -20,34 +23,22 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         try {
-            ByteBuffer buffer = ByteBuffer.allocate(BUFFER_CAPACITY);
-            int bytesRead = client.read(buffer);
-
-            if (bytesRead == -1) {
-                disconnectClient();
-                return;
-            }
-
-            buffer.flip();
-            String message = new String(buffer.array(), 0, buffer.limit()).trim();
-
-            if (message.isEmpty()) {
+            String message = readMessageFromClient();
+            if (message == null || message.isEmpty()) {
                 return;
             }
 
             System.out.println("Received: " + message + " from " + client.getRemoteAddress());
 
-            String[] parts = message.split(" ", 2);
+            String[] parts = parseCommand(message);
             String commandName = parts[0];
-            String[] args = parts.length > 1 ? parts[1].split(" ") : new String[0];
+            String[] args = parts[1].isEmpty() ? new String[0] : parts[1].split(" ");
 
-            // Debug logs
             System.out.println("Command: " + commandName + ", Args: " + String.join(", ", args));
 
             String response = commandExecutor.executeCommand(commandName, args, client);
-
             if (response != null) {
-                sendMessage(response);
+                sendMessageToClient(response);
             }
         } catch (IOException e) {
             System.err.println("Error handling client: " + e.getMessage());
@@ -55,7 +46,27 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    private void sendMessage(String message) {
+    private String readMessageFromClient() throws IOException {
+        ByteBuffer buffer = ByteBuffer.allocate(BUFFER_CAPACITY);
+        int bytesRead = client.read(buffer);
+
+        if (bytesRead == -1) {
+            disconnectClient();
+            return null;
+        }
+
+        buffer.flip();
+        return new String(buffer.array(), 0, buffer.limit()).trim();
+    }
+
+    private String[] parseCommand(String message) {
+        String[] parts = message.split(" ", 2);
+        String commandName = parts[0];
+        String commandArgs = parts.length > 1 ? parts[1] : "";
+        return new String[]{commandName, commandArgs};
+    }
+
+    private void sendMessageToClient(String message) {
         try {
             ByteBuffer buffer = ByteBuffer.wrap((message + "\n").getBytes());
             client.write(buffer);
@@ -67,7 +78,18 @@ public class ClientHandler implements Runnable {
 
     private void disconnectClient() {
         try {
-            System.out.println("Client disconnected: " + client.getRemoteAddress());
+            UserManager userManager = UserManager.getInstance();
+            String username = userManager.getLoggedInUsername(client);
+            if (username != null) {
+                System.out.println("Client disconnected: " + username);
+                userManager.logout(client);
+
+                GameManager gameManager = GameManager.getInstance();
+                Game currentGame = gameManager.getGameByPlayer(username);
+                if (currentGame != null) {
+                    currentGame.disconnectPlayer(username);
+                }
+            }
             client.close();
         } catch (IOException e) {
             System.err.println("Error disconnecting client: " + e.getMessage());
