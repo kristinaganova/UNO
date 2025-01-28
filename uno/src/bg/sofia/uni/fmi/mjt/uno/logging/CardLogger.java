@@ -2,11 +2,13 @@ package bg.sofia.uni.fmi.mjt.uno.logging;
 
 import bg.sofia.uni.fmi.mjt.uno.card.models.Card;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Collections;
 import java.util.List;
 
-public class CardLogger {
+public class CardLogger implements Serializable {
+    private static final long serialVersionUID = 6785347667368644663L;
 
     private static final int MAX_CARDS = 10;
     private final LinkedList<Card> playedCards;

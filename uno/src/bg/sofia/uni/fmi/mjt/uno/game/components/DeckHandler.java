@@ -5,7 +5,11 @@ import bg.sofia.uni.fmi.mjt.uno.card.types.Color;
 import bg.sofia.uni.fmi.mjt.uno.deck.UnoDeck;
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
 
-public class DeckHandler {
+import java.io.Serializable;
+
+public class DeckHandler implements Serializable {
+    private static final long serialVersionUID = -4406937139067442033L;
+
     private final UnoDeck deck;
     private Color currentColor;
 

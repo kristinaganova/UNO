@@ -5,13 +5,16 @@ import bg.sofia.uni.fmi.mjt.uno.game.Game;
 import bg.sofia.uni.fmi.mjt.uno.player.account.Account;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class Player {
+public class Player implements Serializable {
+    private static final long serialVersionUID = -2246431532831884266L;
+
     private final Account account;
     private final Hand handManager;
     private final SocketChannel client;

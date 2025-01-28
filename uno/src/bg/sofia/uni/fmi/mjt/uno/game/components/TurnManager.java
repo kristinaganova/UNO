@@ -2,10 +2,13 @@ package bg.sofia.uni.fmi.mjt.uno.game.components;
 
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
-public class TurnManager {
+public class TurnManager implements Serializable {
+    private static final long serialVersionUID = 4137354971269490998L;
+
     private final List<Player> players;
     private int currentPlayerIndex;
     private boolean isReversed;

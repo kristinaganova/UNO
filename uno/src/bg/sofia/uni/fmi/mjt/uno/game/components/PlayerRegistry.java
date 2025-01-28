@@ -2,15 +2,18 @@ package bg.sofia.uni.fmi.mjt.uno.game.components;
 
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PlayerRegistry {
+public class PlayerRegistry implements Serializable {
+    private static final long serialVersionUID = -3178691709454263542L;
+
     private final List<Player> players;
-    private final Map<Player, Boolean> finishedPlayersSpectators; // Map за завършили играчи и дали са наблюдатели
+    private final Map<Player, Boolean> finishedPlayersSpectators;
     private final int maxPlayers;
 
     public PlayerRegistry(int maxPlayers) {

@@ -32,7 +32,7 @@ public class Game implements Serializable {
     private final CardLogger logger;
     private GameState gameState;
     private final CommandLogger commandLogger;
-    private GameMonitor gameMonitor;
+    private transient GameMonitor gameMonitor;
 
     public Game(String id, int playersCount, Player creator) {
         if (id == null || id.isBlank()) {
