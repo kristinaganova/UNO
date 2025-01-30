@@ -13,8 +13,11 @@ public class UserManager {
     private final Map<SocketChannel, String> loggedInUsers;
     private final Map<Account, Player> accountToPlayerMap;
 
+    private final AccountRepository repository;
+
     private UserManager() {
-        this.accounts = AccountRepository.loadAccounts();
+        this.repository = new AccountRepository();
+        this.accounts = repository.loadAccounts();
         this.loggedInUsers = new ConcurrentHashMap<>();
         this.accountToPlayerMap = new ConcurrentHashMap<>();
     }
@@ -35,7 +38,7 @@ public class UserManager {
         Account newAccount = new Account(username, hashedPassword);
 
         if (accounts.putIfAbsent(username, newAccount) == null) {
-            AccountRepository.saveAccounts(accounts);
+            repository.saveAccounts(accounts);
             return true;
         }
 

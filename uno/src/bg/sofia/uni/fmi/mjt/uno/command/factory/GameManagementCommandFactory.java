@@ -1,12 +1,12 @@
 package bg.sofia.uni.fmi.mjt.uno.command.factory;
 
 import bg.sofia.uni.fmi.mjt.uno.command.Command;
-import bg.sofia.uni.fmi.mjt.uno.command.logged.CreateGameCommand;
-import bg.sofia.uni.fmi.mjt.uno.command.logged.JoinCommand;
-import bg.sofia.uni.fmi.mjt.uno.command.logged.ListGamesCommand;
-import bg.sofia.uni.fmi.mjt.uno.command.logged.StartCommand;
-import bg.sofia.uni.fmi.mjt.uno.command.logged.SummaryCommand;
-import bg.sofia.uni.fmi.mjt.uno.exceptions.CommandNotFoundException;
+import bg.sofia.uni.fmi.mjt.uno.command.management.CreateGameCommand;
+import bg.sofia.uni.fmi.mjt.uno.command.management.JoinCommand;
+import bg.sofia.uni.fmi.mjt.uno.command.management.ListGamesCommand;
+import bg.sofia.uni.fmi.mjt.uno.command.management.StartCommand;
+import bg.sofia.uni.fmi.mjt.uno.command.management.SummaryCommand;
+import bg.sofia.uni.fmi.mjt.uno.exceptions.command.CommandNotFoundException;
 import bg.sofia.uni.fmi.mjt.uno.games.GameManager;
 import bg.sofia.uni.fmi.mjt.uno.player.account.UserManager;
 

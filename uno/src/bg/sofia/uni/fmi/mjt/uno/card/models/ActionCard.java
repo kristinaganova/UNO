@@ -24,21 +24,24 @@ public non-sealed class ActionCard extends Card {
 
     @Override
     public boolean isPlayable(Card other, Color currentColor) {
+        if (other == null || currentColor == null) {
+            return false;
+        }
         return other.isPlayableWithAction(this, currentColor);
     }
 
     @Override
-    public boolean isPlayableWithStandard(StandardCard other, Color currentColor) {
+    protected boolean isPlayableWithStandard(StandardCard other, Color currentColor) {
         return this.getColor() == other.getColor();
     }
 
     @Override
-    public boolean isPlayableWithAction(ActionCard other, Color currentColor) {
+    protected boolean isPlayableWithAction(ActionCard other, Color currentColor) {
         return this.getColor() == other.getColor() || this.type == other.type;
     }
 
     @Override
-    public boolean isPlayableWithWild(WildCard other, Color currentColor) {
+    protected boolean isPlayableWithWild(WildCard other, Color currentColor) {
         return this.getColor() == currentColor;
     }
 

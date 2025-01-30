@@ -16,10 +16,13 @@ public class PlayChooseColorCommand extends PlayerCommand {
 
     @Override
     protected String executePlayerCommand(String[] args) {
+
         if (args == null || args.length < 2) {
             throw new IllegalArgumentException("Usage: play-choose-color " +
                     "--card-id=<card-id> --color=<red/green/blue/yellow>");
         }
+
+        validatePlayerTurn();
 
         String cardId = getArgumentValue(args, "--card-id");
         String colorArg = getArgumentValue(args, "--color");

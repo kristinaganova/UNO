@@ -4,9 +4,8 @@ import bg.sofia.uni.fmi.mjt.uno.command.Command;
 import bg.sofia.uni.fmi.mjt.uno.command.game.info.ShowHandCommand;
 import bg.sofia.uni.fmi.mjt.uno.command.game.info.ShowLastCardCommand;
 import bg.sofia.uni.fmi.mjt.uno.command.game.info.ShowPlayedCardsCommand;
-import bg.sofia.uni.fmi.mjt.uno.exceptions.CommandNotFoundException;
+import bg.sofia.uni.fmi.mjt.uno.exceptions.command.CommandNotFoundException;
 import bg.sofia.uni.fmi.mjt.uno.game.Game;
-import bg.sofia.uni.fmi.mjt.uno.games.GameManager;
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
 import bg.sofia.uni.fmi.mjt.uno.player.account.UserManager;
 
@@ -14,11 +13,9 @@ import java.nio.channels.SocketChannel;
 
 public class GameInfoCommandFactory {
     private final UserManager userManager;
-    private final GameManager gameManager;
 
-    public GameInfoCommandFactory(UserManager userManager, GameManager gameManager) {
+    public GameInfoCommandFactory(UserManager userManager) {
         this.userManager = userManager;
-        this.gameManager = gameManager;
     }
 
     public boolean supports(String commandName) {
@@ -41,15 +38,30 @@ public class GameInfoCommandFactory {
     }
 
     private Player getPlayer(SocketChannel client) {
-        return userManager.getPlayerByUsername(userManager.getLoggedInUsername(client));
+        String username = userManager.getLoggedInUsername(client);
+        if (username == null) {
+            throw new IllegalArgumentException("Client is not logged in.");
+        }
+
+        Player player = userManager.getPlayerByUsername(username);
+        if (player == null) {
+            throw new IllegalArgumentException("No player found for the logged-in user.");
+        }
+
+        return player;
     }
 
     private Game getGame(SocketChannel client) {
         Player player = getPlayer(client);
+        if (player == null) {
+            throw new IllegalArgumentException("Player is not logged in.");
+        }
+
         Game game = player.getCurrentGame();
         if (game == null) {
-            throw new IllegalStateException("Player is not part of any game.");
+            throw new IllegalArgumentException("Player is not part of any game.");
         }
+
         return game;
     }
 }

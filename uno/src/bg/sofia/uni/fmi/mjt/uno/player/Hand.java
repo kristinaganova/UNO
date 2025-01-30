@@ -23,8 +23,17 @@ public class Hand {
         if (card == null) {
             throw new IllegalArgumentException("Card cannot be null.");
         }
-        System.out.println("Adding card: " + card.getCardDescription() + " with color: " + card.getColor());
         hand.get(card.getColor()).add(card);
+    }
+
+    public Card getCardById(String id) {
+        if (id == null || id.isBlank()) {
+            throw new IllegalArgumentException("Card ID cannot be null or empty.");
+        }
+
+        return getAllCards().stream()
+                .filter(card -> id.equals(card.getId()))
+                .toList().getFirst();
     }
 
     public boolean removeCard(Card card) {
@@ -41,13 +50,6 @@ public class Hand {
 
     public int getSize() {
         return getAllCards().size();
-    }
-
-    public String showHand() {
-        return hand.entrySet().stream()
-                .filter(entry -> !entry.getValue().isEmpty())
-                .map(entry -> entry.getKey() + ": " + entry.getValue())
-                .collect(Collectors.joining(", "));
     }
 
     public  Map<Color, List<Card>> getHand() {

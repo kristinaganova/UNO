@@ -3,21 +3,34 @@ package bg.sofia.uni.fmi.mjt.uno.client;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class UnoClient {
-
     private static final int BUFFER_CAPACITY = 1024;
     private final SocketChannel socketChannel;
     private final ByteBuffer buffer;
+    private final Selector selector;
+    private volatile boolean running = true;
 
     public UnoClient(String host, int port) throws IOException {
-        this.socketChannel = SocketChannel.open(new InetSocketAddress(host, port));
+        this.socketChannel = SocketChannel.open();
         this.socketChannel.configureBlocking(false);
-        this.buffer = ByteBuffer.allocate(BUFFER_CAPACITY);
+        this.socketChannel.connect(new InetSocketAddress(host, port));
 
-        System.out.println("Connected to server at " + host + ":" + port);
+        this.selector = Selector.open();
+        socketChannel.register(selector, SelectionKey.OP_CONNECT | SelectionKey.OP_READ);
+
+        this.buffer = ByteBuffer.allocate(BUFFER_CAPACITY);
+        System.out.println("Connecting to server at " + host + ":" + port);
+
+        while (!socketChannel.finishConnect()) {
+            // Wait for connection to establish
+        }
+        System.out.println("Connected!");
     }
 
     public void start() {
@@ -28,34 +41,56 @@ public class UnoClient {
         handleUserInput();
     }
 
-    private void listenForMessages() {
+    protected void listenForMessages() {
         try {
-            while (true) {
-                buffer.clear();
-                int bytesRead = socketChannel.read(buffer);
-                if (bytesRead > 0) {
-                    buffer.flip();
-                    String message = new String(buffer.array(), 0, buffer.limit()).trim();
-                    System.out.println("\nServer: " + message);
-                    System.out.print("> "); // Re-print the prompt for user input
-                } else if (bytesRead == -1) {
-                    System.out.println("Disconnected from server.");
-                    break;
+            while (running) {
+                if (selector.select() > 0) {
+                    Iterator<SelectionKey> keyIterator = selector.selectedKeys().iterator();
+
+                    while (keyIterator.hasNext()) {
+                        SelectionKey key = keyIterator.next();
+                        keyIterator.remove();
+
+                        if (key.isReadable()) {
+                            receiveMessage();
+                        }
+                    }
                 }
             }
         } catch (IOException e) {
-            System.err.println("Error while receiving messages: " + e.getMessage());
+            System.err.println("Lost connection to server: " + e.getMessage());
+            running = false;
+        }
+    }
+
+    private void receiveMessage() throws IOException {
+        buffer.clear();
+        int bytesRead = socketChannel.read(buffer);
+
+        if (bytesRead > 0) {
+            buffer.flip();
+            String message = new String(buffer.array(), 0, buffer.limit()).trim();
+            if (!message.isEmpty()) {
+                System.out.println(System.lineSeparator() + message);
+                System.out.print("> ");
+            }
+        } else if (bytesRead == -1) {
+            System.out.println("Server closed the connection.");
+            running = false;
+            closeConnection();
         }
     }
 
     private void handleUserInput() {
         try (Scanner scanner = new Scanner(System.in)) {
-            while (true) {
+            while (running) {
                 System.out.print("> ");
-                String command = scanner.nextLine();
+                if (!scanner.hasNextLine()) break;
 
+                String command = scanner.nextLine().trim();
                 if ("exit".equalsIgnoreCase(command)) {
                     System.out.println("Exiting...");
+                    running = false;
                     break;
                 }
 
@@ -68,14 +103,16 @@ public class UnoClient {
         }
     }
 
-    private void sendMessage(String message) throws IOException {
+    protected void sendMessage(String message) throws IOException {
         ByteBuffer writeBuffer = ByteBuffer.wrap((message + "\n").getBytes());
         socketChannel.write(writeBuffer);
     }
 
-    private void closeConnection() {
+    protected void closeConnection() {
         try {
+            running = false;
             socketChannel.close();
+            selector.close();
             System.out.println("Connection closed.");
         } catch (IOException e) {
             System.err.println("Error closing connection: " + e.getMessage());
@@ -92,5 +129,9 @@ public class UnoClient {
         } catch (IOException e) {
             System.err.println("Failed to connect to server: " + e.getMessage());
         }
+    }
+
+    public SocketChannel getSocketChannel() {
+        return socketChannel;
     }
 }

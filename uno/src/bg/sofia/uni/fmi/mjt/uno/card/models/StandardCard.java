@@ -42,17 +42,17 @@ public final class StandardCard extends Card {
     }
 
     @Override
-    public boolean isPlayableWithStandard(StandardCard other, Color currentColor) {
+    protected boolean isPlayableWithStandard(StandardCard other, Color currentColor) {
         return this.getColor() == other.getColor() || this.value == other.getValue();
     }
 
     @Override
-    public boolean isPlayableWithAction(ActionCard other, Color currentColor) {
+    protected boolean isPlayableWithAction(ActionCard other, Color currentColor) {
         return this.getColor() == other.getColor();
     }
 
     @Override
-    public boolean isPlayableWithWild(WildCard other, Color currentColor) {
+    protected boolean isPlayableWithWild(WildCard other, Color currentColor) {
         return this.getColor() == currentColor;
     }
 }

@@ -3,6 +3,7 @@ package bg.sofia.uni.fmi.mjt.uno.server;
 import bg.sofia.uni.fmi.mjt.uno.command.CommandExecutor;
 import bg.sofia.uni.fmi.mjt.uno.game.Game;
 import bg.sofia.uni.fmi.mjt.uno.games.GameManager;
+import bg.sofia.uni.fmi.mjt.uno.loggers.ErrorLogger;
 import bg.sofia.uni.fmi.mjt.uno.player.account.UserManager;
 
 import java.io.IOException;
@@ -14,10 +15,12 @@ public class ClientHandler implements Runnable {
     private static final int BUFFER_CAPACITY = 1024;
     private final SocketChannel client;
     private final CommandExecutor commandExecutor;
+    private final ErrorLogger errorLogger;
 
     public ClientHandler(SocketChannel client, CommandExecutor commandExecutor) {
         this.client = client;
         this.commandExecutor = commandExecutor;
+        errorLogger = ErrorLogger.getInstance();
     }
 
     @Override
@@ -40,8 +43,8 @@ public class ClientHandler implements Runnable {
             if (response != null) {
                 sendMessageToClient(response);
             }
-        } catch (IOException e) {
-            System.err.println("Error handling client: " + e.getMessage());
+        } catch (Exception e) {
+            logError(e);
             disconnectClient();
         }
     }
@@ -68,10 +71,10 @@ public class ClientHandler implements Runnable {
 
     private void sendMessageToClient(String message) {
         try {
-            ByteBuffer buffer = ByteBuffer.wrap((message + "\n").getBytes());
+            ByteBuffer buffer = ByteBuffer.wrap((message + System.lineSeparator()).getBytes());
             client.write(buffer);
         } catch (IOException e) {
-            System.err.println("Error sending message to client: " + e.getMessage());
+            logError(e);
             disconnectClient();
         }
     }
@@ -92,7 +95,23 @@ public class ClientHandler implements Runnable {
             }
             client.close();
         } catch (IOException e) {
-            System.err.println("Error disconnecting client: " + e.getMessage());
+            logError(e);
+        }
+    }
+
+    private void logError(Exception e) {
+        String clientInfo = getClientInfo();
+        errorLogger.log("Error occurred while handling client: " + clientInfo, e, clientInfo);
+    }
+
+    private String getClientInfo() {
+        try {
+            UserManager userManager = UserManager.getInstance();
+            String username = userManager.getLoggedInUsername(client);
+            String clientAddress = client.getRemoteAddress().toString();
+            return "Username: " + (username != null ? username : "Unknown") + ", Address: " + clientAddress;
+        } catch (IOException e) {
+            return "Unknown (error retrieving client info)";
         }
     }
 }

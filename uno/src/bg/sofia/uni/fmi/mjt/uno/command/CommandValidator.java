@@ -1,6 +1,6 @@
 package bg.sofia.uni.fmi.mjt.uno.command;
 
-import bg.sofia.uni.fmi.mjt.uno.exceptions.CommandExecutionException;
+import bg.sofia.uni.fmi.mjt.uno.exceptions.command.CommandExecutionException;
 
 public class CommandValidator {
 

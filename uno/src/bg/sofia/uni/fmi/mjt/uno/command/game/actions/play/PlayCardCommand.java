@@ -14,6 +14,9 @@ public class PlayCardCommand extends PlayerCommand {
 
     @Override
     protected String executePlayerCommand(String[] args) {
+
+        validatePlayerTurn();
+
         if (args == null || args.length < 1) {
             throw new IllegalArgumentException("Usage: play-card --card-id=<card-id>");
         }
@@ -33,5 +36,6 @@ public class PlayCardCommand extends PlayerCommand {
         playCard(cardToPlay, null);
 
         return "You played " + cardToPlay.getCardDescription() + ".";
+
     }
 }

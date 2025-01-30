@@ -4,7 +4,7 @@ import bg.sofia.uni.fmi.mjt.uno.command.Command;
 import bg.sofia.uni.fmi.mjt.uno.command.auth.LoginCommand;
 import bg.sofia.uni.fmi.mjt.uno.command.auth.LogoutCommand;
 import bg.sofia.uni.fmi.mjt.uno.command.auth.RegisterCommand;
-import bg.sofia.uni.fmi.mjt.uno.exceptions.CommandNotFoundException;
+import bg.sofia.uni.fmi.mjt.uno.exceptions.command.CommandNotFoundException;
 import bg.sofia.uni.fmi.mjt.uno.games.GameManager;
 import bg.sofia.uni.fmi.mjt.uno.player.account.UserManager;
 

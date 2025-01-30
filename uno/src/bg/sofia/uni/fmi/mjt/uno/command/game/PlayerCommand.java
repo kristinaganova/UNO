@@ -3,7 +3,7 @@ package bg.sofia.uni.fmi.mjt.uno.command.game;
 import bg.sofia.uni.fmi.mjt.uno.card.models.Card;
 import bg.sofia.uni.fmi.mjt.uno.card.types.Color;
 import bg.sofia.uni.fmi.mjt.uno.command.Command;
-import bg.sofia.uni.fmi.mjt.uno.exceptions.CommandExecutionException;
+import bg.sofia.uni.fmi.mjt.uno.exceptions.command.CommandExecutionException;
 import bg.sofia.uni.fmi.mjt.uno.game.Game;
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
 
@@ -22,7 +22,6 @@ public abstract class PlayerCommand implements Command {
     @Override
     public String execute(String[] args) {
         try {
-            validatePlayerTurn();
             String commandString = String.join(" ", args);
             String result = executePlayerCommand(args);
             game.logCommand(commandString);
@@ -104,7 +103,7 @@ public abstract class PlayerCommand implements Command {
 
         game.getGameMessenger().notifyAll("Player: " + player.getAccount().getUsername()
                 + " played: " + card.getCardDescription());
-        game.getGameMessenger().notifyAll("It is: " + game.getTurnManager().getCurrentPlayer() + "'s turn." );
+        game.getTurnManager().announceTurn();
     }
 
 }

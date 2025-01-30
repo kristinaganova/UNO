@@ -5,6 +5,10 @@ import bg.sofia.uni.fmi.mjt.uno.game.Game;
 public class StandardCardEffect implements CardEffectStrategy {
     @Override
     public void applyEffect(Game game) {
+        if (game == null) {
+            throw new IllegalArgumentException("Game cannot be null");
+        }
+
         game.getTurnManager().advanceTurn();
     }
 }

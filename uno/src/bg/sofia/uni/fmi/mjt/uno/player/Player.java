@@ -10,6 +10,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 public class Player implements Serializable {
@@ -18,9 +19,9 @@ public class Player implements Serializable {
     private final Account account;
     private final Hand handManager;
     private final SocketChannel client;
-    private boolean unoCalled;
-    private Game currentGame;
-    private boolean isOnline;
+    private final AtomicBoolean unoCalled;
+    private final AtomicBoolean isOnline;
+    private volatile Game currentGame;
 
     public Player(Account account, SocketChannel client) {
         if (account == null || client == null) {
@@ -29,24 +30,31 @@ public class Player implements Serializable {
         this.account = account;
         this.client = client;
         this.handManager = new Hand();
-        this.unoCalled = false;
+        this.unoCalled = new AtomicBoolean(false);
+        this.isOnline = new AtomicBoolean(false);
     }
 
     public void sendMessage(String message) {
+        if (client == null || !client.isOpen()) {
+            System.err.println("[Player] Cannot send message to " + account.getUsername() + " (Client disconnected)");
+            return;
+        }
+
         try {
             ByteBuffer buffer = ByteBuffer.wrap((message + "\n").getBytes());
             client.write(buffer);
+            System.out.println("[Player] Sent message to " + account.getUsername() + ": " + message);
         } catch (IOException e) {
             System.err.println("Error sending message to player " + account.getUsername() + ": " + e.getMessage());
         }
     }
 
     public boolean isOnline() {
-        return isOnline;
+        return isOnline.get();
     }
 
     public void setOnline(boolean online) {
-        this.isOnline = online;
+        isOnline.set(online);
     }
 
     public SocketChannel getClient() {
@@ -57,7 +65,7 @@ public class Player implements Serializable {
         return account;
     }
 
-    public void setGame(Game game) {
+    public synchronized void setGame(Game game) {
         if (game == null) {
             throw new IllegalArgumentException("Game cannot be null.");
         }
@@ -65,27 +73,27 @@ public class Player implements Serializable {
     }
 
     public Game getCurrentGame() {
-        if (currentGame == null) {
+        Game game = this.currentGame;
+        if (game == null) {
             throw new IllegalStateException("Player is not associated with any game.");
         }
-        return currentGame;
+        return game;
     }
 
-    public void addCardToHand(Card card) {
+    public synchronized void addCardToHand(Card card) {
         if (card == null) {
             throw new IllegalArgumentException("Card cannot be null.");
         }
+
         handManager.addCard(card);
-        System.out.println("Card added to " + account.getUsername() + "'s hand: " + card.getCardDescription());
-        unoCalled = false;
+
+        if (handManager.getHand().entrySet().size() > 1 && unoCalled.get()) {
+            unoCalled.set(false);
+        }
     }
 
-    public boolean removeCardFromHand(Card card) {
-        boolean removed = handManager.removeCard(card);
-        if (getHandSize() == 1 && !unoCalled) {
-            System.out.println(account.getUsername() + " forgot to call UNO!");
-        }
-        return removed;
+    public synchronized boolean removeCardFromHand(Card card) {
+        return handManager.removeCard(card);
     }
 
     public int getHandSize() {
@@ -94,14 +102,14 @@ public class Player implements Serializable {
 
     public void callUno() {
         if (getHandSize() == 1) {
-            unoCalled = true;
+            unoCalled.set(true);
         } else {
             throw new IllegalStateException("UNO can only be called with one card left.");
         }
     }
 
     public boolean hasCalledUno() {
-        return unoCalled;
+        return unoCalled.get();
     }
 
     public String showHand() {
@@ -110,15 +118,16 @@ public class Player implements Serializable {
             return "Your hand is empty.";
         }
 
-        return "The top card is: " + currentGame.getDeckHandler().getTopDiscardCard().getCardDescription() +
+        Game game = getCurrentGame();
+        return "The top card is: " + game.getDeckHandler().getTopDiscardCard().getCardDescription() +
                 System.lineSeparator() +
-                "Current game color:  " + currentGame.getDeckHandler().getCurrentColor().toString() +
+                "Current game color:  " + game.getDeckHandler().getCurrentColor().toString() +
                 System.lineSeparator() +
                 "Your hand: " +
                 System.lineSeparator() +
                 cards.stream()
-                .map(card -> card.getId() + " - " + card.getCardDescription())
-                .collect(Collectors.joining("\n"));
+                        .map(card -> card.getId() + " - " + card.getCardDescription())
+                        .collect(Collectors.joining("\n"));
     }
 
     public Hand getHandManager() {

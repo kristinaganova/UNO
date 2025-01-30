@@ -4,8 +4,6 @@ import bg.sofia.uni.fmi.mjt.uno.card.strategy.CardEffectStrategy;
 import bg.sofia.uni.fmi.mjt.uno.card.types.CardType;
 import bg.sofia.uni.fmi.mjt.uno.card.types.Color;
 import bg.sofia.uni.fmi.mjt.uno.card.types.WildCardType;
-import bg.sofia.uni.fmi.mjt.uno.game.Game;
-import bg.sofia.uni.fmi.mjt.uno.player.Player;
 
 public non-sealed class WildCard extends Card {
 
@@ -25,21 +23,24 @@ public non-sealed class WildCard extends Card {
 
     @Override
     public boolean isPlayable(Card topCard, Color currentColor) {
+        if (topCard == null) {
+            throw new IllegalArgumentException("Top card is null.");
+        }
         return topCard.isPlayableWithWild(this, currentColor);
     }
 
     @Override
-    public boolean isPlayableWithStandard(StandardCard other, Color currentColor) {
+    protected boolean isPlayableWithStandard(StandardCard other, Color currentColor) {
         return true;
     }
 
     @Override
-    public boolean isPlayableWithAction(ActionCard other, Color currentColor) {
+    protected boolean isPlayableWithAction(ActionCard other, Color currentColor) {
         return true;
     }
 
     @Override
-    public boolean isPlayableWithWild(WildCard other, Color currentColor) {
+    protected boolean isPlayableWithWild(WildCard other, Color currentColor) {
         return true;
     }
 

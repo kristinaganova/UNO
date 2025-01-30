@@ -12,12 +12,24 @@ public class GameMessenger {
     }
 
     public void notifyAll(String message) {
+        if (message == null || message.isEmpty()) {
+            throw new IllegalArgumentException("Message cannot be null or empty");
+        }
+
         for (Player player : players) {
             player.sendMessage(message);
         }
     }
 
     public void notifyPlayer(Player player, String message) {
-        player.sendMessage(message);
+        if (message == null || message.isEmpty()) {
+            throw new IllegalArgumentException("Message cannot be null or empty");
+        }
+        if (player == null || !player.isOnline()) {
+            throw new IllegalArgumentException("Player is not online");
+        }
+
+        System.out.println("[GameMessenger] Sending to " + player.getAccount().getUsername() + ": " + message);
+        player.sendMessage("Server: " + message);
     }
 }

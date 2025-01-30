@@ -2,7 +2,7 @@ package bg.sofia.uni.fmi.mjt.uno.command.auth;
 
 import bg.sofia.uni.fmi.mjt.uno.command.AbstractCommand;
 import bg.sofia.uni.fmi.mjt.uno.command.CommandValidator;
-import bg.sofia.uni.fmi.mjt.uno.exceptions.CommandExecutionException;
+import bg.sofia.uni.fmi.mjt.uno.exceptions.command.CommandExecutionException;
 import bg.sofia.uni.fmi.mjt.uno.player.account.UserManager;
 
 public class RegisterCommand extends AbstractCommand {

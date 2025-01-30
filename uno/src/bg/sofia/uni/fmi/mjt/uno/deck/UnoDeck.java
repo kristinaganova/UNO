@@ -14,6 +14,8 @@ import bg.sofia.uni.fmi.mjt.uno.card.models.ActionCard;
 import bg.sofia.uni.fmi.mjt.uno.card.types.ActionCardType;
 import bg.sofia.uni.fmi.mjt.uno.card.models.WildCard;
 import bg.sofia.uni.fmi.mjt.uno.card.types.WildCardType;
+import bg.sofia.uni.fmi.mjt.uno.exceptions.card.CardException;
+import bg.sofia.uni.fmi.mjt.uno.exceptions.deck.IllegalDeckSateException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -71,6 +73,7 @@ public class UnoDeck implements Deck {
             case SKIP -> new SkipTurnEffect();
             case REVERSE -> new ReverseTurnEffect();
             case PLUS_TWO -> new PlusTwoEffect();
+            default -> throw new IllegalArgumentException("Unknown action card type: " + type);
         };
     }
 
@@ -85,17 +88,20 @@ public class UnoDeck implements Deck {
             replenishDrawPile();
         }
         if (drawPile.isEmpty()) {
-            throw new IllegalStateException("No cards left in the deck. Game cannot continue.");
+            throw new IllegalDeckSateException("No cards left in the deck. Game cannot continue.");
         }
         return drawPile.remove(drawPile.size() - 1);
     }
 
     @Override
     public void discardCard(Card card) {
+        if (card == null) {
+            throw new IllegalArgumentException("Card cannot be null.");
+        }
         discardPile.add(card);
     }
 
-    private void replenishDrawPile() {
+    protected void replenishDrawPile() {
         if (discardPile.isEmpty()) {
             return;
         }

@@ -3,6 +3,7 @@ package bg.sofia.uni.fmi.mjt.uno.card.models;
 import bg.sofia.uni.fmi.mjt.uno.card.strategy.CardEffectStrategy;
 import bg.sofia.uni.fmi.mjt.uno.card.types.CardType;
 import bg.sofia.uni.fmi.mjt.uno.card.types.Color;
+import bg.sofia.uni.fmi.mjt.uno.exceptions.card.CardException;
 import bg.sofia.uni.fmi.mjt.uno.game.Game;
 
 import java.util.UUID;
@@ -14,7 +15,17 @@ public abstract sealed class Card permits ActionCard, StandardCard, WildCard {
     private final CardEffectStrategy effectStrategy;
 
     public Card(Color color, CardType type, CardEffectStrategy effectStrategy) {
-        this.id = UUID.randomUUID().toString();
+        if (color == null) {
+            throw new CardException("color cannot be null");
+        }
+        if (type == null) {
+            throw new CardException("type cannot be null");
+        }
+        if (effectStrategy == null) {
+            throw new CardException("effectStrategy cannot be null");
+        }
+
+        this.id = UUID.randomUUID().toString().substring(0, 5);
         this.color = color;
         this.type = type;
         this.effectStrategy = effectStrategy;
@@ -40,10 +51,10 @@ public abstract sealed class Card permits ActionCard, StandardCard, WildCard {
 
     public abstract boolean isPlayable(Card topCard, Color currentColor);
 
-    public abstract boolean isPlayableWithStandard(StandardCard other, Color currentColor);
+    protected abstract boolean isPlayableWithStandard(StandardCard other, Color currentColor);
 
-    public abstract boolean isPlayableWithAction(ActionCard other, Color currentColor);
+    protected abstract boolean isPlayableWithAction(ActionCard other, Color currentColor);
 
-    public abstract boolean isPlayableWithWild(WildCard other, Color currentColor);
+    protected abstract boolean isPlayableWithWild(WildCard other, Color currentColor);
 
 }

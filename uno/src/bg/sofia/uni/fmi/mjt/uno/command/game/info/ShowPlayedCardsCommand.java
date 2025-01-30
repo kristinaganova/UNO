@@ -2,7 +2,7 @@ package bg.sofia.uni.fmi.mjt.uno.command.game.info;
 
 import bg.sofia.uni.fmi.mjt.uno.card.models.Card;
 import bg.sofia.uni.fmi.mjt.uno.command.game.actions.play.PlayCardCommand;
-import bg.sofia.uni.fmi.mjt.uno.exceptions.CommandExecutionException;
+import bg.sofia.uni.fmi.mjt.uno.exceptions.command.CommandExecutionException;
 import bg.sofia.uni.fmi.mjt.uno.game.Game;
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
 
@@ -22,11 +22,7 @@ public class ShowPlayedCardsCommand extends PlayCardCommand {
             throw new CommandExecutionException("No played cards found.");
         }
 
-        StringBuilder playedCards = new StringBuilder("Played cards:\n");
-        for (Card card : playedCardsList) {
-            playedCards.append(card.getCardDescription()).append("\n");
-        }
-        return playedCards.toString();
+        return game.getLogger().getLogSummary();
     }
 
 }

@@ -10,23 +10,30 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class AccountRepository {
-
+    private final String usersFile;
     private static final String USERS_FILE = "users.dat";
 
-    public static void saveAccounts(Map<String, Account> accounts) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(USERS_FILE))) {
+    public AccountRepository(String usersFile) {
+        this.usersFile = usersFile;
+    }
+
+    public AccountRepository() {
+        this.usersFile = USERS_FILE;
+    }
+
+    public void saveAccounts(Map<String, Account> accounts) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(usersFile))) {
             oos.writeObject(accounts);
-            System.out.println("Accounts saved to file: " + USERS_FILE);
+            System.out.println("Accounts saved to file: " + usersFile);
         } catch (IOException e) {
             System.err.println("Error saving accounts to file: " + e.getMessage());
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public static Map<String, Account> loadAccounts() {
-        File file = new File(USERS_FILE);
+    public Map<String, Account> loadAccounts() {
+        File file = new File(usersFile);
         if (!file.exists()) {
-            System.out.println("No accounts file found. Starting fresh.");
+            System.out.println("No accounts file found. Returning empty map.");
             return new ConcurrentHashMap<>();
         }
 
