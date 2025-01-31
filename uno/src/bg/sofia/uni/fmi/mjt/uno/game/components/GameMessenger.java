@@ -2,13 +2,12 @@ package bg.sofia.uni.fmi.mjt.uno.game.components;
 
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
 
-import java.util.List;
-
 public class GameMessenger {
-    private final List<Player> players;
+    private final PlayerRegistry playerRegistry;
 
-    public GameMessenger(List<Player> players) {
-        this.players = players;
+    public GameMessenger(PlayerRegistry playerRegistry) {
+
+        this.playerRegistry = playerRegistry;
     }
 
     public void notifyAll(String message) {
@@ -16,8 +15,24 @@ public class GameMessenger {
             throw new IllegalArgumentException("Message cannot be null or empty");
         }
 
-        for (Player player : players) {
+        for (Player player : playerRegistry.getPlayers()) {
             player.sendMessage(message);
+        }
+
+        for (Player player : playerRegistry.getFinishedPlayers()) {
+            player.sendMessage(message);
+        }
+    }
+
+    public void notifySpectators(String message) {
+        if (message == null || message.isEmpty()) {
+            throw new IllegalArgumentException("Message cannot be null or empty");
+        }
+
+        for (Player player : playerRegistry.getPlayers()) {
+            if (playerRegistry.isPlayerSpectator(player)) {
+                player.sendMessage(message);
+            }
         }
     }
 

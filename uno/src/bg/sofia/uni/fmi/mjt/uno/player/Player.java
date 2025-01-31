@@ -18,7 +18,7 @@ public class Player implements Serializable {
 
     private final Account account;
     private final Hand handManager;
-    private final SocketChannel client;
+    private SocketChannel client;
     private final AtomicBoolean unoCalled;
     private final AtomicBoolean isOnline;
     private volatile Game currentGame;
@@ -70,6 +70,10 @@ public class Player implements Serializable {
             throw new IllegalArgumentException("Game cannot be null.");
         }
         this.currentGame = game;
+    }
+
+    public void updateSocketChannel(SocketChannel newClient) {
+        this.client = newClient;
     }
 
     public Game getCurrentGame() {

@@ -51,7 +51,7 @@ public class Game {
         this.deckHandler = new DeckHandler();
         this.playerRegistry = new PlayerRegistry(playersCount);
         this.gameRules = new GameRules(playerRegistry);
-        this.gameMessenger = new GameMessenger(playerRegistry.getPlayers());
+        this.gameMessenger = new GameMessenger(playerRegistry);
         this.logger = new CardLogger();
         this.commandLogger = new CommandLogger(id);
         gameState = GameState.AVAILABLE;
@@ -113,8 +113,8 @@ public class Game {
             }
 
             turnManager = new TurnManager(playerRegistry.getPlayers(), gameMessenger);
-            distributeInitialCards();
             gameMessenger.notifyAll("The game has started!");
+            deckHandler.getTopDiscardCard().applyEffect(this);
             gameMessenger.notifyAll("It is: " + turnManager.getCurrentPlayer().getAccount().getUsername() + "'s turn.");
             setGameState(GameState.STARTED);
 
@@ -124,31 +124,24 @@ public class Game {
         }
     }
 
-    private void distributeInitialCards() {
-
+    private void distributeInitialCards(Player player) {
         StringBuilder message = new StringBuilder();
 
-        for (Player player : playerRegistry.getPlayers()) {
-            for (int i = 0; i < INITIAL_CARDS; i++) {
-                deckHandler.drawCard(player);
-            }
-            message.append("Player ").append(player.getAccount().getUsername())
-                    .append(" received initial cards.").append(System.lineSeparator());
-            gameMessenger.notifyPlayer(player, "Your initial hand: " + player.showHand());
+        for (int i = 0; i < INITIAL_CARDS; i++) {
+            deckHandler.drawCard(player);
         }
+        message.append("Player ").append(player.getAccount().getUsername())
+                .append(" received initial cards.").append(System.lineSeparator());
+        gameMessenger.notifyPlayer(player, "Your initial hand: " + player.showHand());
 
         gameMessenger.notifyAll(message.toString());
-
     }
 
-    public void endGame() {
-
-        synchronized (this) {
-            if (gameMonitor != null) {
-                gameMonitor.stop();
-            }
-            setGameState(GameState.FINISHED);
+    public synchronized void endGame() {
+        if (gameMonitor != null) {
+            gameMonitor.stop();
         }
+        setGameState(GameState.FINISHED);
 
         List<Player> ranking = gameRules.calculateRanking();
         StringBuilder summary = new StringBuilder("Game Over! Final Ranking:" + System.lineSeparator());
@@ -161,7 +154,6 @@ public class Game {
                 .append(System.lineSeparator()));
 
         gameMessenger.notifyAll(summary.toString());
-
     }
 
     public TurnManager getTurnManager() {
@@ -183,8 +175,12 @@ public class Game {
         Player player = findPlayerByUsername(username);
 
         if (player != null) {
+            if (getTurnManager().getCurrentPlayer() == player) {
+                getTurnManager().advanceTurn();
+            }
             player.setOnline(false);
             getGameMessenger().notifyAll(username + " has disconnected.");
+            getTurnManager().announceTurn();
         }
 
     }
@@ -199,6 +195,7 @@ public class Game {
 
         player.setOnline(true);
         getGameMessenger().notifyAll(username + " has reconnected.");
+        player.sendMessage("It is: " + getTurnManager().getCurrentPlayer().getAccount().getUsername() + "'s turn.");
         return true;
 
     }
@@ -258,5 +255,18 @@ public class Game {
                 .findFirst()
                 .orElse(null);
 
+    }
+
+    public void joinGame(Player player) {
+        if (player == null) {
+            throw new IllegalArgumentException("Player cannot be null.");
+        }
+        getPlayerRegistry().addPlayer(player);
+        player.setGame(this);
+        distributeInitialCards(player);
+    }
+
+    public CommandLogger getCommandLogger() {
+        return commandLogger;
     }
 }

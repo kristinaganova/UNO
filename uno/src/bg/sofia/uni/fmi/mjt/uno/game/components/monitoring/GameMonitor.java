@@ -5,7 +5,6 @@ import bg.sofia.uni.fmi.mjt.uno.game.components.PlayerRegistry;
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class GameMonitor implements Runnable {

@@ -2,6 +2,7 @@ package bg.sofia.uni.fmi.mjt.uno.command.factory;
 
 import bg.sofia.uni.fmi.mjt.uno.command.Command;
 import bg.sofia.uni.fmi.mjt.uno.command.game.actions.DrawCardCommand;
+import bg.sofia.uni.fmi.mjt.uno.command.game.actions.KeepCommand;
 import bg.sofia.uni.fmi.mjt.uno.command.game.actions.LeaveCommand;
 import bg.sofia.uni.fmi.mjt.uno.command.game.actions.StopUnoCommand;
 import bg.sofia.uni.fmi.mjt.uno.command.game.actions.UnoCommand;
@@ -26,7 +27,7 @@ public class GameActionCommandFactory {
     public boolean supports(String commandName) {
         return switch (commandName) {
             case "play-card", "play-choose-color", "play-plus-four", "draw-card",
-                 "leave", "spectate", "uno", "stop-uno" -> true;
+                 "leave", "spectate", "uno", "stop-uno", "keep"-> true;
             default -> false;
         };
     }
@@ -44,6 +45,7 @@ public class GameActionCommandFactory {
             case "spectate" -> new SpectateCommand(player, game);
             case "uno" -> new UnoCommand(player, game);
             case "stop-uno" -> new StopUnoCommand(player, game);
+            case "keep" -> new KeepCommand(player, game);
             default -> throw new CommandNotFoundException("Unknown command: " + commandName);
         };
     }

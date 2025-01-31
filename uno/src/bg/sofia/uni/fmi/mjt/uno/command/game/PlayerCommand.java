@@ -103,6 +103,8 @@ public abstract class PlayerCommand implements Command {
 
         game.getGameMessenger().notifyAll("Player: " + player.getAccount().getUsername()
                 + " played: " + card.getCardDescription());
+        game.getGameMessenger().notifySpectators("Player: " + player.getAccount().getUsername()
+                + "played card: " + card.getCardDescription());
         game.getTurnManager().announceTurn();
     }
 

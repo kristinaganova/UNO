@@ -58,6 +58,7 @@ public class PlayerRegistry {
                 throw new IllegalStateException("Player is not in the game.");
             }
             finishedPlayersSpectators.put(player, false);
+            players.remove(player);
         }
     }
 

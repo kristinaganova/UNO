@@ -67,8 +67,7 @@ public class GameManager {
             throw new GameNotAvailableException("Game with ID " + gameId + " is not available.");
         }
 
-        game.getPlayerRegistry().addPlayer(player);
-        player.setGame(game);
+        game.joinGame(player);
         notifyPlayersInGame(game, player.getAccount().getUsername() + " has joined the game.");
         return true;
     }

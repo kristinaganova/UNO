@@ -59,9 +59,15 @@ public class UserManager {
         }
 
         loggedInUsers.put(client, username);
-
         Account account = accounts.get(username);
-        accountToPlayerMap.putIfAbsent(account, new Player(account, client));
+
+        Player player = accountToPlayerMap.get(account);
+        if (player == null) {
+            player = new Player(account, client);
+            accountToPlayerMap.put(account, player);
+        } else {
+            player.updateSocketChannel(client);
+        }
 
         return true;
     }

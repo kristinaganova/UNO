@@ -4,10 +4,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 
 public class CommandLogger {
+    private static final int MAX_RECENT_COMMANDS = 10;
     private final Path logFilePath;
+    private final Deque<String> recentCommands;
 
     public CommandLogger(String gameId) {
         if (gameId == null || gameId.isBlank()) {
@@ -15,6 +19,7 @@ public class CommandLogger {
         }
 
         this.logFilePath = Path.of("logs", gameId + ".log");
+        this.recentCommands = new LinkedList<>();
 
         try {
             Files.createDirectories(logFilePath.getParent());
@@ -30,7 +35,7 @@ public class CommandLogger {
         }
     }
 
-    public void logCommand(String command) {
+    public synchronized void logCommand(String command) {
         if (command == null || command.isBlank()) {
             throw new IllegalArgumentException("Command cannot be null or empty.");
         }
@@ -41,13 +46,22 @@ public class CommandLogger {
         } catch (IOException e) {
             throw new IllegalStateException("Could not log command: " + command, e);
         }
+
+        if (recentCommands.size() == MAX_RECENT_COMMANDS) {
+            recentCommands.pollFirst();
+        }
+        recentCommands.addLast(command);
     }
 
-    public List<String> getLoggedCommands() {
+    public synchronized List<String> getLoggedCommands() {
         try {
             return Files.readAllLines(logFilePath);
         } catch (IOException e) {
             throw new IllegalStateException("Could not read log file for game.", e);
         }
+    }
+
+    public synchronized List<String> getRecentCommands() {
+        return List.copyOf(recentCommands);
     }
 }

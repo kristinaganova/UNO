@@ -16,10 +16,36 @@ public class DrawCardCommand extends PlayerCommand {
         validatePlayerTurn();
 
         Card drawnCard = game.getDeckHandler().drawCard(player);
+        notifyCardDrawn(drawnCard);
+
+        if (isCardPlayable(drawnCard)) {
+            return promptPlayOrKeep(drawnCard);
+        }
+
+        return keepDrawnCard(drawnCard);
+    }
+
+    private void notifyCardDrawn(Card drawnCard) {
+        game.getGameMessenger().notifyAll("Player: " + player.getAccount().getUsername() + " drew a card.");
+    }
+
+    private boolean isCardPlayable(Card drawnCard) {
+        Card topCard = game.getDeckHandler().getDeck().getTopDiscardCard();
+        return drawnCard.isPlayable(topCard, game.getDeckHandler().getCurrentColor());
+    }
+
+    private String promptPlayOrKeep(Card drawnCard) {
+        String respose = "You drew: " + drawnCard.getCardDescription() +
+                        " (ID: " + drawnCard.getId() + ")." + System.lineSeparator() +
+                        "You can either:" + System.lineSeparator() +
+                        "1. Play it: play-card --card-id=" + drawnCard.getId() + System.lineSeparator() +
+                        "2. Keep it: keep";
+        return respose;
+    }
+
+    private String keepDrawnCard(Card drawnCard) {
         game.getTurnManager().advanceTurn();
-        game.getGameMessenger().notifyAll("user: " + player.getAccount().getUsername() +
-                " draw card." + System.lineSeparator());
         game.getTurnManager().announceTurn();
-        return "You drew: " + drawnCard.getCardDescription();
+        return "You drew: " + drawnCard.getCardDescription() + " and kept it.";
     }
 }

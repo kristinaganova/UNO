@@ -28,7 +28,9 @@ class GameMessengerTest {
         when(mockPlayer1.getAccount()).thenReturn(mockAccount1);
         when(mockAccount1.getUsername()).thenReturn("Player1");
 
-        gameMessenger = new GameMessenger(List.of(mockPlayer1, mockPlayer2));
+        PlayerRegistry playerRegistry = mock(PlayerRegistry.class);
+        when(playerRegistry.getMaxPlayers()).thenReturn(2);
+        gameMessenger = new GameMessenger(playerRegistry);
     }
 
     @Test
