@@ -35,21 +35,31 @@ public class GameMonitor implements Runnable {
 
     private void monitorPlayers() {
         List<Player> activePlayers = new ArrayList<>(playerRegistry.getPlayers());
-        Iterator<Player> iterator = activePlayers.iterator();
 
-        while (iterator.hasNext()) {
-            Player player = iterator.next();
+        for (Player player : activePlayers) {
             if (player.getHandManager().getAllCards().isEmpty() &&
                     !playerRegistry.getFinishedPlayers().contains(player)) {
+                System.out.println("[GameMonitor] Player finished: " + player.getAccount().getUsername());
                 handleFinishedPlayer(player);
-                iterator.remove();
             }
         }
 
-        if (activePlayers.size() == 1) {
-            Player lastPlayer = activePlayers.get(0);
-            handleGameEnd(lastPlayer);
-            lastPlayer.getCurrentGame().endGame();
+        activePlayers = new ArrayList<>(playerRegistry.getPlayers());
+        long playersWithCards = activePlayers.stream()
+                .filter(p -> !playerRegistry.getFinishedPlayers().contains(p))
+                .count();
+
+        if (playersWithCards == 1) {
+            Player lastPlayer = activePlayers.stream()
+                    .filter(p -> !playerRegistry.getFinishedPlayers().contains(p))
+                    .findFirst()
+                    .orElse(null);
+
+            if (lastPlayer != null) {
+                System.out.println("[GameMonitor] Last player left: " + lastPlayer.getAccount().getUsername());
+                handleGameEnd(lastPlayer);
+                lastPlayer.getCurrentGame().endGame();
+            }
         }
     }
 
@@ -71,8 +81,11 @@ public class GameMonitor implements Runnable {
                 playerRegistry.markPlayerAsFinished(winner);
             }
 
+            System.out.println("[GameMonitor] Game Over! The winner is: " + winner.getAccount().getUsername());
             gameMessenger.notifyAll("Game over! The winner is " + winner.getAccount().getUsername() + "!");
-            playerRegistry.removePlayer(winner);
+
+            winner.getCurrentGame().endGame();
+
             stop();
         }
     }

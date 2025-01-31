@@ -74,10 +74,6 @@ public class Game {
         return playerRegistry;
     }
 
-    public GameRules getGameRules() {
-        return gameRules;
-    }
-
     public GameMessenger getGameMessenger() {
         return gameMessenger;
     }

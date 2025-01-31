@@ -47,9 +47,7 @@ public class PlayerRegistry {
     public synchronized void removePlayer(Player player) {
         validatePlayer(player);
 
-        if (!players.remove(player)) {
-            throw new IllegalStateException("Player not found in the game.");
-        }
+        players.remove(player);
     }
 
     public void markPlayerAsFinished(Player player) {
@@ -60,7 +58,6 @@ public class PlayerRegistry {
                 throw new IllegalStateException("Player is not in the game.");
             }
             finishedPlayersSpectators.put(player, false);
-            players.remove(player);
         }
     }
 

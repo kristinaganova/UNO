@@ -14,7 +14,6 @@ import bg.sofia.uni.fmi.mjt.uno.card.models.ActionCard;
 import bg.sofia.uni.fmi.mjt.uno.card.types.ActionCardType;
 import bg.sofia.uni.fmi.mjt.uno.card.models.WildCard;
 import bg.sofia.uni.fmi.mjt.uno.card.types.WildCardType;
-import bg.sofia.uni.fmi.mjt.uno.exceptions.card.CardException;
 import bg.sofia.uni.fmi.mjt.uno.exceptions.deck.IllegalDeckSateException;
 
 import java.util.ArrayList;

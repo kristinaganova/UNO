@@ -1,6 +1,7 @@
 package bg.sofia.uni.fmi.mjt.uno.game;
 
 import bg.sofia.uni.fmi.mjt.uno.exceptions.game.GameIsFullException;
+import bg.sofia.uni.fmi.mjt.uno.exceptions.game.NotEnoughPlayersException;
 import bg.sofia.uni.fmi.mjt.uno.exceptions.player.PlayerNotPermittedException;
 
 import bg.sofia.uni.fmi.mjt.uno.player.Hand;
@@ -76,7 +77,7 @@ class GameTest {
     void testStartGameNotEnoughPlayers() {
         game.getPlayerRegistry().addPlayer(mockCreator);
 
-        assertThrows(GameIsFullException.class, () -> game.startGame(mockCreator),
+        assertThrows(NotEnoughPlayersException.class, () -> game.startGame(mockCreator),
                 "Should not start a game without at least 2 players.");
     }
 

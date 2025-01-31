@@ -2,6 +2,7 @@ package bg.sofia.uni.fmi.mjt.uno.games;
 
 import bg.sofia.uni.fmi.mjt.uno.exceptions.game.GameAlreadyExistsException;
 import bg.sofia.uni.fmi.mjt.uno.exceptions.game.GameNotAvailableException;
+import bg.sofia.uni.fmi.mjt.uno.exceptions.game.GameNotFoundException;
 import bg.sofia.uni.fmi.mjt.uno.game.Game;
 import bg.sofia.uni.fmi.mjt.uno.game.GameState;
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
@@ -61,8 +62,8 @@ public class GameManager {
             throw new IllegalArgumentException("Player cannot be null.");
         }
 
-        Game game = games.get(gameId);
-        if (game == null || game.getGameState() != GameState.AVAILABLE) {
+        Game game = getGame(gameId);
+        if (game == null || game.getGameState() == GameState.FINISHED) {
             throw new GameNotAvailableException("Game with ID " + gameId + " is not available.");
         }
 
@@ -80,9 +81,9 @@ public class GameManager {
             throw new IllegalArgumentException("Player cannot be null.");
         }
 
-        Game game = games.get(gameId);
+        Game game = getGame(gameId);
         if (game == null) {
-            throw new IllegalArgumentException("Game with this ID does not exist.");
+            throw new GameNotFoundException("Game with this ID does not exist.");
         }
 
         game.startGame(requestingPlayer);
@@ -107,7 +108,7 @@ public class GameManager {
                         game.getGameState(),
                         game.getPlayerRegistry().getPlayers().size(),
                         game.getPlayerRegistry().getMaxPlayers()))
-                .collect(Collectors.joining("\n"));
+                .collect(Collectors.joining(System.lineSeparator()));
     }
 
     public Game getGame(String gameId) {
@@ -121,13 +122,13 @@ public class GameManager {
     public Game getGameByPlayer(String username) {
         return games.values().stream()
                 .filter(game -> game.getPlayerRegistry().getPlayers().stream()
-                        .anyMatch(player -> player.getAccount() != null &&  // ✅ Null check
+                        .anyMatch(player -> player.getAccount() != null &&
                                 player.getAccount().getUsername().equals(username)))
                 .findFirst()
                 .orElse(null);
     }
 
-    private void notifyPlayersInGame(Game game, String message) {
+    protected void notifyPlayersInGame(Game game, String message) {
         if (game == null) {
             throw new IllegalArgumentException("Game cannot be null.");
         }

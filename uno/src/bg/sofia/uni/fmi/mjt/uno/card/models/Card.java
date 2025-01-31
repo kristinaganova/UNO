@@ -3,7 +3,6 @@ package bg.sofia.uni.fmi.mjt.uno.card.models;
 import bg.sofia.uni.fmi.mjt.uno.card.strategy.CardEffectStrategy;
 import bg.sofia.uni.fmi.mjt.uno.card.types.CardType;
 import bg.sofia.uni.fmi.mjt.uno.card.types.Color;
-import bg.sofia.uni.fmi.mjt.uno.exceptions.card.CardException;
 import bg.sofia.uni.fmi.mjt.uno.game.Game;
 
 import java.util.UUID;
@@ -14,21 +13,27 @@ public abstract sealed class Card permits ActionCard, StandardCard, WildCard {
     private final CardType type;
     private final CardEffectStrategy effectStrategy;
 
+    private static final int MAX_ID_LEN = 5;
+
     public Card(Color color, CardType type, CardEffectStrategy effectStrategy) {
+
         if (color == null) {
-            throw new CardException("color cannot be null");
-        }
-        if (type == null) {
-            throw new CardException("type cannot be null");
-        }
-        if (effectStrategy == null) {
-            throw new CardException("effectStrategy cannot be null");
+            throw new IllegalArgumentException("color cannot be null");
         }
 
-        this.id = UUID.randomUUID().toString().substring(0, 5);
+        if (type == null) {
+            throw new IllegalArgumentException("type cannot be null");
+        }
+
+        if (effectStrategy == null) {
+            throw new IllegalArgumentException("effectStrategy cannot be null");
+        }
+
+        this.id = UUID.randomUUID().toString().substring(0, MAX_ID_LEN);
         this.color = color;
         this.type = type;
         this.effectStrategy = effectStrategy;
+
     }
 
     public Color getColor() {

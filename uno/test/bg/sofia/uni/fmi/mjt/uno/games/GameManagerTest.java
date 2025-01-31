@@ -2,6 +2,7 @@ package bg.sofia.uni.fmi.mjt.uno.games;
 
 import bg.sofia.uni.fmi.mjt.uno.exceptions.game.GameAlreadyExistsException;
 import bg.sofia.uni.fmi.mjt.uno.exceptions.game.GameNotAvailableException;
+import bg.sofia.uni.fmi.mjt.uno.exceptions.game.GameNotFoundException;
 import bg.sofia.uni.fmi.mjt.uno.exceptions.player.PlayerNotPermittedException;
 import bg.sofia.uni.fmi.mjt.uno.game.Game;
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
@@ -52,7 +53,7 @@ class GameManagerTest {
     }
 
     @Test
-    void testCreateGame_Fail_InvalidPlayersCount() {
+    void testCreateGameFailInvalidPlayersCount() {
         assertThrows(IllegalArgumentException.class, () -> gameManager.createGame("game1", 1, mockPlayer1));
         assertThrows(IllegalArgumentException.class, () -> gameManager.createGame("game1", 11, mockPlayer1));
     }
@@ -74,6 +75,24 @@ class GameManagerTest {
         gameManager.joinGame("game1", mockPlayer2);
         gameManager.joinGame("game1", mockPlayer1);
         assertDoesNotThrow(() -> gameManager.startGame("game1", mockPlayer1));
+    }
+
+    @Test
+    void testStartGameNotExists() {
+        assertThrows(GameNotFoundException.class, () -> gameManager.startGame("game1", mockPlayer1));
+    }
+
+    @Test
+    void testStartGameNullGameID() {
+        assertThrows(IllegalArgumentException.class, () -> gameManager.startGame(null, mockPlayer1));
+    }
+
+    @Test
+    void testStartGameNullCreator() {
+        gameManager.createGame("game1", 3, mockPlayer1);
+        gameManager.joinGame("game1", mockPlayer2);
+        gameManager.joinGame("game1", mockPlayer1);
+        assertThrows(IllegalArgumentException.class, () -> gameManager.startGame("game1", null));
     }
 
     @Test
@@ -121,5 +140,27 @@ class GameManagerTest {
 
         assertTrue(gameManager.isPlayerInAnyGame("player2"));
         assertFalse(gameManager.isPlayerInAnyGame("unknown"));
+    }
+
+    @Test
+    void testNotifyPlayersNullGame() {
+        assertThrows(IllegalArgumentException.class, () -> gameManager.notifyPlayersInGame(null, "message"));
+    }
+
+    @Test
+    void testNotifyPlayersNullMessage() {
+        gameManager.createGame("game1", 3, mockPlayer1);
+        Game game = gameManager.getGame("game1");
+        assertThrows(IllegalArgumentException.class, () -> gameManager.notifyPlayersInGame(game, null));
+    }
+
+    @Test
+    void removeGameNullGame() {
+        assertThrows(IllegalArgumentException.class, () -> gameManager.removeGame(null));
+    }
+
+    @Test
+    void getGamesByStatusNull() {
+        assertThrows(IllegalArgumentException.class, () -> gameManager.getGamesByStatus(null));
     }
 }

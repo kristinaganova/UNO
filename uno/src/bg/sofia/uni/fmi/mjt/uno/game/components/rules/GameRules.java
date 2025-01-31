@@ -4,7 +4,10 @@ import bg.sofia.uni.fmi.mjt.uno.game.components.PlayerRegistry;
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public class GameRules {
     private final PlayerRegistry playerRegistry;
@@ -20,27 +23,16 @@ public class GameRules {
         return playerRegistry.getPlayers().size() <= 1;
     }
 
-    public Player determineWinner() {
-        return playerRegistry.getPlayers().stream()
-                .min((p1, p2) -> Integer.compare(
-                        p1.getHand().getAllCards().size(),
-                        p2.getHand().getAllCards().size()))
-                .orElse(null);
-    }
-
     public List<Player> calculateRanking() {
-        List<Player> ranking = new ArrayList<>();
+        Set<Player> uniqueRanking = new LinkedHashSet<>();
 
-        ranking.addAll(playerRegistry.getFinishedPlayers());
+        uniqueRanking.addAll(playerRegistry.getFinishedPlayers());
 
-        ranking.addAll(playerRegistry.getPlayers().stream()
-                .sorted((p1, p2) -> Integer.compare(
-                        p1.getHand().getAllCards().size(),
-                        p2.getHand().getAllCards().size()))
-                .toList());
+        playerRegistry.getPlayers().stream()
+                .sorted(Comparator.comparingInt(p -> p.getHand().getAllCards().size()))
+                .forEach(uniqueRanking::add);
 
-        return ranking;
+        return new ArrayList<>(uniqueRanking);
     }
-
 }
 
