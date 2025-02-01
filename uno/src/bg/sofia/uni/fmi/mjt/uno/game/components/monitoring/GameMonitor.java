@@ -11,24 +11,33 @@ public class GameMonitor implements Runnable {
     private final PlayerRegistry playerRegistry;
     private final GameMessenger gameMessenger;
     private boolean isRunning;
+    private final Object monitorLock;
 
     public GameMonitor(PlayerRegistry playerRegistry, GameMessenger gameMessenger) {
         this.playerRegistry = playerRegistry;
         this.gameMessenger = gameMessenger;
         this.isRunning = true;
+        this.monitorLock = new Object();
     }
 
-    private static final int SLEEP_TIME = 1000;
     @Override
     public void run() {
         while (isRunning) {
             try {
+                synchronized (monitorLock) {
+                    monitorLock.wait();
+                }
                 monitorPlayers();
-                Thread.sleep(SLEEP_TIME);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 System.err.println("GameMonitor interrupted: " + e.getMessage());
             }
+        }
+    }
+
+    public void wakeUp() {
+        synchronized (monitorLock) {
+            monitorLock.notify();
         }
     }
 
@@ -91,7 +100,6 @@ public class GameMonitor implements Runnable {
 
     public void stop() {
         isRunning = false;
-        Thread.currentThread().interrupt();
+        wakeUp();
     }
-
 }

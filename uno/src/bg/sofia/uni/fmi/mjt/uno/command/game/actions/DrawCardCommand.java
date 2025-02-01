@@ -16,6 +16,7 @@ public class DrawCardCommand extends PlayerCommand {
         validatePlayerTurn();
 
         Card drawnCard = game.getDeckHandler().drawCard(player);
+        player.getHand().setLastDrawnCard(drawnCard);
         notifyCardDrawn(drawnCard);
 
         if (isCardPlayable(drawnCard)) {

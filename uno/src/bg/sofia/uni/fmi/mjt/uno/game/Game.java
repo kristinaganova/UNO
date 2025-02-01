@@ -35,7 +35,6 @@ public class Game {
     private transient GameMonitor gameMonitor;
 
     public Game(String id, int playersCount, Player creator) {
-
         if (id == null || id.isBlank()) {
             throw new IllegalArgumentException("Game ID cannot be null or blank.");
         }
@@ -55,35 +54,6 @@ public class Game {
         this.logger = new CardLogger();
         this.commandLogger = new CommandLogger(id);
         gameState = GameState.AVAILABLE;
-
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public Player getCreator() {
-        return creator;
-    }
-
-    public DeckHandler getDeckHandler() {
-        return deckHandler;
-    }
-
-    public PlayerRegistry getPlayerRegistry() {
-        return playerRegistry;
-    }
-
-    public GameMessenger getGameMessenger() {
-        return gameMessenger;
-    }
-
-    public GameState getGameState() {
-        return gameState;
-    }
-
-    public CardLogger getLogger() {
-        return logger;
     }
 
     public void setGameState(GameState gameState) {
@@ -94,7 +64,6 @@ public class Game {
     }
 
     public void startGame(Player requestingPlayer) {
-
         if (requestingPlayer == null) {
             throw new IllegalArgumentException("Player cannot be null.");
         }
@@ -138,49 +107,46 @@ public class Game {
     }
 
     public synchronized void endGame() {
-        if (gameMonitor != null) {
-            gameMonitor.stop();
-        }
-
+        stopGameMonitor();
         setGameState(GameState.FINISHED);
-
-        List<Player> ranking = gameRules.calculateRanking();
+        List<Player> ranking = calculateFinalRanking();
 
         if (ranking.isEmpty()) {
-            gameMessenger.notifyAll("Game Over! But no players were ranked. Something went wrong.");
+            notifyNoRankedPlayers();
             return;
         }
 
-        StringBuilder summary = new StringBuilder("Game Over! Final Ranking:" + System.lineSeparator());
-        AtomicInteger rank = new AtomicInteger(1);
+        gameMessenger.notifyAll(getSummary());
+        clearRemainingPlayers();
+    }
 
-        ranking.forEach(player -> summary.append(rank.getAndIncrement())
-                .append(". ")
-                .append(player.getAccount().getUsername())
-                .append(player.getHand().getAllCards().isEmpty() ? " (Finished)" : " - Cards left: "
-                        + player.getHand().getAllCards().size())
-                .append(System.lineSeparator()));
+    private void stopGameMonitor() {
+        if (gameMonitor != null) {
+            gameMonitor.stop();
+        }
+    }
 
-        gameMessenger.notifyAll(summary.toString());
+    private List<Player> calculateFinalRanking() {
+        return gameRules.calculateRanking();
+    }
+
+    private void notifyNoRankedPlayers() {
+        gameMessenger.notifyAll("Game Over! But no players were ranked. Something went wrong.");
+    }
+
+    private void clearRemainingPlayers() {
         playerRegistry.getPlayers().clear();
     }
 
-    public TurnManager getTurnManager() {
-        return turnManager;
-    }
-
     public void logCommand(String command, Player player) {
-
         String metadata = String.format("[Player: %s] [Time: %s] %s",
                 player.getAccount().getUsername(),
                 LocalDateTime.now(),
                 command);
         commandLogger.logCommand(metadata);
-
     }
 
     public synchronized void disconnectPlayer(String username) {
-
         Player player = findPlayerByUsername(username);
 
         if (player != null) {
@@ -191,11 +157,9 @@ public class Game {
             getGameMessenger().notifyAll(username + " has disconnected.");
             getTurnManager().announceTurn();
         }
-
     }
 
     public synchronized boolean reconnectPlayer(String username) {
-
         Player player = findPlayerByUsername(username);
 
         if (player == null) {
@@ -206,11 +170,9 @@ public class Game {
         getGameMessenger().notifyAll(username + " has reconnected.");
         player.sendMessage("It is: " + getTurnManager().getCurrentPlayer().getAccount().getUsername() + "'s turn.");
         return true;
-
     }
 
     public String getSummary() {
-
         StringBuilder summary = new StringBuilder("Game Summary:" + System.lineSeparator());
         summary.append("Game ID: ").append(id).append(System.lineSeparator());
         summary.append("Creator: ").append(creator.getAccount().getUsername()).append(System.lineSeparator());
@@ -234,7 +196,6 @@ public class Game {
         }
 
         return summary.toString();
-
     }
 
     public synchronized String leaveGame(Player player) {
@@ -297,12 +258,10 @@ public class Game {
     }
 
     private Player findPlayerByUsername(String username) {
-
         return playerRegistry.getPlayers().stream()
                 .filter(p -> p.getAccount().getUsername().equals(username))
                 .findFirst()
                 .orElse(null);
-
     }
 
     public void joinGame(Player player) {
@@ -316,5 +275,41 @@ public class Game {
 
     public CommandLogger getCommandLogger() {
         return commandLogger;
+    }
+
+    public GameMonitor getGameMonitor() {
+        return gameMonitor;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Player getCreator() {
+        return creator;
+    }
+
+    public DeckHandler getDeckHandler() {
+        return deckHandler;
+    }
+
+    public PlayerRegistry getPlayerRegistry() {
+        return playerRegistry;
+    }
+
+    public GameMessenger getGameMessenger() {
+        return gameMessenger;
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public CardLogger getLogger() {
+        return logger;
+    }
+
+    public TurnManager getTurnManager() {
+        return turnManager;
     }
 }

@@ -2,6 +2,9 @@ package bg.sofia.uni.fmi.mjt.uno.command;
 
 import bg.sofia.uni.fmi.mjt.uno.command.factory.CommandFactory;
 import bg.sofia.uni.fmi.mjt.uno.exceptions.command.CommandExecutionException;
+import bg.sofia.uni.fmi.mjt.uno.game.Game;
+import bg.sofia.uni.fmi.mjt.uno.games.GameManager;
+import bg.sofia.uni.fmi.mjt.uno.player.account.UserManager;
 
 import java.nio.channels.SocketChannel;
 
@@ -16,13 +19,27 @@ public class CommandExecutor {
     public String executeCommand(String commandName, String[] args, SocketChannel client) {
         try {
             Command command = commandFactory.createCommand(commandName, client);
-            return command.execute(commandName, args);
+            String response = command.execute(commandName, args);
+
+            notifyMonitor(client);
+
+            return response;
         } catch (CommandExecutionException e) {
             return "Command execution error: " + e.getMessage();
         } catch (IllegalArgumentException e) {
             return "Invalid command: " + e.getMessage();
         } catch (Exception e) {
             return "Unexpected error occurred: " + e.getMessage();
+        }
+    }
+
+    private void notifyMonitor(SocketChannel client) {
+        UserManager userManager = UserManager.getInstance();
+        String username = userManager.getLoggedInUsername(client);
+        Game game = GameManager.getInstance().getGameByPlayer(username);
+
+        if (game != null && game.getGameMonitor() != null) {
+            game.getGameMonitor().wakeUp();
         }
     }
 }

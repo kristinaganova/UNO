@@ -14,7 +14,7 @@ public class PlusFourEffect implements CardEffectStrategy {
 
         Player nextPlayer = game.getTurnManager().getNextPlayer();
         for (int i = 0; i < CARDS_TO_DRAW; i++) {
-            nextPlayer.getHand().addCard(game.getDeckHandler().getDeck().drawCard());
+            game.getDeckHandler().drawCard(nextPlayer);
         }
         game.getTurnManager().skipTurn();
     }

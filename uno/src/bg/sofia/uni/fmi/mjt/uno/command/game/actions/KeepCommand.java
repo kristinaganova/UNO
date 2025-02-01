@@ -4,6 +4,8 @@ import bg.sofia.uni.fmi.mjt.uno.command.game.PlayerCommand;
 import bg.sofia.uni.fmi.mjt.uno.game.Game;
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
 
+import java.util.Optional;
+
 public class KeepCommand extends PlayerCommand {
 
     public KeepCommand(Player player, Game game) {
@@ -15,15 +17,15 @@ public class KeepCommand extends PlayerCommand {
         if (!validateLastCommandWasDrawCard()) {
             return "No drawn card to keep";
         }
-        game.getGameMessenger().notifyAll("Player: " + player.getAccount().getUsername()
-                + " chose to keep the drawn card.");
 
-        player.getHand().addDrawnCardToHand();
+        player.getHand().setLastDrawnCard(null);
+
         game.advanceTurn();
+
         return "You kept the card.";
     }
 
     private boolean validateLastCommandWasDrawCard() {
-        return !player.getHand().getLastDrawnCard().isEmpty();
+        return player.getHand().getLastDrawnCard().isPresent();
     }
 }
