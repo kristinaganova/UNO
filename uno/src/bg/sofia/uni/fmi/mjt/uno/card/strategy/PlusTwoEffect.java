@@ -12,7 +12,7 @@ public class PlusTwoEffect implements CardEffectStrategy {
 
         Player nextPlayer = game.getTurnManager().getNextPlayer();
         for (int i = 0; i < 2; i++) {
-            game.getDeckHandler().drawCard(nextPlayer);
+            nextPlayer.getHand().addCard(game.getDeckHandler().getDeck().drawCard());
         }
         game.getTurnManager().skipTurn();
     }

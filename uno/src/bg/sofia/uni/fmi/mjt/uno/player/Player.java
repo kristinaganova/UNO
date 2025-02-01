@@ -5,7 +5,6 @@ import bg.sofia.uni.fmi.mjt.uno.game.Game;
 import bg.sofia.uni.fmi.mjt.uno.player.account.Account;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.List;
@@ -13,8 +12,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
-public class Player implements Serializable {
-    private static final long serialVersionUID = -2246431532831884266L;
+public class Player {
 
     private final Account account;
     private final Hand handManager;
@@ -41,7 +39,7 @@ public class Player implements Serializable {
         }
 
         try {
-            ByteBuffer buffer = ByteBuffer.wrap((message + "\n").getBytes());
+            ByteBuffer buffer = ByteBuffer.wrap((message + System.lineSeparator()).getBytes());
             client.write(buffer);
             System.out.println("[Player] Sent message to " + account.getUsername() + ": " + message);
         } catch (IOException e) {
@@ -131,7 +129,7 @@ public class Player implements Serializable {
                 System.lineSeparator() +
                 cards.stream()
                         .map(card -> card.getId() + " - " + card.getCardDescription())
-                        .collect(Collectors.joining("\n"));
+                        .collect(Collectors.joining(System.lineSeparator()));
     }
 
     public Hand getHandManager() {

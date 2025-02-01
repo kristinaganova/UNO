@@ -27,6 +27,9 @@ public class TurnManager {
     }
 
     public Player getCurrentPlayer() {
+        if (currentPlayerIndex >= players.size()) {
+            throw new NoOnlinePlayersException("There are no online players.");
+        }
         return players.get(currentPlayerIndex);
     }
 

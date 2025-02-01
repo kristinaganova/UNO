@@ -13,7 +13,7 @@ public class ReverseTurnEffect implements CardEffectStrategy {
             game.getTurnManager().skipTurn();
         } else {
             game.getTurnManager().reverseDirection();
-            game.getTurnManager().advanceTurn();
+            game.advanceTurn();
         }
     }
 }

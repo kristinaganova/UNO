@@ -21,7 +21,7 @@ public class DeckHandler {
             throw new IllegalArgumentException("Player cannot be null");
         }
         Card card = deck.drawCard();
-        player.addCardToHand(card);
+        player.getHand().setLastDrawnCard(card);
         player.sendMessage("You drew: " + card.getCardDescription());
         return card;
     }

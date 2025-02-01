@@ -4,8 +4,9 @@ public interface Command {
     /**
      * Executes the command logic.
      *
-     * @param args Arguments required for the command.
+     * @param commandName
+     * @param args        Arguments required for the command.
      * @return A response string to send back to the client.
      */
-    String execute(String[] args);
+    String execute(String commandName, String[] args);
 }

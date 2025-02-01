@@ -31,12 +31,12 @@ public non-sealed class WildCard extends Card {
 
     @Override
     protected boolean isPlayableWithStandard(StandardCard other, Color currentColor) {
-        return true;
+        return other.getColor() == currentColor;
     }
 
     @Override
     protected boolean isPlayableWithAction(ActionCard other, Color currentColor) {
-        return true;
+        return other.getColor() == currentColor;
     }
 
     @Override

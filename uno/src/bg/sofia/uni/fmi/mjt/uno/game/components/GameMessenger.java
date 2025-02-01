@@ -10,7 +10,7 @@ public class GameMessenger {
         this.playerRegistry = playerRegistry;
     }
 
-    public void notifyAll(String message) {
+    public synchronized void notifyAll(String message) {
         if (message == null || message.isEmpty()) {
             throw new IllegalArgumentException("Message cannot be null or empty");
         }

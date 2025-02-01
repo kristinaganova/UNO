@@ -15,7 +15,7 @@ public class ShowPlayedCardsCommand extends PlayCardCommand {
     }
 
     @Override
-    public String execute(String[] args) {
+    public String execute(String commandName, String[] args) {
         List<Card> playedCardsList = game.getLogger().getPlayedCards();
 
         if (playedCardsList.isEmpty()) {

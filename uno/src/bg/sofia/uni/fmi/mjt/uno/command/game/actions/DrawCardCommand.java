@@ -21,7 +21,6 @@ public class DrawCardCommand extends PlayerCommand {
         if (isCardPlayable(drawnCard)) {
             return promptPlayOrKeep(drawnCard);
         }
-
         return keepDrawnCard(drawnCard);
     }
 
@@ -38,14 +37,14 @@ public class DrawCardCommand extends PlayerCommand {
         String respose = "You drew: " + drawnCard.getCardDescription() +
                         " (ID: " + drawnCard.getId() + ")." + System.lineSeparator() +
                         "You can either:" + System.lineSeparator() +
-                        "1. Play it: play-card --card-id=" + drawnCard.getId() + System.lineSeparator() +
+                        "1. Play it: card-id=" + drawnCard.getId() + System.lineSeparator() +
                         "2. Keep it: keep";
         return respose;
     }
 
     private String keepDrawnCard(Card drawnCard) {
-        game.getTurnManager().advanceTurn();
-        game.getTurnManager().announceTurn();
+        game.advanceTurn();
+        player.getHand().addDrawnCardToHand();
         return "You drew: " + drawnCard.getCardDescription() + " and kept it.";
     }
 }

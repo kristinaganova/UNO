@@ -23,7 +23,7 @@ public class GameRules {
         return playerRegistry.getPlayers().size() <= 1;
     }
 
-    public List<Player> calculateRanking() {
+    public synchronized List<Player> calculateRanking() {
         Set<Player> uniqueRanking = new LinkedHashSet<>();
 
         uniqueRanking.addAll(playerRegistry.getFinishedPlayers());

@@ -47,6 +47,10 @@ public class PlayerRegistry {
     public synchronized void removePlayer(Player player) {
         validatePlayer(player);
 
+        if (!players.contains(player)) {
+            throw new IllegalStateException("Player not found in the game.");
+        }
+
         players.remove(player);
     }
 
@@ -62,7 +66,7 @@ public class PlayerRegistry {
         }
     }
 
-    public void setPlayerAsSpectator(Player player) {
+    public synchronized void setPlayerAsSpectator(Player player) {
         validatePlayer(player);
 
         if (!finishedPlayersSpectators.containsKey(player)) {

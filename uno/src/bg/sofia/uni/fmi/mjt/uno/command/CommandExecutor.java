@@ -16,7 +16,7 @@ public class CommandExecutor {
     public String executeCommand(String commandName, String[] args, SocketChannel client) {
         try {
             Command command = commandFactory.createCommand(commandName, client);
-            return command.execute(args);
+            return command.execute(commandName, args);
         } catch (CommandExecutionException e) {
             return "Command execution error: " + e.getMessage();
         } catch (IllegalArgumentException e) {

@@ -15,7 +15,7 @@ public class LogoutCommand implements Command {
     }
 
     @Override
-    public String execute(String[] args) {
+    public String execute(String commandName, String[] args) {
         if (!userManager.isLoggedIn(client)) {
             return "You are not logged in.";
         }

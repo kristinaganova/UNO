@@ -128,7 +128,7 @@ public class Game {
         StringBuilder message = new StringBuilder();
 
         for (int i = 0; i < INITIAL_CARDS; i++) {
-            deckHandler.drawCard(player);
+            player.getHand().addCard(getDeckHandler().getDeck().drawCard());
         }
         message.append("Player ").append(player.getAccount().getUsername())
                 .append(" received initial cards.").append(System.lineSeparator());
@@ -141,11 +141,19 @@ public class Game {
         if (gameMonitor != null) {
             gameMonitor.stop();
         }
+
         setGameState(GameState.FINISHED);
 
         List<Player> ranking = gameRules.calculateRanking();
+
+        if (ranking.isEmpty()) {
+            gameMessenger.notifyAll("Game Over! But no players were ranked. Something went wrong.");
+            return;
+        }
+
         StringBuilder summary = new StringBuilder("Game Over! Final Ranking:" + System.lineSeparator());
         AtomicInteger rank = new AtomicInteger(1);
+
         ranking.forEach(player -> summary.append(rank.getAndIncrement())
                 .append(". ")
                 .append(player.getAccount().getUsername())
@@ -154,16 +162,17 @@ public class Game {
                 .append(System.lineSeparator()));
 
         gameMessenger.notifyAll(summary.toString());
+        playerRegistry.getPlayers().clear();
     }
 
     public TurnManager getTurnManager() {
         return turnManager;
     }
 
-    public void logCommand(String command) {
+    public void logCommand(String command, Player player) {
 
         String metadata = String.format("[Player: %s] [Time: %s] %s",
-                turnManager.getCurrentPlayer().getAccount().getUsername(),
+                player.getAccount().getUsername(),
                 LocalDateTime.now(),
                 command);
         commandLogger.logCommand(metadata);
@@ -229,23 +238,62 @@ public class Game {
     }
 
     public synchronized String leaveGame(Player player) {
-
         if (player == null) {
             throw new IllegalArgumentException("Player cannot be null.");
         }
 
-        player.getHand().removeCards();
+        String username = player.getAccount().getUsername();
+        gameMessenger.notifyAll("Player " + username + " has left the game.");
 
-        playerRegistry.removePlayer(player);
-        gameMessenger.notifyAll("Player " + player.getAccount().getUsername() + " has left the game.");
-
-        if (playerRegistry.getPlayers().isEmpty() || playerRegistry.getPlayers().size() == 1) {
-            gameMessenger.notifyAll("Not enough players left in the game. The game will now end.");
-            endGame();
+        if (isGameAvailableOrFinished()) {
+            removePlayerFromGame(player);
+            return "Player " + username + " has left the game.";
         }
 
-        return "Player " + player.getAccount().getUsername() + " has left the game.";
+        return handleActiveGamePlayerLeave(player, username);
+    }
 
+    private boolean isGameAvailableOrFinished() {
+        return gameState == GameState.AVAILABLE || gameState == GameState.FINISHED;
+    }
+
+    private void removePlayerFromGame(Player player) {
+        playerRegistry.removePlayer(player);
+    }
+
+    private String handleActiveGamePlayerLeave(Player player, String username) {
+        boolean wasCurrentTurn = wasCurrentTurnPlayer(player);
+
+        player.getHand().removeCards();
+        removePlayerFromGame(player);
+
+        if (shouldEndGame()) {
+            gameMessenger.notifyAll("Not enough players left in the game. The game will now end.");
+            endGame();
+            return "Player " + username + " has left the game.";
+        }
+
+        if (wasCurrentTurn) {
+            advanceTurn();
+        }
+
+        return "Player " + username + " has left the game.";
+    }
+
+    private boolean wasCurrentTurnPlayer(Player player) {
+        return turnManager != null && turnManager.getCurrentPlayer() != null
+                && turnManager.getCurrentPlayer().equals(player);
+    }
+
+    private boolean shouldEndGame() {
+        return playerRegistry.getPlayers().isEmpty() || playerRegistry.getPlayers().size() == 1;
+    }
+
+    public void advanceTurn() {
+        if (turnManager != null) {
+            turnManager.advanceTurn();
+            turnManager.announceTurn();
+        }
     }
 
     private Player findPlayerByUsername(String username) {

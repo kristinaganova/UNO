@@ -20,12 +20,11 @@ public abstract class PlayerCommand implements Command {
     }
 
     @Override
-    public String execute(String[] args) {
+    public String execute(String commandName, String[] args) {
         try {
-            String commandString = String.join(" ", args);
+            String commandString = commandName + String.join(" ", args);
+            game.logCommand(commandString, player);
             String result = executePlayerCommand(args);
-            game.logCommand(commandString);
-
             return result;
         } catch (Exception e) {
             return "Error: " + e.getMessage();
@@ -105,7 +104,5 @@ public abstract class PlayerCommand implements Command {
                 + " played: " + card.getCardDescription());
         game.getGameMessenger().notifySpectators("Player: " + player.getAccount().getUsername()
                 + "played card: " + card.getCardDescription());
-        game.getTurnManager().announceTurn();
     }
-
 }

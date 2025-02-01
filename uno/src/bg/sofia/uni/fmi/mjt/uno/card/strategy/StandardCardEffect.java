@@ -9,6 +9,6 @@ public class StandardCardEffect implements CardEffectStrategy {
             throw new IllegalArgumentException("Game cannot be null");
         }
 
-        game.getTurnManager().advanceTurn();
+        game.advanceTurn();
     }
 }

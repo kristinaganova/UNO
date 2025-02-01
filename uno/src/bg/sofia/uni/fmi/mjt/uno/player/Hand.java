@@ -7,10 +7,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Hand {
     private final Map<Color, List<Card>> hand;
+    private Optional<Card> lastDrawnCard;
 
     public Hand() {
         this.hand = new HashMap<>();
@@ -60,5 +62,18 @@ public class Hand {
         for (Color color : hand.keySet()) {
             hand.put(color, new ArrayList<>());
         }
+    }
+
+    public Optional<Card> getLastDrawnCard() {
+        return lastDrawnCard;
+    }
+
+    public void setLastDrawnCard(Card lastDrawnCard) {
+        this.lastDrawnCard = Optional.ofNullable(lastDrawnCard);
+    }
+
+    public void addDrawnCardToHand() {
+        lastDrawnCard.ifPresent(this::addCard);
+        lastDrawnCard = Optional.empty();
     }
 }

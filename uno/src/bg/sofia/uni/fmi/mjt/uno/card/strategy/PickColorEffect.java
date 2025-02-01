@@ -8,6 +8,6 @@ public class PickColorEffect implements CardEffectStrategy {
         if (game == null) {
             throw new IllegalArgumentException("Game cannot be null");
         }
-        game.getTurnManager().advanceTurn();
+        game.advanceTurn();
     }
 }
