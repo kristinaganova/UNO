@@ -4,6 +4,8 @@ import bg.sofia.uni.fmi.mjt.uno.card.strategy.CardEffectStrategy;
 import bg.sofia.uni.fmi.mjt.uno.card.types.CardType;
 import bg.sofia.uni.fmi.mjt.uno.card.types.Color;
 import bg.sofia.uni.fmi.mjt.uno.card.types.WildCardType;
+import bg.sofia.uni.fmi.mjt.uno.card.types.ActionCardType;
+import bg.sofia.uni.fmi.mjt.uno.game.Game;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,22 +32,37 @@ class WildCardTest {
 
     @Test
     void testGetCardDescription() {
-        assertEquals("Makes the next player draw 4 cards and lets you pick a color BLACK", wildCard.getCardDescription(),
+        assertEquals("Makes the next player draw 4 cards and lets you pick a color BLACK",
+                wildCard.getCardDescription(),
                 "Card description should match WildCardType.");
     }
 
     @Test
-    void testIsPlayableWithStandardCard() {
+    void testIsPlayableWithStandardCardMatchingColor() {
         StandardCard standardCard = new StandardCard(Color.RED, 5, effectStrategy);
         assertTrue(wildCard.isPlayable(standardCard, Color.RED),
-                "Wild cards should be playable with any standard card.");
+                "Wild cards should be playable if the current color matches.");
     }
 
     @Test
-    void testIsPlayableWithActionCard() {
-        ActionCard actionCard = new ActionCard(Color.GREEN, bg.sofia.uni.fmi.mjt.uno.card.types.ActionCardType.SKIP, effectStrategy);
+    void testIsPlayableWithStandardCardDifferentColor() {
+        StandardCard standardCard = new StandardCard(Color.YELLOW, 3, effectStrategy);
+        assertFalse(wildCard.isPlayable(standardCard, Color.RED),
+                "Wild cards should not be playable if the current color does not match.");
+    }
+
+    @Test
+    void testIsPlayableWithActionCardMatchingColor() {
+        ActionCard actionCard = new ActionCard(Color.GREEN, ActionCardType.SKIP, effectStrategy);
         assertTrue(wildCard.isPlayable(actionCard, Color.GREEN),
-                "Wild cards should be playable with any action card.");
+                "Wild cards should be playable if the current color matches.");
+    }
+
+    @Test
+    void testIsPlayableWithActionCardDifferentColor() {
+        ActionCard actionCard = new ActionCard(Color.BLUE, ActionCardType.REVERSE, effectStrategy);
+        assertFalse(wildCard.isPlayable(actionCard, Color.YELLOW),
+                "Wild cards should not be playable if the current color does not match.");
     }
 
     @Test
@@ -56,10 +73,10 @@ class WildCardTest {
     }
 
     @Test
-    void testIsPlayableReturnsTrueForAnyCurrentColor() {
-        StandardCard standardCard = new StandardCard(Color.YELLOW, 2, effectStrategy);
-        assertTrue(wildCard.isPlayable(standardCard, Color.YELLOW),
-                "Wild cards should be playable regardless of the current color.");
+    void testIsPlayableWithDifferentWildCardType() {
+        WildCard anotherWildCard = new WildCard(WildCardType.PLUS_FOUR, effectStrategy);
+        assertTrue(wildCard.isPlayable(anotherWildCard, Color.GREEN),
+                "Different wild card types should still be playable with each other.");
     }
 
     @Test
@@ -73,5 +90,11 @@ class WildCardTest {
     void testGetWildCardType() {
         assertEquals(WildCardType.PLUS_FOUR, wildCard.getWildCardType(),
                 "WildCard type should match the one provided in the constructor.");
+    }
+
+    @Test
+    void testEffectStrategyIsCalled() {
+        wildCard.applyEffect(mock(Game.class));
+        verify(effectStrategy, times(1)).applyEffect(any());
     }
 }

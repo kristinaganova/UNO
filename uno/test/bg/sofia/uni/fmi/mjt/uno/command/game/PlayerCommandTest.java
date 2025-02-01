@@ -40,7 +40,7 @@ class PlayerCommandTest {
 
     @Test
     void testExecuteCommandSuccessfully() {
-        String result = command.execute(commandName, new String[]{"some", "args"});
+        String result = command.execute("commandName", new String[]{"some", "args"});
         assertEquals("Test executed", result, "Expected successful execution message.");
     }
 
@@ -53,7 +53,7 @@ class PlayerCommandTest {
             }
         };
 
-        String result = failingCommand.execute(commandName, new String[]{"args"});
+        String result = failingCommand.execute("commandName", new String[]{"args"});
         assertTrue(result.contains("Error: Test failure"), "Should return an error message.");
     }
 

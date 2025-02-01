@@ -28,11 +28,11 @@ public class Game {
     private final PlayerRegistry playerRegistry;
     private final GameRules gameRules;
     private final GameMessenger gameMessenger;
-    private TurnManager turnManager = null;
+    private TurnManager turnManager;
     private final CardLogger logger;
     private GameState gameState;
     private final CommandLogger commandLogger;
-    private transient GameMonitor gameMonitor;
+    private GameMonitor gameMonitor;
 
     public Game(String id, int playersCount, Player creator) {
         if (id == null || id.isBlank()) {
@@ -53,6 +53,7 @@ public class Game {
         this.gameMessenger = new GameMessenger(playerRegistry);
         this.logger = new CardLogger();
         this.commandLogger = new CommandLogger(id);
+        turnManager = new TurnManager(playerRegistry.getPlayers(), gameMessenger);
         gameState = GameState.AVAILABLE;
     }
 
@@ -139,23 +140,28 @@ public class Game {
     }
 
     public void logCommand(String command, Player player) {
+        String playerName = turnManager.getCurrentPlayer().getAccount().getUsername();
+
         String metadata = String.format("[Player: %s] [Time: %s] %s",
-                player.getAccount().getUsername(),
-                LocalDateTime.now(),
-                command);
+                playerName, LocalDateTime.now(), command);
+
         commandLogger.logCommand(metadata);
     }
 
     public synchronized void disconnectPlayer(String username) {
         Player player = findPlayerByUsername(username);
 
-        if (player != null) {
-            if (getTurnManager().getCurrentPlayer() == player) {
-                getTurnManager().advanceTurn();
-            }
-            player.setOnline(false);
-            getGameMessenger().notifyAll(username + " has disconnected.");
-            getTurnManager().announceTurn();
+        if (player == null) {
+            return;
+        }
+
+        turnManager.advanceTurn();
+
+        player.setOnline(false);
+        gameMessenger.notifyAll(username + " has disconnected.");
+
+        if (turnManager != null) {
+            turnManager.announceTurn();
         }
     }
 
@@ -208,10 +214,17 @@ public class Game {
 
         if (isGameAvailableOrFinished()) {
             removePlayerFromGame(player);
+            checkAndEndGame();
             return "Player " + username + " has left the game.";
         }
 
         return handleActiveGamePlayerLeave(player, username);
+    }
+
+    private void checkAndEndGame() {
+        if (playerRegistry.getPlayers().isEmpty()) {
+            endGame();
+        }
     }
 
     private boolean isGameAvailableOrFinished() {
@@ -242,8 +255,7 @@ public class Game {
     }
 
     private boolean wasCurrentTurnPlayer(Player player) {
-        return turnManager != null && turnManager.getCurrentPlayer() != null
-                && turnManager.getCurrentPlayer().equals(player);
+        return turnManager.getCurrentPlayer().equals(player);
     }
 
     private boolean shouldEndGame() {
@@ -251,10 +263,8 @@ public class Game {
     }
 
     public void advanceTurn() {
-        if (turnManager != null) {
-            turnManager.advanceTurn();
-            turnManager.announceTurn();
-        }
+        turnManager.advanceTurn();
+        turnManager.announceTurn();
     }
 
     private Player findPlayerByUsername(String username) {

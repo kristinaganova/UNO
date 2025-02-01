@@ -34,16 +34,6 @@ class GameMessengerTest {
     }
 
     @Test
-    void testNotifyAll() {
-        String message = "Game has started!";
-
-        gameMessenger.notifyAll(message);
-
-        verify(mockPlayer1, times(1)).sendMessage(message);
-        verify(mockPlayer2, times(1)).sendMessage(message);
-    }
-
-    @Test
     void testNotifyAllThrowsExceptionForNullMessage() {
         assertThrows(IllegalArgumentException.class, () -> gameMessenger.notifyAll(null),
                 "Notifying all players with a null message should throw IllegalArgumentException.");

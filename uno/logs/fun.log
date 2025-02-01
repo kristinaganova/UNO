@@ -48,3 +48,53 @@
 [Player: username] [Time: 2025-02-01T17:38:16.585577600] draw-card
 [Player: username] [Time: 2025-02-01T17:38:33.945133800] play-plus-four--card-id=898ae --color=green
 [Player: krisi] [Time: 2025-02-01T17:38:42.573263800] show-hand
+[Player: username] [Time: 2025-02-01T18:01:33.567791900] show-hand
+[Player: username] [Time: 2025-02-01T18:02:07.504774500] play-card--card-id=b6385
+[Player: krisi] [Time: 2025-02-01T18:02:11.848394400] show-hand
+[Player: krisi] [Time: 2025-02-01T18:02:18.371316800] play-card--card-id=b8aef
+[Player: username] [Time: 2025-02-01T18:02:27.777734200] show-hand
+[Player: username] [Time: 2025-02-01T18:02:34.752747800] play-card--card-id=8841b
+[Player: krisi] [Time: 2025-02-01T18:02:38.442741300] show-hand
+[Player: krisi] [Time: 2025-02-01T18:02:54.242345400] draw-card
+[Player: username] [Time: 2025-02-01T18:03:05.154196600] show-hand
+[Player: krisi] [Time: 2025-02-01T18:06:52.875964] show-hand
+[Player: krisi] [Time: 2025-02-01T18:07:02.042451600] play-card--card-id=644dd
+[Player: username] [Time: 2025-02-01T18:07:06.116264400] show-hand
+[Player: username] [Time: 2025-02-01T18:07:10.495884300] draw-card
+[Player: krisi] [Time: 2025-02-01T18:07:15.588989800] show-hand
+[Player: krisi] [Time: 2025-02-01T18:07:49.947252200] draw-card
+[Player: username] [Time: 2025-02-01T18:07:53.434653700] show-hand
+[Player: username] [Time: 2025-02-01T18:07:58.880126300] show-hand
+[Player: username] [Time: 2025-02-01T18:08:05.608622900] play-card--card-id=2145b
+[Player: krisi] [Time: 2025-02-01T18:08:09.409431700] show-hand
+[Player: krisi] [Time: 2025-02-01T18:08:17.172599200] play-card--card-id=2145b
+[Player: krisi] [Time: 2025-02-01T18:08:26.015675700] play-card--card-id=b0fb1
+[Player: krisi] [Time: 2025-02-01T18:08:44.196104] play-card--card-id=de37d
+[Player: username] [Time: 2025-02-01T18:08:48.156059400] show-hand
+[Player: username] [Time: 2025-02-01T18:08:54.209318900] play-card--card-id=bf1a6
+[Player: krisi] [Time: 2025-02-01T18:08:57.787188500] show-hand
+[Player: krisi] [Time: 2025-02-01T18:09:06.022367700] play-card--card-id=b0fb1
+[Player: username] [Time: 2025-02-01T18:09:09.756940500] show-hand
+[Player: username] [Time: 2025-02-01T18:09:45.279817100] play-choose-color--card-id=5e626 --color=red
+[Player: krisi] [Time: 2025-02-01T18:09:51.001125600] draw-card
+[Player: username] [Time: 2025-02-01T18:09:56.828411] show-hand
+[Player: username] [Time: 2025-02-01T18:10:07.358733900] play-card--card-id=2599f
+[Player: username] [Time: 2025-02-01T18:10:11.228755] draw-card
+[Player: username] [Time: 2025-02-01T18:10:27.025163600] play-card--card-id=d530f
+[Player: krisi] [Time: 2025-02-01T18:10:32.199772600] draw-card
+[Player: krisi] [Time: 2025-02-01T18:10:35.643180400] show-hand
+[Player: krisi] [Time: 2025-02-01T18:10:41.267989300] play-card--card-id=ef8e3
+[Player: krisi] [Time: 2025-02-01T18:10:46.173916100] keep
+[Player: username] [Time: 2025-02-01T18:12:28.912571700] play-card--card-id=ef8e3
+[Player: krisi] [Time: 2025-02-01T18:12:36.831911700] draw-card
+[Player: krisi] [Time: 2025-02-01T18:12:49.185062300] keep
+[Player: username] [Time: 2025-02-01T18:12:58.410770900] show-hand
+[Player: username] [Time: 2025-02-01T18:13:23.859510300] play-choose-color--card-id=da5e9 --color=blue
+[Player: username] [Time: 2025-02-01T18:13:58.016197700] play-plus-four--card-id=2de8d --color=red
+[Player: username] [Time: 2025-02-01T18:14:12.956796900] play-plus-four--card-id=da5e9 --color=red
+[Player: username] [Time: 2025-02-01T18:14:17.636452200] show-hand
+[Player: username] [Time: 2025-02-01T18:15:12.451142400] show-hand
+[Player: username] [Time: 2025-02-01T18:15:18.503661500] draw-card
+[Player: username] [Time: 2025-02-01T18:15:36.391603700] play-plus-four--card-id=97b5b --color=blue
+[Player: username] [Time: 2025-02-01T18:15:40.306650700] show-hand
+[Player: username] [Time: 2025-02-01T18:15:54.484339200] play-card--card-id=71728

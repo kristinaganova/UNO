@@ -27,7 +27,7 @@ class CommandExecutorTest {
     @Test
     void testExecuteCommandSuccessfully() throws CommandExecutionException {
         when(commandFactoryMock.createCommand("test", clientMock)).thenReturn(commandMock);
-        when(commandMock.execute(commandName, null)).thenReturn("Command executed successfully");
+        when(commandMock.execute("test", null)).thenReturn("Command executed successfully");
 
         String result = commandExecutor.executeCommand("test", null, clientMock);
         assertEquals("Command executed successfully", result, "Command should execute successfully.");

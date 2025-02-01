@@ -27,7 +27,7 @@ class LogoutCommandTest {
     void testExecuteWhenUserIsNotLoggedIn() {
         when(mockUserManager.isLoggedIn(mockClient)).thenReturn(false);
 
-        String result = logoutCommand.execute(commandName, new String[]{});
+        String result = logoutCommand.execute("logout", new String[]{});
 
         assertEquals("You are not logged in.", result);
         verify(mockUserManager, never()).logout(any());
@@ -37,7 +37,7 @@ class LogoutCommandTest {
     void testExecuteWhenUserIsLoggedIn() {
         when(mockUserManager.isLoggedIn(mockClient)).thenReturn(true);
 
-        String result = logoutCommand.execute(commandName, new String[]{});
+        String result = logoutCommand.execute("logout", new String[]{});
 
         assertEquals("Logout successful.", result);
         verify(mockUserManager, times(1)).logout(mockClient);

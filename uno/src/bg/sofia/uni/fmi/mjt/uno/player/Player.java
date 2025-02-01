@@ -19,7 +19,7 @@ public class Player {
     private SocketChannel client;
     private final AtomicBoolean unoCalled;
     private final AtomicBoolean isOnline;
-    private volatile Game currentGame;
+    private Game currentGame;
 
     public Player(Account account, SocketChannel client) {
         if (account == null || client == null) {

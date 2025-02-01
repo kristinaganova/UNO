@@ -1,15 +1,16 @@
 package bg.sofia.uni.fmi.mjt.uno.player.account;
 
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.nio.channels.SocketChannel;
 import java.lang.reflect.Field;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class UserManagerTest {
     private UserManager userManager;
 
@@ -64,10 +65,31 @@ class UserManagerTest {
     }
 
     @Test
+    void testConcurrentLogins() {
+        userManager.createAccount("user1", "password123");
+        userManager.createAccount("user2", "password456");
+
+        SocketChannel client1 = mock(SocketChannel.class);
+        SocketChannel client2 = mock(SocketChannel.class);
+
+        assertTrue(userManager.login(client1, "user1"), "User1 should be able to log in.");
+        assertTrue(userManager.login(client2, "user2"), "User2 should be able to log in simultaneously.");
+    }
+
+    @Test
     void testLoginWithInvalidUserThrowsException() {
         SocketChannel mockClient = mock(SocketChannel.class);
         assertThrows(IllegalArgumentException.class, () -> userManager.login(mockClient, "nonexistentUser"),
                 "Should throw exception for invalid username.");
+    }
+
+    @Test
+    void testLoginWithWrongPasswordFails() {
+        userManager.createAccount("testUser", "password123");
+        SocketChannel mockClient = mock(SocketChannel.class);
+
+        assertFalse(userManager.validateCredentials("testUser", "wrongPassword"),
+                "Logging in with an incorrect password should fail.");
     }
 
     @Test
@@ -78,6 +100,16 @@ class UserManagerTest {
 
         assertTrue(userManager.logout(mockClient), "User should be able to log out.");
         assertFalse(userManager.isLoggedIn(mockClient), "User should not be logged in after logout.");
+    }
+
+    @Test
+    void testLogoutTwice() {
+        userManager.createAccount("testUser", "password123");
+        SocketChannel mockClient = mock(SocketChannel.class);
+        userManager.login(mockClient, "testUser");
+
+        assertTrue(userManager.logout(mockClient), "First logout should succeed.");
+        assertFalse(userManager.logout(mockClient), "Second logout should fail.");
     }
 
     @Test
@@ -136,6 +168,12 @@ class UserManagerTest {
         SocketChannel mockClient = mock(SocketChannel.class);
         assertThrows(IllegalStateException.class, () -> userManager.getOrCreatePlayer("nonexistentUser", mockClient),
                 "Fetching a player for a nonexistent user should throw an exception.");
+    }
+
+    @Test
+    void testGetPlayerByUsernameFailsForNonExistentUser() {
+        assertThrows(IllegalStateException.class, () -> userManager.getPlayerByUsername("nonexistentUser"),
+                "Fetching a player that doesn't exist should throw an exception.");
     }
 
     @Test

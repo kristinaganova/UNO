@@ -1,6 +1,5 @@
 package bg.sofia.uni.fmi.mjt.uno.game;
 
-import bg.sofia.uni.fmi.mjt.uno.exceptions.game.GameIsFullException;
 import bg.sofia.uni.fmi.mjt.uno.exceptions.game.NotEnoughPlayersException;
 import bg.sofia.uni.fmi.mjt.uno.exceptions.player.PlayerNotPermittedException;
 

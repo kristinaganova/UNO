@@ -45,7 +45,6 @@ public class DrawCardCommand extends PlayerCommand {
 
     private String keepDrawnCard(Card drawnCard) {
         game.advanceTurn();
-        player.getHand().addDrawnCardToHand();
         return "You drew: " + drawnCard.getCardDescription() + " and kept it.";
     }
 }

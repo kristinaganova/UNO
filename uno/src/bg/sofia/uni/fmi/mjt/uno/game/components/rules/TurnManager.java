@@ -14,16 +14,18 @@ public class TurnManager {
     private final GameMessenger gameMessenger;
 
     public TurnManager(List<Player> players, GameMessenger gameMessenger) {
+        if (players == null) {
+            throw new IllegalArgumentException("players cannot be null");
+        }
 
-        if (players == null || players.size() < 2) {
-            throw new IllegalArgumentException("At least 2 players are required to start the game.");
+        if (gameMessenger == null) {
+            throw new IllegalArgumentException("gameMessenger cannot be null");
         }
 
         this.players = players;
         this.currentPlayerIndex = 0;
         this.isReversed = false;
         this.gameMessenger = gameMessenger;
-
     }
 
     public Player getCurrentPlayer() {
@@ -34,16 +36,13 @@ public class TurnManager {
     }
 
     public Player getNextPlayer() {
-
         int nextIndex = isReversed
                 ? (currentPlayerIndex - 1 + players.size()) % players.size()
                 : (currentPlayerIndex + 1) % players.size();
         return players.get(nextIndex);
-
     }
 
     public void advanceTurn() {
-
         if (players.stream().noneMatch(Player::isOnline)) {
             throw new NoOnlinePlayersException("No online players available to take a turn.");
         }
@@ -53,7 +52,6 @@ public class TurnManager {
                     ? (currentPlayerIndex - 1 + players.size()) % players.size()
                     : (currentPlayerIndex + 1) % players.size();
         } while (!players.get(currentPlayerIndex).isOnline());
-
     }
 
     public void announceTurn() {

@@ -26,7 +26,7 @@ class PickColorEffectTest {
     @Test
     void testApplyEffectAdvancesTurn() {
         pickColorEffect.applyEffect(mockGame);
-        verify(mockTurnManager, times(1)).advanceTurn();
+        verify(mockGame, times(1)).advanceTurn();
     }
 
     @Test

@@ -7,22 +7,24 @@ import bg.sofia.uni.fmi.mjt.uno.exceptions.player.PlayerNotPermittedException;
 import bg.sofia.uni.fmi.mjt.uno.game.Game;
 import bg.sofia.uni.fmi.mjt.uno.player.Player;
 import bg.sofia.uni.fmi.mjt.uno.player.account.Account;
+import bg.sofia.uni.fmi.mjt.uno.player.Hand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 class GameManagerTest {
-
     private GameManager gameManager;
     private Player mockPlayer1;
     private Player mockPlayer2;
     private Account mockAccount1;
     private Account mockAccount2;
+    private Hand mockHand1;
+    private Hand mockHand2;
 
     @BeforeEach
-    void setUp() {;
+    void setUp() {
         gameManager = GameManager.getInstance();
         gameManager.clearGames();
 
@@ -30,20 +32,37 @@ class GameManagerTest {
         mockAccount2 = mock(Account.class);
         mockPlayer1 = mock(Player.class);
         mockPlayer2 = mock(Player.class);
+        mockHand1 = mock(Hand.class);  // 🔹 Mocking the hand
+        mockHand2 = mock(Hand.class);  // 🔹 Mocking the hand
 
         when(mockAccount1.getUsername()).thenReturn("player1");
         when(mockAccount2.getUsername()).thenReturn("player2");
+
         when(mockPlayer1.getAccount()).thenReturn(mockAccount1);
         when(mockPlayer2.getAccount()).thenReturn(mockAccount2);
 
         when(mockPlayer1.isOnline()).thenReturn(true);
         when(mockPlayer2.isOnline()).thenReturn(true);
+
+        // 🔹 Ensure `getHand()` returns a valid mock object
+        when(mockPlayer1.getHand()).thenReturn(mockHand1);
+        when(mockPlayer2.getHand()).thenReturn(mockHand2);
+
+        // 🔹 Preventing NullPointerException when adding cards
+        doNothing().when(mockHand1).addCard(any());
+        doNothing().when(mockHand2).addCard(any());
     }
 
     @Test
     void testCreateGameSuccess() {
         assertDoesNotThrow(() -> gameManager.createGame("game1", 3, mockPlayer1));
         assertTrue(gameManager.doesGameExist("game1"));
+    }
+
+    @Test
+    void testJoinGameSuccess() {
+        gameManager.createGame("game1", 3, mockPlayer1);
+        assertDoesNotThrow(() -> gameManager.joinGame("game1", mockPlayer2));
     }
 
     @Test
@@ -56,12 +75,6 @@ class GameManagerTest {
     void testCreateGameFailInvalidPlayersCount() {
         assertThrows(IllegalArgumentException.class, () -> gameManager.createGame("game1", 1, mockPlayer1));
         assertThrows(IllegalArgumentException.class, () -> gameManager.createGame("game1", 11, mockPlayer1));
-    }
-
-    @Test
-    void testJoinGameSuccess() {
-        gameManager.createGame("game1", 3, mockPlayer1);
-        assertDoesNotThrow(() -> gameManager.joinGame("game1", mockPlayer2));
     }
 
     @Test

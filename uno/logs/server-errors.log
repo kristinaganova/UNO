@@ -19628,3 +19628,1095 @@ java.nio.channels.ClosedChannelException
 	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
 	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
 	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.560088400
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.560088400
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.560088400
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.560088400
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.560088400
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.560088400
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.560088400
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.560088400
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:435)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.560088400
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.560088400
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.559083600
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.561496700
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.561496700
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.561496700
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.561496700
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.561496700
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.561496700
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.561496700
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.561496700
+Client Info: Username: krisi, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: krisi, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.563005800
+Client Info: Username: Unknown, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: Unknown, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.563005800
+Client Info: Username: Unknown, Address: /127.0.0.1:52008
+Log Level: ERROR
+Message: Error occurred while handling client: Username: Unknown, Address: /127.0.0.1:52008
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.566502700
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.567709700
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.567709700
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.567709700
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.567709700
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.567709700
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.567709700
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.567709700
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.567709700
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.569212600
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.567709700
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.567709700
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.569212600
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.567709700
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.569212600
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.569212600
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.569212600
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.569212600
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.569212600
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.569212600
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.569212600
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.569212600
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.569212600
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.569212600
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.569212600
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.569212600
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.569212600
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.569212600
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.569212600
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.569212600
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.569212600
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.569212600
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.569212600
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.569212600
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.569212600
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.569212600
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.nio.channels.ClosedChannelException
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpenAndConnected(SocketChannelImpl.java:224)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:411)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+===================================================
+Timestamp: 2025-02-01T18:05:31.569212600
+Client Info: Unknown (error retrieving client info)
+Log Level: ERROR
+Message: Error occurred while handling client: Unknown (error retrieving client info)
+Stacktrace:
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:403)
+	at java.base/sun.nio.ch.SocketChannelImpl.implRead(SocketChannelImpl.java:419)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:493)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.readMessageFromClient(ClientHandler.java:54)
+	at bg.sofia.uni.fmi.mjt.uno.server.ClientHandler.run(ClientHandler.java:29)
+	at java.base/java.lang.Thread.run(Thread.java:1575)

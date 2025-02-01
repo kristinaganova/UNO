@@ -20,6 +20,8 @@ public class KeepCommand extends PlayerCommand {
 
         player.getHand().setLastDrawnCard(null);
 
+        game.getGameMessenger().notifyAll("Player: " + player.getAccount().getUsername() + " drew a card");
+
         game.advanceTurn();
 
         return "You kept the card.";
