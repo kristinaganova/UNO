@@ -41,7 +41,8 @@ public class CommandLogger {
         }
 
         try {
-            Files.writeString(logFilePath, command + System.lineSeparator(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+            Files.writeString(logFilePath, command + System.lineSeparator(),
+                    StandardOpenOption.CREATE, StandardOpenOption.APPEND);
             System.out.println("Logged command: " + command);
         } catch (IOException e) {
             throw new IllegalStateException("Could not log command: " + command, e);

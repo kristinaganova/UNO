@@ -7,22 +7,27 @@ import bg.sofia.uni.fmi.mjt.uno.server.player.account.UserManager;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class UnoServer {
 
     private final Selector selector;
     private final CommandExecutor commandExecutor;
+    private final ExecutorService clientThreadPool;
+    private volatile boolean running = true;
     private final UserManager userManager;
-    private static final int BUFFER_SIZE = 1024;
+
+    private static final int THREAD_POOL_SIZE = 10;
 
     public UnoServer(int port) throws IOException {
         this.selector = Selector.open();
+        this.clientThreadPool = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
 
         GameManager gameManager = GameManager.getInstance();
         this.userManager = UserManager.getInstance();
@@ -37,7 +42,7 @@ public class UnoServer {
     }
 
     public void start() throws IOException {
-        while (true) {
+        while (running) {
             selector.select();
             Iterator<SelectionKey> keys = selector.selectedKeys().iterator();
 
@@ -49,7 +54,7 @@ public class UnoServer {
                     if (key.isAcceptable()) {
                         acceptConnection((ServerSocketChannel) key.channel());
                     } else if (key.isReadable()) {
-                        handleClientRequest(key);
+                        processClientRequest(key);
                     }
                 } catch (IOException e) {
                     key.cancel();
@@ -66,79 +71,21 @@ public class UnoServer {
         System.out.println("New client connected: " + client.getRemoteAddress());
     }
 
-    private void handleClientRequest(SelectionKey key) {
+    private void processClientRequest(SelectionKey key) {
         SocketChannel client = (SocketChannel) key.channel();
-        ByteBuffer buffer = ByteBuffer.allocate(BUFFER_SIZE);
-
-        try {
-            int bytesRead = client.read(buffer);
-            if (bytesRead == -1) {
-                handleClientDisconnection(client);
-                return;
-            }
-
-            buffer.flip();
-            String message = new String(buffer.array(), 0, buffer.limit()).trim();
-
-            if (!message.isEmpty()) {
-                System.out.println("Received from client: " + message);
-                processCommand(client, message);
-            }
-
-        } catch (IOException e) {
-            handleClientDisconnection(client);
-        }
+        clientThreadPool.execute(new ClientHandler(client, commandExecutor));
     }
 
-    private void processCommand(SocketChannel client, String message) {
-        try {
-            String[] parts = message.split(" ", 2);
-            String commandName = parts[0];
-            String[] args = parts.length > 1 ? parts[1].split(" ") : new String[0];
-
-            System.out.println("Executing Command: " + commandName + " Args: " + String.join(", ", args));
-
-            String response = commandExecutor.executeCommand(commandName, args, client);
-
-            if (response != null) {
-                sendMessageToClient(client, response);
-            }
-        } catch (Exception e) {
-            System.err.println("Error processing command: " + e.getMessage());
-            sendMessageToClient(client, "Error: Failed to execute command.");
-        }
+    public void stop() {
+        running = false;
+        selector.wakeup();
+        clientThreadPool.shutdown();
     }
-
-    private void sendMessageToClient(SocketChannel client, String message) {
-        try {
-            ByteBuffer buffer = ByteBuffer.wrap((message + System.lineSeparator()).getBytes());
-            client.write(buffer);
-            System.out.println("Sent to client: " + message);
-        } catch (IOException e) {
-            System.err.println("Error sending message: " + e.getMessage());
-        }
-    }
-
-    private void handleClientDisconnection(SocketChannel client) {
-        try {
-            String username = userManager.getLoggedInUsername(client);
-            if (username != null) {
-                System.out.println("Client disconnected: " + username);
-                userManager.logout(client);
-            } else {
-                System.out.println("Unlogged client disconnected: " + client.getRemoteAddress());
-            }
-            client.close();
-        } catch (IOException e) {
-            System.err.println("Error closing client connection: " + e.getMessage());
-        }
-    }
-
-    private static final int PORT = 1503;
 
     public static void main(String[] args) {
+        final int port = 1503;
         try {
-            UnoServer server = new UnoServer(PORT);
+            UnoServer server = new UnoServer(port);
             server.start();
         } catch (IOException e) {
             e.printStackTrace();

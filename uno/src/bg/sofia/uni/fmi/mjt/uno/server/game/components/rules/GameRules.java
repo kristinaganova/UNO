@@ -5,9 +5,7 @@ import bg.sofia.uni.fmi.mjt.uno.server.player.Player;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 public class GameRules {
     private final PlayerRegistry playerRegistry;

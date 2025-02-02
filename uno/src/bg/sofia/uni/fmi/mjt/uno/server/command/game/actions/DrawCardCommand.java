@@ -17,7 +17,7 @@ public class DrawCardCommand extends PlayerCommand {
 
         Card drawnCard = game.getDeckHandler().drawCard(player);
         player.getHand().setLastDrawnCard(drawnCard);
-        notifyCardDrawn(drawnCard);
+        notifyCardDrawn();
 
         if (isCardPlayable(drawnCard)) {
             return promptPlayOrKeep(drawnCard);
@@ -25,7 +25,7 @@ public class DrawCardCommand extends PlayerCommand {
         return keepDrawnCard(drawnCard);
     }
 
-    private void notifyCardDrawn(Card drawnCard) {
+    private void notifyCardDrawn() {
         game.getGameMessenger().notifyAll("Player: " + player.getAccount().username() + " drew a card.");
     }
 

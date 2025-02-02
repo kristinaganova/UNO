@@ -186,7 +186,7 @@ public class Game {
         summary.append("Creator: ").append(creator.getAccount().username()).append(System.lineSeparator());
         summary.append("State: ").append(gameState).append(System.lineSeparator());
 
-        summary.append("Players:" + System.lineSeparator());
+        summary.append("Players:").append(System.lineSeparator());
         AtomicInteger rank = new AtomicInteger(1);
         playerRegistry.getPlayers().forEach(player -> summary.append(rank.getAndIncrement())
                 .append(". ")

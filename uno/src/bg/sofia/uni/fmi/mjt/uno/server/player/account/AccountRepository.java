@@ -30,7 +30,8 @@ public class AccountRepository {
 
     public void saveAccounts(Map<String, Account> accounts) {
         try (ObjectOutputStream oos = new ObjectOutputStream(
-                Files.newOutputStream(usersFilePath, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING))) {
+                Files.newOutputStream(usersFilePath, StandardOpenOption.CREATE,
+                        StandardOpenOption.TRUNCATE_EXISTING))) {
             oos.writeObject(accounts);
             System.out.println(MESSAGE_ACCOUNTS_SAVED + usersFilePath);
         } catch (IOException e) {

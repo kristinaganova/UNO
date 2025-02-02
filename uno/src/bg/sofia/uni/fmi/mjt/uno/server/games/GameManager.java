@@ -20,11 +20,9 @@ public class GameManager {
     }
 
     public static GameManager getInstance() {
-        if (instance == null) {
-            synchronized (GameManager.class) {
-                if (instance == null) {
-                    instance = new GameManager();
-                }
+        synchronized (GameManager.class) {
+            if (instance == null) {
+                instance = new GameManager();
             }
         }
         return instance;

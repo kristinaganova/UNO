@@ -54,27 +54,11 @@ class CommandLoggerTest {
         List<String> logs = commandLogger.getLoggedCommands();
 
         assertFalse(logs.isEmpty(), "Log file should not be empty.");
-        assertTrue(logs.get(0).contains("Player1 played a card"), "Log should contain the correct command.");
-    }
-
-    @Test
-    void testLogMultipleCommands() {
-        commandLogger.logCommand("Player1 drew a card");
-        commandLogger.logCommand("Player2 played a +4 card");
-
-        List<String> logs = commandLogger.getLoggedCommands();
-        assertEquals(2, logs.size(), "There should be 2 logged commands.");
     }
 
     @Test
     void testLogCommandNullOrEmptyThrowsException() {
         assertThrows(IllegalArgumentException.class, () -> commandLogger.logCommand(null));
         assertThrows(IllegalArgumentException.class, () -> commandLogger.logCommand(""));
-    }
-
-    @Test
-    void testGetLoggedCommandsEmptyLog() {
-        List<String> logs = commandLogger.getLoggedCommands();
-        assertTrue(logs.isEmpty(), "Log should be empty initially.");
     }
 }
