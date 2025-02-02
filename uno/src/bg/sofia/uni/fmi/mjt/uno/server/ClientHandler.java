@@ -1,10 +1,10 @@
 package bg.sofia.uni.fmi.mjt.uno.server;
 
-import bg.sofia.uni.fmi.mjt.uno.command.CommandExecutor;
-import bg.sofia.uni.fmi.mjt.uno.game.Game;
-import bg.sofia.uni.fmi.mjt.uno.games.GameManager;
-import bg.sofia.uni.fmi.mjt.uno.loggers.ErrorLogger;
-import bg.sofia.uni.fmi.mjt.uno.player.account.UserManager;
+import bg.sofia.uni.fmi.mjt.uno.server.command.CommandExecutor;
+import bg.sofia.uni.fmi.mjt.uno.server.game.Game;
+import bg.sofia.uni.fmi.mjt.uno.server.games.GameManager;
+import bg.sofia.uni.fmi.mjt.uno.server.loggers.ErrorLogger;
+import bg.sofia.uni.fmi.mjt.uno.server.player.account.UserManager;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

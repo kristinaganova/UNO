@@ -11,39 +11,70 @@ import java.util.Scanner;
 
 public class UnoClient {
     private static final int BUFFER_CAPACITY = 1024;
-    private final SocketChannel socketChannel;
-    private final ByteBuffer buffer;
-    private final Selector selector;
-    private volatile boolean running = true;
+    private static final int RECONNECT_DELAY_MS = 5000;
+    private static final int MAX_RECONNECT_ATTEMPTS = 5;
 
-    public UnoClient(String host, int port) throws IOException {
-        this.socketChannel = SocketChannel.open();
-        this.socketChannel.configureBlocking(false);
-        this.socketChannel.connect(new InetSocketAddress(host, port));
+    private SocketChannel socketChannel;
+    private ByteBuffer buffer;
+    private Selector selector;
+    private boolean running = true;
+    private boolean isConnected = false;
 
-        this.selector = Selector.open();
-        socketChannel.register(selector, SelectionKey.OP_CONNECT | SelectionKey.OP_READ);
+    private final String host;
+    private final int port;
+    private final Object lock = new Object();
 
-        this.buffer = ByteBuffer.allocate(BUFFER_CAPACITY);
-        System.out.println("Connecting to server at " + host + ":" + port);
+    public UnoClient(String host, int port) {
+        this.host = host;
+        this.port = port;
+    }
 
-        while (!socketChannel.finishConnect()) {
-            // Wait for connection to establish
+    public void connect() throws IOException {
+        synchronized (lock) {
+            this.socketChannel = SocketChannel.open();
+            this.socketChannel.configureBlocking(false);
+            this.socketChannel.connect(new InetSocketAddress(host, port));
+
+            this.selector = Selector.open();
+            socketChannel.register(selector, SelectionKey.OP_CONNECT | SelectionKey.OP_READ);
+
+            this.buffer = ByteBuffer.allocate(BUFFER_CAPACITY);
+            System.out.println("Connecting to server at " + host + ":" + port);
+
+            while (!socketChannel.finishConnect()) {
+                // Wait for connection to establish
+            }
+
+            isConnected = true;
+            lock.notifyAll();
+            System.out.println("Connected!");
         }
-        System.out.println("Connected!");
     }
 
     public void start() {
-        Thread listenerThread = new Thread(this::listenForMessages);
-        listenerThread.setDaemon(true);
-        listenerThread.start();
+        try {
+            connect();
 
-        handleUserInput();
+            Thread listenerThread = new Thread(this::listenForMessages);
+            listenerThread.setDaemon(true);
+            listenerThread.start();
+
+            handleUserInput();
+        } catch (IOException e) {
+            System.err.println("Failed to connect: " + e.getMessage());
+            attemptReconnect();
+        }
     }
 
-    protected void listenForMessages() {
+    private void listenForMessages() {
         try {
             while (running) {
+                synchronized (lock) {
+                    while (!isConnected) {
+                        lock.wait();
+                    }
+                }
+
                 if (selector.select() > 0) {
                     Iterator<SelectionKey> keyIterator = selector.selectedKeys().iterator();
 
@@ -57,9 +88,9 @@ public class UnoClient {
                     }
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             System.err.println("Lost connection to server: " + e.getMessage());
-            running = false;
+            attemptReconnect();
         }
     }
 
@@ -76,8 +107,7 @@ public class UnoClient {
             }
         } else if (bytesRead == -1) {
             System.out.println("Server closed the connection.");
-            running = false;
-            closeConnection();
+            attemptReconnect();
         }
     }
 
@@ -96,26 +126,71 @@ public class UnoClient {
 
                 sendMessage(command);
             }
-        } catch (IOException e) {
-            System.err.println("Error while sending messages: " + e.getMessage());
+
         } finally {
             closeConnection();
         }
     }
 
-    protected void sendMessage(String message) throws IOException {
-        ByteBuffer writeBuffer = ByteBuffer.wrap((message + "\n").getBytes());
-        socketChannel.write(writeBuffer);
+    private void sendMessage(String message) {
+        synchronized (lock) {
+            while (!isConnected) {
+                try {
+                    System.out.println("Waiting for reconnection...");
+                    lock.wait();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    System.err.println("Interrupted while waiting for reconnection.");
+                    return;
+                }
+            }
+
+            try {
+                ByteBuffer writeBuffer = ByteBuffer.wrap((message + System.lineSeparator()).getBytes());
+                socketChannel.write(writeBuffer);
+            } catch (IOException e) {
+                System.err.println("Error sending message: " + e.getMessage());
+                attemptReconnect();
+            }
+        }
     }
 
-    protected void closeConnection() {
-        try {
-            running = false;
-            socketChannel.close();
-            selector.close();
-            System.out.println("Connection closed.");
-        } catch (IOException e) {
-            System.err.println("Error closing connection: " + e.getMessage());
+    private void attemptReconnect() {
+        closeConnection();
+
+        System.out.println("Attempting to reconnect...");
+        int attempts = 0;
+
+        while (running && attempts < MAX_RECONNECT_ATTEMPTS) {
+            try {
+                System.out.println("Reconnect attempt " + (attempts + 1) + " of " + MAX_RECONNECT_ATTEMPTS);
+                Thread.sleep(RECONNECT_DELAY_MS);
+                connect();
+                System.out.println("Reconnected successfully!");
+                return;
+            } catch (IOException | InterruptedException e) {
+                attempts++;
+                System.err.println("Reconnect attempt " + attempts + " failed, retrying...");
+            }
+        }
+
+        System.err.println("Max reconnection attempts reached. Giving up.");
+        running = false;
+    }
+
+    private void closeConnection() {
+        synchronized (lock) {
+            try {
+                isConnected = false;
+                if (socketChannel != null && socketChannel.isOpen()) {
+                    socketChannel.close();
+                }
+                if (selector != null) {
+                    selector.close();
+                }
+            } catch (IOException e) {
+                System.err.println("Error closing connection: " + e.getMessage());
+            }
         }
     }
 
@@ -123,15 +198,7 @@ public class UnoClient {
         final String host = "localhost";
         final int port = 1503;
 
-        try {
-            UnoClient client = new UnoClient(host, port);
-            client.start();
-        } catch (IOException e) {
-            System.err.println("Failed to connect to server: " + e.getMessage());
-        }
-    }
-
-    public SocketChannel getSocketChannel() {
-        return socketChannel;
+        UnoClient client = new UnoClient(host, port);
+        client.start();
     }
 }

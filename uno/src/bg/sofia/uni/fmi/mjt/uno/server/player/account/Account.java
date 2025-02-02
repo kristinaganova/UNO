@@ -1,0 +1,21 @@
+package bg.sofia.uni.fmi.mjt.uno.server.player.account;
+
+import java.io.Serializable;
+
+public record Account(String username, String passwordHash) implements Serializable {
+    private static final long serialVersionUID = 6454870410141989623L;
+
+    public Account {
+        if (username == null || username.isBlank()) {
+            throw new IllegalArgumentException("Username cannot be null or blank.");
+        }
+        if (passwordHash == null || passwordHash.isBlank()) {
+            throw new IllegalArgumentException("Password hash cannot be null or blank.");
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Account{username='" + username + "'}";
+    }
+}
