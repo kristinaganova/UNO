@@ -1,15 +1,17 @@
 package bg.sofia.uni.fmi.mjt.uno.server.command.factory;
 
 import bg.sofia.uni.fmi.mjt.uno.server.command.Command;
+import bg.sofia.uni.fmi.mjt.uno.server.command.factory.types.GameInfoCommand;
 import bg.sofia.uni.fmi.mjt.uno.server.command.game.info.ShowHandCommand;
 import bg.sofia.uni.fmi.mjt.uno.server.command.game.info.ShowLastCardCommand;
 import bg.sofia.uni.fmi.mjt.uno.server.command.game.info.ShowPlayedCardsCommand;
 import bg.sofia.uni.fmi.mjt.uno.server.exceptions.command.CommandNotFoundException;
-import bg.sofia.uni.fmi.mjt.uno.server.game.Game;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.Game;
 import bg.sofia.uni.fmi.mjt.uno.server.player.Player;
 import bg.sofia.uni.fmi.mjt.uno.server.player.account.UserManager;
 
 import java.nio.channels.SocketChannel;
+import java.util.Arrays;
 
 public class GameInfoCommandFactory {
     private final UserManager userManager;
@@ -19,22 +21,29 @@ public class GameInfoCommandFactory {
     }
 
     public boolean supports(String commandName) {
-        return switch (commandName) {
-            case "show-hand", "show-last-card", "show-played-cards" -> true;
-            default -> false;
-        };
+        return Arrays.stream(GameInfoCommand.values())
+                .anyMatch(command -> command.getCommand().equals(commandName));
     }
 
     public Command createCommand(String commandName, SocketChannel client) {
         Player player = getPlayer(client);
         Game game = getGame(client);
 
-        return switch (commandName) {
-            case "show-hand" -> new ShowHandCommand(player, game);
-            case "show-last-card" -> new ShowLastCardCommand(player, game);
-            case "show-played-cards" -> new ShowPlayedCardsCommand(player, game);
-            default -> throw new CommandNotFoundException("Unknown command: " + commandName);
-        };
+        if (!supports(commandName)) {
+            throw new CommandNotFoundException(commandName);
+        }
+
+        for (GameInfoCommand command : GameInfoCommand.values()) {
+            if (command.getCommand().equals(commandName)) {
+                return switch (command) {
+                    case SHOW_HAND -> new ShowHandCommand(player, game);
+                    case SHOW_LAST_CARD -> new ShowLastCardCommand(player, game);
+                    case SHOW_PLAYED_CARDS -> new ShowPlayedCardsCommand(player, game);
+                };
+            }
+        }
+
+        throw new CommandNotFoundException("Unknown command: " + commandName);
     }
 
     private Player getPlayer(SocketChannel client) {

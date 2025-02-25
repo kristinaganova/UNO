@@ -4,7 +4,7 @@ import bg.sofia.uni.fmi.mjt.uno.server.exceptions.game.GameAlreadyExistsExceptio
 import bg.sofia.uni.fmi.mjt.uno.server.exceptions.game.GameNotAvailableException;
 import bg.sofia.uni.fmi.mjt.uno.server.exceptions.game.GameNotFoundException;
 import bg.sofia.uni.fmi.mjt.uno.server.exceptions.player.PlayerNotPermittedException;
-import bg.sofia.uni.fmi.mjt.uno.server.game.Game;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.Game;
 import bg.sofia.uni.fmi.mjt.uno.server.games.GameManager;
 import bg.sofia.uni.fmi.mjt.uno.server.player.Player;
 import bg.sofia.uni.fmi.mjt.uno.server.player.account.Account;

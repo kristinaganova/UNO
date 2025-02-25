@@ -1,6 +1,7 @@
 package bg.sofia.uni.fmi.mjt.uno.server.command.factory;
 
 import bg.sofia.uni.fmi.mjt.uno.server.command.Command;
+import bg.sofia.uni.fmi.mjt.uno.server.command.factory.types.GameManagementCommand;
 import bg.sofia.uni.fmi.mjt.uno.server.command.management.CreateGameCommand;
 import bg.sofia.uni.fmi.mjt.uno.server.command.management.JoinCommand;
 import bg.sofia.uni.fmi.mjt.uno.server.command.management.ListGamesCommand;
@@ -11,6 +12,7 @@ import bg.sofia.uni.fmi.mjt.uno.server.games.GameManager;
 import bg.sofia.uni.fmi.mjt.uno.server.player.account.UserManager;
 
 import java.nio.channels.SocketChannel;
+import java.util.Arrays;
 
 public class GameManagementCommandFactory {
     private final UserManager userManager;
@@ -22,20 +24,26 @@ public class GameManagementCommandFactory {
     }
 
     public boolean supports(String commandName) {
-        return switch (commandName) {
-            case "create-game", "list-games", "join", "start", "summary" -> true;
-            default -> false;
-        };
+        return Arrays.stream(GameManagementCommand.values())
+                .anyMatch(command -> command.getCommand().equals(commandName));
     }
 
     public Command createCommand(String commandName, SocketChannel client) {
-        return switch (commandName) {
-            case "create-game" -> new CreateGameCommand(gameManager, userManager, client);
-            case "list-games" -> new ListGamesCommand(gameManager);
-            case "join" -> new JoinCommand(gameManager, userManager, client);
-            case "start" -> new StartCommand(gameManager, userManager, client);
-            case "summary" -> new SummaryCommand(gameManager);
-            default -> throw new CommandNotFoundException("Unknown command: " + commandName);
-        };
+        if (!supports(commandName)) {
+            throw new CommandNotFoundException(commandName);
+        }
+
+        for (GameManagementCommand command : GameManagementCommand.values()) {
+            if (command.getCommand().equals(commandName)) {
+                return switch (command) {
+                    case CREATE -> new CreateGameCommand(gameManager, userManager, client);
+                    case LIST -> new ListGamesCommand(gameManager);
+                    case JOIN -> new JoinCommand(gameManager, userManager, client);
+                    case START -> new StartCommand(gameManager, userManager, client);
+                    case SUMMARY -> new SummaryCommand(gameManager);
+                };
+            }
+        }
+        throw new CommandNotFoundException("Unknown command: " + commandName);
     }
 }

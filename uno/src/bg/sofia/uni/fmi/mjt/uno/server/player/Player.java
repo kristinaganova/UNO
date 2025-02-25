@@ -1,7 +1,7 @@
 package bg.sofia.uni.fmi.mjt.uno.server.player;
 
 import bg.sofia.uni.fmi.mjt.uno.server.card.models.Card;
-import bg.sofia.uni.fmi.mjt.uno.server.game.Game;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.Game;
 import bg.sofia.uni.fmi.mjt.uno.server.player.account.Account;
 
 import java.io.IOException;

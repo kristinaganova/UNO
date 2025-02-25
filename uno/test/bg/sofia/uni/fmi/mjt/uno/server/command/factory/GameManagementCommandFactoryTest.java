@@ -82,6 +82,6 @@ class GameManagementCommandFactoryTest {
     void testCreateCommandThrowsExceptionForUnknownCommand() {
         Exception exception = assertThrows(CommandNotFoundException.class,
                 () -> gameManagementCommandFactory.createCommand("unknown-command", mockClient));
-        assertEquals("Unknown command: unknown-command", exception.getMessage());
+        assertEquals("unknown-command", exception.getMessage());
     }
 }

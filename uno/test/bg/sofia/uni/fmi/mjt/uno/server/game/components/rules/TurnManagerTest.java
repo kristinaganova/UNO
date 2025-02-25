@@ -1,8 +1,8 @@
-package bg.sofia.uni.fmi.mjt.uno.server.game.components.rules;
+package bg.sofia.uni.fmi.mjt.uno.server.games.game.components.rules;
 
 import bg.sofia.uni.fmi.mjt.uno.server.exceptions.game.NoOnlinePlayersException;
-import bg.sofia.uni.fmi.mjt.uno.server.game.components.GameMessenger;
-import bg.sofia.uni.fmi.mjt.uno.server.game.components.rules.TurnManager;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.components.GameMessenger;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.components.rules.TurnManager;
 import bg.sofia.uni.fmi.mjt.uno.server.player.Player;
 import bg.sofia.uni.fmi.mjt.uno.server.player.account.Account;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,7 +1,7 @@
 package bg.sofia.uni.fmi.mjt.uno.server.card.strategy;
 
 import bg.sofia.uni.fmi.mjt.uno.server.card.strategy.StandardCardEffect;
-import bg.sofia.uni.fmi.mjt.uno.server.game.Game;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.Game;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.*;

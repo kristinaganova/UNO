@@ -3,7 +3,7 @@ package bg.sofia.uni.fmi.mjt.uno.server.card.models;
 import bg.sofia.uni.fmi.mjt.uno.server.card.strategy.CardEffectStrategy;
 import bg.sofia.uni.fmi.mjt.uno.server.card.types.CardType;
 import bg.sofia.uni.fmi.mjt.uno.server.card.types.Color;
-import bg.sofia.uni.fmi.mjt.uno.server.game.Game;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.Game;
 
 import java.util.UUID;
 

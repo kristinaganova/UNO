@@ -1,9 +1,9 @@
 package bg.sofia.uni.fmi.mjt.uno.server.card.strategy;
 
 import bg.sofia.uni.fmi.mjt.uno.server.card.strategy.ReverseTurnEffect;
-import bg.sofia.uni.fmi.mjt.uno.server.game.Game;
-import bg.sofia.uni.fmi.mjt.uno.server.game.components.rules.TurnManager;
-import bg.sofia.uni.fmi.mjt.uno.server.game.components.PlayerRegistry;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.Game;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.components.rules.TurnManager;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.components.PlayerRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.List;

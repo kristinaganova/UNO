@@ -4,11 +4,14 @@ import bg.sofia.uni.fmi.mjt.uno.server.command.Command;
 import bg.sofia.uni.fmi.mjt.uno.server.command.auth.LoginCommand;
 import bg.sofia.uni.fmi.mjt.uno.server.command.auth.LogoutCommand;
 import bg.sofia.uni.fmi.mjt.uno.server.command.auth.RegisterCommand;
+import bg.sofia.uni.fmi.mjt.uno.server.command.factory.types.AuthCommand;
+import bg.sofia.uni.fmi.mjt.uno.server.command.factory.types.GameActionCommand;
 import bg.sofia.uni.fmi.mjt.uno.server.exceptions.command.CommandNotFoundException;
 import bg.sofia.uni.fmi.mjt.uno.server.games.GameManager;
 import bg.sofia.uni.fmi.mjt.uno.server.player.account.UserManager;
 
 import java.nio.channels.SocketChannel;
+import java.util.Arrays;
 
 public class AuthCommandFactory {
     private final UserManager userManager;
@@ -20,18 +23,25 @@ public class AuthCommandFactory {
     }
 
     public boolean supports(String commandName) {
-        return switch (commandName) {
-            case "register", "login", "logout" -> true;
-            default -> false;
-        };
+        return Arrays.stream(AuthCommand.values())
+                .anyMatch(command -> command.getCommand().equals(commandName));
     }
 
     public Command createCommand(String commandName, SocketChannel client) {
-        return switch (commandName) {
-            case "register" -> new RegisterCommand(userManager);
-            case "login" -> new LoginCommand(userManager, gameManager, client);
-            case "logout" -> new LogoutCommand(userManager, client);
-            default -> throw new CommandNotFoundException("Unknown command: " + commandName);
-        };
+        if (!supports(commandName)) {
+            throw new CommandNotFoundException(commandName);
+        }
+
+        for (AuthCommand command : AuthCommand.values()) {
+            if (command.getCommand().equals(commandName)) {
+                return switch (command) {
+                    case REGISTER -> new RegisterCommand(userManager);
+                    case LOGIN -> new LoginCommand(userManager, gameManager, client);
+                    case LOGOUT -> new LogoutCommand(userManager, client);
+                };
+            }
+        }
+
+        throw new CommandNotFoundException("Unknown command: " + commandName);
     }
 }

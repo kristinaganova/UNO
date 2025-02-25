@@ -7,6 +7,7 @@ import bg.sofia.uni.fmi.mjt.uno.server.player.account.UserManager;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.nio.channels.CancelledKeyException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
@@ -56,6 +57,8 @@ public class UnoServer {
                     } else if (key.isReadable()) {
                         processClientRequest(key);
                     }
+                } catch (CancelledKeyException e) {
+                    System.err.println("Warning: Attempted to use a cancelled key.");
                 } catch (IOException e) {
                     key.cancel();
                     System.err.println("Client connection error: " + e.getMessage());
@@ -86,7 +89,10 @@ public class UnoServer {
         final int port = 1503;
         try {
             UnoServer server = new UnoServer(port);
+            Runtime.getRuntime().addShutdownHook(new Thread(server::stop));
+
             server.start();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

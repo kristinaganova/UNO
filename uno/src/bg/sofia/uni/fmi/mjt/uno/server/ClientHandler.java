@@ -1,7 +1,7 @@
 package bg.sofia.uni.fmi.mjt.uno.server;
 
 import bg.sofia.uni.fmi.mjt.uno.server.command.CommandExecutor;
-import bg.sofia.uni.fmi.mjt.uno.server.game.Game;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.Game;
 import bg.sofia.uni.fmi.mjt.uno.server.games.GameManager;
 import bg.sofia.uni.fmi.mjt.uno.server.loggers.ErrorLogger;
 import bg.sofia.uni.fmi.mjt.uno.server.player.account.UserManager;

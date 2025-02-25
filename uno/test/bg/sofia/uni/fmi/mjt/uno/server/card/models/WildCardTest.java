@@ -8,7 +8,7 @@ import bg.sofia.uni.fmi.mjt.uno.server.card.types.CardType;
 import bg.sofia.uni.fmi.mjt.uno.server.card.types.Color;
 import bg.sofia.uni.fmi.mjt.uno.server.card.types.WildCardType;
 import bg.sofia.uni.fmi.mjt.uno.server.card.types.ActionCardType;
-import bg.sofia.uni.fmi.mjt.uno.server.game.Game;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.Game;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

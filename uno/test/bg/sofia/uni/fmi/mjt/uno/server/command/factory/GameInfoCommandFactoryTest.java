@@ -6,7 +6,7 @@ import bg.sofia.uni.fmi.mjt.uno.server.command.game.info.ShowHandCommand;
 import bg.sofia.uni.fmi.mjt.uno.server.command.game.info.ShowLastCardCommand;
 import bg.sofia.uni.fmi.mjt.uno.server.command.game.info.ShowPlayedCardsCommand;
 import bg.sofia.uni.fmi.mjt.uno.server.exceptions.command.CommandNotFoundException;
-import bg.sofia.uni.fmi.mjt.uno.server.game.Game;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.Game;
 import bg.sofia.uni.fmi.mjt.uno.server.player.Player;
 import bg.sofia.uni.fmi.mjt.uno.server.player.account.UserManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -73,7 +73,7 @@ class GameInfoCommandFactoryTest {
     void testCreateCommandThrowsExceptionForUnknownCommand() {
         Exception exception = assertThrows(CommandNotFoundException.class,
                 () -> gameInfoCommandFactory.createCommand("invalidCommand", mockClient));
-        assertEquals("Unknown command: invalidCommand", exception.getMessage());
+        assertEquals("invalidCommand", exception.getMessage());
     }
 
     @Test

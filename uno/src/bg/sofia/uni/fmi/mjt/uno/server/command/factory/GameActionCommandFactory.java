@@ -1,6 +1,7 @@
 package bg.sofia.uni.fmi.mjt.uno.server.command.factory;
 
 import bg.sofia.uni.fmi.mjt.uno.server.command.Command;
+import bg.sofia.uni.fmi.mjt.uno.server.command.factory.types.GameActionCommand;
 import bg.sofia.uni.fmi.mjt.uno.server.command.game.actions.DrawCardCommand;
 import bg.sofia.uni.fmi.mjt.uno.server.command.game.actions.KeepCommand;
 import bg.sofia.uni.fmi.mjt.uno.server.command.game.actions.LeaveCommand;
@@ -11,11 +12,12 @@ import bg.sofia.uni.fmi.mjt.uno.server.command.game.actions.play.PlayChooseColor
 import bg.sofia.uni.fmi.mjt.uno.server.command.game.actions.play.PlayPlusFourCommand;
 import bg.sofia.uni.fmi.mjt.uno.server.command.game.info.SpectateCommand;
 import bg.sofia.uni.fmi.mjt.uno.server.exceptions.command.CommandNotFoundException;
-import bg.sofia.uni.fmi.mjt.uno.server.game.Game;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.Game;
 import bg.sofia.uni.fmi.mjt.uno.server.player.Player;
 import bg.sofia.uni.fmi.mjt.uno.server.player.account.UserManager;
 
 import java.nio.channels.SocketChannel;
+import java.util.Arrays;
 
 public class GameActionCommandFactory {
     private final UserManager userManager;
@@ -25,29 +27,35 @@ public class GameActionCommandFactory {
     }
 
     public boolean supports(String commandName) {
-        return switch (commandName) {
-            case "play-card", "play-choose-color", "play-plus-four", "draw-card",
-                 "leave", "spectate", "uno", "stop-uno", "keep"-> true;
-            default -> false;
-        };
+        return Arrays.stream(GameActionCommand.values())
+                .anyMatch(command -> command.getCommand().equals(commandName));
     }
 
     public Command createCommand(String commandName, SocketChannel client) {
         Player player = getPlayer(client);
         Game game = getGame(client);
 
-        return switch (commandName) {
-            case "play-card" -> new PlayCardCommand(player, game);
-            case "play-choose-color" -> new PlayChooseColorCommand(player, game);
-            case "play-plus-four" -> new PlayPlusFourCommand(player, game);
-            case "draw-card" -> new DrawCardCommand(player, game);
-            case "leave" -> new LeaveCommand(player, game);
-            case "spectate" -> new SpectateCommand(player, game);
-            case "uno" -> new UnoCommand(player, game);
-            case "stop-uno" -> new StopUnoCommand(player, game);
-            case "keep" -> new KeepCommand(player, game);
-            default -> throw new CommandNotFoundException("Unknown command: " + commandName);
-        };
+        if (!supports(commandName)) {
+            throw new CommandNotFoundException(commandName);
+        }
+
+        for (GameActionCommand command : GameActionCommand.values()) {
+            if (command.getCommand().equals(commandName)) {
+                return switch (command) {
+                    case PLAY_CARD -> new PlayCardCommand(player, game);
+                    case PLAY_CHOOSE_COLOR -> new PlayChooseColorCommand(player, game);
+                    case PLAY_PLUS_FOUR -> new PlayPlusFourCommand(player, game);
+                    case DRAW_CARD -> new DrawCardCommand(player, game);
+                    case LEAVE -> new LeaveCommand(player, game);
+                    case SPECTATE -> new SpectateCommand(player, game);
+                    case UNO -> new UnoCommand(player, game);
+                    case STOP_UNO -> new StopUnoCommand(player, game);
+                    case KEEP -> new KeepCommand(player, game);
+                };
+            }
+        }
+
+        throw new CommandNotFoundException("Unknown command: " + commandName);
     }
 
     private Player getPlayer(SocketChannel client) {

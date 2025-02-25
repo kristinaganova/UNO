@@ -11,7 +11,7 @@ import bg.sofia.uni.fmi.mjt.uno.server.command.game.actions.play.PlayChooseColor
 import bg.sofia.uni.fmi.mjt.uno.server.command.game.actions.play.PlayPlusFourCommand;
 import bg.sofia.uni.fmi.mjt.uno.server.command.game.info.SpectateCommand;
 import bg.sofia.uni.fmi.mjt.uno.server.exceptions.command.CommandNotFoundException;
-import bg.sofia.uni.fmi.mjt.uno.server.game.Game;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.Game;
 import bg.sofia.uni.fmi.mjt.uno.server.player.Player;
 import bg.sofia.uni.fmi.mjt.uno.server.player.account.UserManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -113,7 +113,7 @@ class GameActionCommandFactoryTest {
     void testCreateCommandThrowsExceptionForUnknownCommand() {
         Exception exception = assertThrows(CommandNotFoundException.class,
                 () -> gameActionCommandFactory.createCommand("invalidCommand", mockClient));
-        assertEquals("Unknown command: invalidCommand", exception.getMessage());
+        assertEquals("invalidCommand", exception.getMessage());
     }
 
     @Test

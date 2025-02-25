@@ -6,7 +6,7 @@ import bg.sofia.uni.fmi.mjt.uno.server.card.strategy.StandardCardEffect;
 import bg.sofia.uni.fmi.mjt.uno.server.card.types.Color;
 import bg.sofia.uni.fmi.mjt.uno.server.command.game.PlayerCommand;
 import bg.sofia.uni.fmi.mjt.uno.server.exceptions.command.CommandExecutionException;
-import bg.sofia.uni.fmi.mjt.uno.server.game.Game;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.Game;
 
 import bg.sofia.uni.fmi.mjt.uno.server.player.Hand;
 import bg.sofia.uni.fmi.mjt.uno.server.player.Player;

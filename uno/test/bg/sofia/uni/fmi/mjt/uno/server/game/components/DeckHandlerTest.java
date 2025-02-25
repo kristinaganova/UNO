@@ -1,10 +1,10 @@
-package bg.sofia.uni.fmi.mjt.uno.server.game.components;
+package bg.sofia.uni.fmi.mjt.uno.server.games.game.components;
 
 import bg.sofia.uni.fmi.mjt.uno.server.card.models.Card;
 import bg.sofia.uni.fmi.mjt.uno.server.card.models.StandardCard;
 import bg.sofia.uni.fmi.mjt.uno.server.card.types.Color;
 import bg.sofia.uni.fmi.mjt.uno.server.deck.UnoDeck;
-import bg.sofia.uni.fmi.mjt.uno.server.game.components.DeckHandler;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.components.DeckHandler;
 import bg.sofia.uni.fmi.mjt.uno.server.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

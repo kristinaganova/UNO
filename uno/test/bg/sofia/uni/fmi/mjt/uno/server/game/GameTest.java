@@ -1,10 +1,10 @@
-package bg.sofia.uni.fmi.mjt.uno.server.game;
+package bg.sofia.uni.fmi.mjt.uno.server.games.game;
 
 import bg.sofia.uni.fmi.mjt.uno.server.exceptions.game.NotEnoughPlayersException;
 import bg.sofia.uni.fmi.mjt.uno.server.exceptions.player.PlayerNotPermittedException;
 
-import bg.sofia.uni.fmi.mjt.uno.server.game.Game;
-import bg.sofia.uni.fmi.mjt.uno.server.game.GameState;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.Game;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.GameState;
 import bg.sofia.uni.fmi.mjt.uno.server.player.Hand;
 import bg.sofia.uni.fmi.mjt.uno.server.player.Player;
 import bg.sofia.uni.fmi.mjt.uno.server.player.account.Account;

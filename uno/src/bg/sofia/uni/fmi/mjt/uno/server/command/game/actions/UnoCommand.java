@@ -2,7 +2,7 @@ package bg.sofia.uni.fmi.mjt.uno.server.command.game.actions;
 
 import bg.sofia.uni.fmi.mjt.uno.server.command.game.PlayerCommand;
 import bg.sofia.uni.fmi.mjt.uno.server.exceptions.command.CommandExecutionException;
-import bg.sofia.uni.fmi.mjt.uno.server.game.Game;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.Game;
 import bg.sofia.uni.fmi.mjt.uno.server.player.Player;
 
 public class UnoCommand extends PlayerCommand {

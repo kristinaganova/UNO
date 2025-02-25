@@ -1,8 +1,8 @@
-package bg.sofia.uni.fmi.mjt.uno.server.game.components;
+package bg.sofia.uni.fmi.mjt.uno.server.games.game.components;
 
 import bg.sofia.uni.fmi.mjt.uno.server.exceptions.game.GameIsFullException;
 import bg.sofia.uni.fmi.mjt.uno.server.exceptions.player.PlayerAlreadyInGameException;
-import bg.sofia.uni.fmi.mjt.uno.server.game.components.PlayerRegistry;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.components.PlayerRegistry;
 import bg.sofia.uni.fmi.mjt.uno.server.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

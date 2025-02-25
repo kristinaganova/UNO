@@ -1,7 +1,6 @@
 package bg.sofia.uni.fmi.mjt.uno.server.card.models;
 
-import bg.sofia.uni.fmi.mjt.uno.server.card.models.ActionCard;
-import bg.sofia.uni.fmi.mjt.uno.server.card.models.StandardCard;
+
 import bg.sofia.uni.fmi.mjt.uno.server.card.strategy.CardEffectStrategy;
 import bg.sofia.uni.fmi.mjt.uno.server.card.types.ActionCardType;
 import bg.sofia.uni.fmi.mjt.uno.server.card.types.CardType;

@@ -65,6 +65,6 @@ class AuthCommandFactoryTest {
     @Test
     void testCreateCommandThrowsExceptionForUnknownCommand() {
         Exception exception = assertThrows(CommandNotFoundException.class, () -> authCommandFactory.createCommand("invalidCommand", mockClient));
-        assertEquals("Unknown command: invalidCommand", exception.getMessage());
+        assertEquals("invalidCommand", exception.getMessage());
     }
 }

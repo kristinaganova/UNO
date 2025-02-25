@@ -1,7 +1,7 @@
-package bg.sofia.uni.fmi.mjt.uno.server.game.components;
+package bg.sofia.uni.fmi.mjt.uno.server.games.game.components;
 
-import bg.sofia.uni.fmi.mjt.uno.server.game.components.GameMessenger;
-import bg.sofia.uni.fmi.mjt.uno.server.game.components.PlayerRegistry;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.components.GameMessenger;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.components.PlayerRegistry;
 import bg.sofia.uni.fmi.mjt.uno.server.player.Player;
 import bg.sofia.uni.fmi.mjt.uno.server.player.account.Account;
 import org.junit.jupiter.api.BeforeEach;

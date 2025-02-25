@@ -3,7 +3,7 @@ package bg.sofia.uni.fmi.mjt.uno.server.command.auth;
 import bg.sofia.uni.fmi.mjt.uno.server.command.AbstractCommand;
 import bg.sofia.uni.fmi.mjt.uno.server.command.CommandValidator;
 import bg.sofia.uni.fmi.mjt.uno.server.exceptions.command.CommandExecutionException;
-import bg.sofia.uni.fmi.mjt.uno.server.game.Game;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.Game;
 import bg.sofia.uni.fmi.mjt.uno.server.games.GameManager;
 import bg.sofia.uni.fmi.mjt.uno.server.player.account.UserManager;
 

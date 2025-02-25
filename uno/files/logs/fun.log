@@ -3,3 +3,11 @@
 [Player: username] [Time: 2025-02-02T16:34:02.405987] play-card--card-id=9f83c
 [Player: username] [Time: 2025-02-02T16:34:08.110433200] show-hand
 [Player: username] [Time: 2025-02-02T16:34:13.339452500] draw-card
+[Player: username] [Time: 2025-02-03T09:53:11.829487500] leave
+[Player: krisi] [Time: 2025-02-03T16:16:56.127127600] show-hand
+[Player: krisi] [Time: 2025-02-03T16:17:13.464512200] play-card--card-id=09769
+[Player: test1] [Time: 2025-02-03T16:17:22.124365200] show-hand
+[Player: test1] [Time: 2025-02-03T16:17:43.031345] play-card--card-id=ec10b
+[Player: test1] [Time: 2025-02-03T16:17:58.425998200] play-card--card-id=2fd31
+[Player: test1] [Time: 2025-02-03T16:18:27.190822] show-hand
+[Player: test1] [Time: 2025-02-03T16:18:44.315366300] leave

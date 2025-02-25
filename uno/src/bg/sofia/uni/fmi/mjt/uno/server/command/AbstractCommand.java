@@ -6,6 +6,7 @@ public abstract class AbstractCommand implements Command {
         try {
             return executeCommand(args);
         } catch (Exception e) {
+            e.printStackTrace();
             return "Error: " + e.getMessage();
         }
     }

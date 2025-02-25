@@ -3,8 +3,8 @@ package bg.sofia.uni.fmi.mjt.uno.server.games;
 import bg.sofia.uni.fmi.mjt.uno.server.exceptions.game.GameAlreadyExistsException;
 import bg.sofia.uni.fmi.mjt.uno.server.exceptions.game.GameNotAvailableException;
 import bg.sofia.uni.fmi.mjt.uno.server.exceptions.game.GameNotFoundException;
-import bg.sofia.uni.fmi.mjt.uno.server.game.Game;
-import bg.sofia.uni.fmi.mjt.uno.server.game.GameState;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.Game;
+import bg.sofia.uni.fmi.mjt.uno.server.games.game.GameState;
 import bg.sofia.uni.fmi.mjt.uno.server.player.Player;
 
 import java.util.Map;
